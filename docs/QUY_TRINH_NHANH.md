@@ -30,7 +30,8 @@ Phần nền thiếu thứ gì khi đang làm nghiệp vụ (một thành phần
 ## Làm nghiệp vụ
 
 1. Tạo nhánh từ `main`: `git switch main && git pull && git switch -c feat/<phần>-<việc>` (ví dụ `feat/contracts-list`, `feat/signing-service-s1`).
-2. Chỉ sửa thư mục của mình (`CODEOWNERS`); dùng phần nền như thư viện.
+2. Chỉ sửa đường dẫn nghiệp vụ (bảng mục 3 của `CLAUDE.md`); dùng phần nền như thư viện. CI chạy
+   `scripts/check-base-untouched.mjs` và từ chối PR sửa phần nền (tự kiểm: `pnpm check:base`).
 3. PR vào `main`, một người duyệt, CI xanh, **merge commit** (giữ commit của từng người).
 
 ## Bảo vệ nhánh (GitHub)
@@ -39,6 +40,7 @@ Phần nền thiếu thứ gì khi đang làm nghiệp vụ (một thành phần
 
 - chỉ nhận thay đổi qua Pull Request, cần ít nhất 1 người duyệt, và duyệt lại khi có commit mới;
 - phải qua CI (job `verify`) và cập nhật với nhánh đích trước khi merge;
+- tệp phần nền cần người trong `.github/CODEOWNERS` duyệt;
 - cấm force push, cấm xoá nhánh.
 
 Quản trị repo (trưởng nhóm) được merge bằng quyền admin khi CI xanh mà chưa có người duyệt (`gh pr merge --admin --merge`); chỉ dùng cho việc phần nền hoặc đồng bộ `base → main` khi cả nhóm chưa ai duyệt được, không dùng để bỏ qua CI.

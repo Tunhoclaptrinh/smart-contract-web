@@ -1,0 +1,14 @@
+# Base files need the base owner's review (docs/QUY_TRINH_NHANH.md); CI also refuses base changes
+# outside the base flow (scripts/check-base-untouched.mjs). Business paths have no fixed owner:
+# any teammate reviews them.
+*                                  @Tunhoclaptrinh
+/src/features/
+/src/locales/
+/src/router.tsx
+/src/shared/layout/navConfig.ts
+/public/
+/package.json
+/pnpm-lock.yaml
+/README.md
+/CHANGELOG.md
+/docs/bao-cao/
