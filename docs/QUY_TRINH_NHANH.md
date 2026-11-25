@@ -6,18 +6,20 @@
 
 | Nhánh | Chứa gì | Ai sửa | Vào bằng |
 | --- | --- | --- | --- |
-| `base` | **Phần nền dùng chung**: `packages/*` (bộ UI, contracts, api-client, config), `src/shared/*` (api, auth, layout, state, ui, lib), `src/i18n`, `src/styles`, `src/test`, cấu hình (Vite, TypeScript, ESLint, Prettier, CI) | Trưởng nhóm (TV1 phụ trách kỹ thuật nền) | PR từ `base/<việc>` |
+| `base` | **Phần nền dùng chung**: `packages/*` (bộ UI, contracts, api-client, config), `src/shared/*` (api, auth, layout, state, ui, lib), `src/i18n`, `src/styles`, `src/test`, cấu hình (Vite, TypeScript, ESLint, Prettier, CI) | Trưởng nhóm (TV1 phụ trách kỹ thuật nền) | PR từ `core/<việc>` |
 | `main` | Phần nền **cộng** nghiệp vụ của cả nhóm (màn, service) | Mọi người, mỗi người phần của mình | PR từ `feat/<phần>-<việc>`, `fix/…` |
 
 `main` luôn chứa `base`. `base` **không bao giờ** chứa nghiệp vụ, nên phần nền luôn tách sạch, dùng lại được, và lịch sử commit cho thấy rõ ai làm phần nền, ai làm nghiệp vụ.
 
 ```
-base/<việc> ──PR──▶ base ──PR "sync: base → main"──▶ main ◀──PR── feat/<phần>-<việc>
+core/<việc> ──PR──▶ base ──PR "sync: base → main"──▶ main ◀──PR── feat/<phần>-<việc>
 ```
 
 ## Sửa phần nền
 
-1. Tạo nhánh từ `base`: `git switch base && git pull && git switch -c base/<việc>`.
+Nhánh việc của phần nền tên `core/<việc>`, **không** đặt `base/<việc>`: Git coi tên nhánh như đường dẫn, nên đã có nhánh `base` thì không tạo được `base/…`.
+
+1. Tạo nhánh từ `base`: `git switch base && git pull && git switch -c core/<việc>`.
 2. Sửa, chạy đủ kiểm tra (`pnpm check` hoặc `pnpm test`), commit theo Conventional Commits.
 3. Mở PR vào `base`; một người khác duyệt; CI phải xanh.
 4. Merge xong, mở PR **`base` → `main`** (tiêu đề `sync: base → main`), dùng **merge commit** (không squash, không rebase) để `main` giữ nguyên commit của `base`.
@@ -45,7 +47,7 @@ Bật bằng `scripts/protect-branches.sh <chủ-repo>/<tên-repo>` (cần GitHu
 
 | Muốn | Lệnh |
 | --- | --- |
-| Bắt đầu việc nền | `git switch base && git pull && git switch -c base/<việc>` |
+| Bắt đầu việc nền | `git switch base && git pull && git switch -c core/<việc>` |
 | Bắt đầu việc nghiệp vụ | `git switch main && git pull && git switch -c feat/<phần>-<việc>` |
 | Lấy phần nền mới về nhánh đang làm | `git fetch && git merge origin/main` |
 | Xem `main` đã có hết `base` chưa | `git log --oneline main..base` (rỗng là đủ) |
