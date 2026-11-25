@@ -13,6 +13,11 @@ import RouteErrorPage from "@/shared/pages/RouteErrorPage";
 export const router = createBrowserRouter([
   { path: "/login", element: <LoginPage />, errorElement: <RouteErrorPage /> },
   {
+    path: "/register",
+    lazy: () => import("@/shared/auth/RegisterPage").then(asRoute),
+    errorElement: <RouteErrorPage />,
+  },
+  {
     element: <RequireAuth />,
     errorElement: <RouteErrorPage />,
     HydrateFallback: () => null,

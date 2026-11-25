@@ -315,5 +315,40 @@
     "organization": "Tổ chức",
     "areas": "Khu vực bạn được mở",
     "noAreas": "Vai trò của bạn chưa có khu vực nào trong bản này."
+  },
+  "register": {
+    "title": "Đăng ký công ty",
+    "subtitle": "Tạo tài khoản cho công ty của bạn. Người đăng ký là quản trị tài khoản công ty và sẽ tạo tài khoản cho nhân viên sau khi đăng nhập.",
+    "company": "Công ty",
+    "admin": "Người quản trị",
+    "name": "Tên công ty",
+    "code": "Mã công ty",
+    "codeHint": "Viết liền, không dấu, ví dụ ML01; không đổi được sau này.",
+    "kind": "Loại công ty",
+    "kinds": {
+      "BUYER": "Bên mua",
+      "SUPPLIER": "Nhà cung cấp"
+    },
+    "companyEmail": "Email liên hệ của công ty",
+    "taxCode": "Mã số thuế",
+    "displayName": "Họ và tên",
+    "email": "Email đăng nhập",
+    "password": "Mật khẩu",
+    "passwordHint": "Ít nhất 12 ký tự.",
+    "confirm": "Nhập lại mật khẩu",
+    "mismatch": "Hai mật khẩu chưa khớp.",
+    "submit": "Đăng ký và đăng nhập",
+    "haveAccount": "Đã có tài khoản?",
+    "signIn": "Đăng nhập",
+    "noAccount": "Chưa có tài khoản?",
+    "signUp": "Đăng ký công ty",
+    "errors": {
+      "EMAIL_TAKEN": "Email này đã có tài khoản.",
+      "ORGANIZATION_CODE_TAKEN": "Mã công ty đã được dùng.",
+      "PASSWORD_MINIMUM_12_CHARACTERS": "Mật khẩu cần ít nhất 12 ký tự.",
+      "SIGNUP_DISABLED": "Hệ thống đang tắt đăng ký.",
+      "INVALID_EMAIL": "Email chưa đúng định dạng.",
+      "UNKNOWN": "Không đăng ký được. Kiểm tra lại thông tin và thử lại."
+    }
   }
 }

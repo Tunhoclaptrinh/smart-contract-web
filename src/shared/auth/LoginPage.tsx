@@ -21,7 +21,7 @@ import {
 } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { listDemoAccounts, type DemoAccount } from "../api/auth.api";
 import { homeByRole } from "../layout/navConfig";
 import { initialsOf } from "../lib/initials";
@@ -322,6 +322,12 @@ export default function LoginPage() {
               {t("login.submit")}
             </Button>
           </Form>
+          <Typography.Paragraph style={{ marginTop: 16, textAlign: "center" }}>
+            {t("register.noAccount")}{" "}
+            <Link to="/register" data-testid="register-link">
+              {t("register.signUp")}
+            </Link>
+          </Typography.Paragraph>
         </div>
       </main>
     </div>

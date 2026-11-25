@@ -74,3 +74,20 @@ export async function getUser(_userId: string): Promise<User | null> {
     }
   }
 }
+
+/** What a company enters to sign up: the company and its account administrator. */
+export interface SignUpInput {
+  organization: {
+    name: string;
+    code: string;
+    kind: "BUYER" | "SUPPLIER";
+    email?: string;
+    taxCode?: string;
+  };
+  admin: { displayName: string; email: string; password: string };
+}
+
+/** Creates the company and its administrator account, then signs in as that administrator. */
+export async function signUp(input: SignUpInput): Promise<User> {
+  return storeSession(await platform.post<AuthResult>("/auth/register", input));
+}

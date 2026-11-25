@@ -12,6 +12,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   signIn as signInRequest,
   signInDemo as signInDemoRequest,
+  signUp as signUpRequest,
+  type SignUpInput,
 } from "../api/auth.api";
 import type { User } from "../api/types";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
@@ -26,11 +28,16 @@ interface SessionValue {
   signIn: (email: string, password: string) => Promise<User>;
   /** One-click sign-in with a sample account (only when the API allows demo sign-in). */
   signInDemo: (email: string) => Promise<User>;
+  /** Signs up a company with its account administrator and signs in as that administrator. */
+  signUp: (input: SignUpInput) => Promise<User>;
   signOut: () => void;
 }
 
 /** The actions; the state itself (user, restoring) lives in the Redux store. */
-type SessionActions = Pick<SessionValue, "signIn" | "signInDemo" | "signOut">;
+type SessionActions = Pick<
+  SessionValue,
+  "signIn" | "signInDemo" | "signUp" | "signOut"
+>;
 const SessionContext = createContext<SessionActions | null>(null);
 
 export function readStoredUserId(): string | null {
@@ -108,6 +115,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     [start],
   );
 
+  const signUp = useCallback(
+    async (input: SignUpInput) => start(await signUpRequest(input)),
+    [start],
+  );
+
   const signOut = useCallback(() => {
     void platform.post("/auth/logout", {}).catch(() => {});
     localStorage.removeItem("codecash.accessToken");
@@ -117,8 +129,8 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   }, [queryClient, dispatch]);
 
   const value = useMemo(
-    () => ({ signIn, signInDemo, signOut }),
-    [signIn, signInDemo, signOut],
+    () => ({ signIn, signInDemo, signUp, signOut }),
+    [signIn, signInDemo, signUp, signOut],
   );
 
   return (

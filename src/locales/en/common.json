@@ -315,5 +315,40 @@
     "organization": "Organisation",
     "areas": "Areas open to you",
     "noAreas": "Your role has no area in this version yet."
+  },
+  "register": {
+    "title": "Register a company",
+    "subtitle": "Create an account for your company. You become its account administrator and create your staff's accounts after signing in.",
+    "company": "Company",
+    "admin": "Administrator",
+    "name": "Company name",
+    "code": "Company code",
+    "codeHint": "No spaces or accents, e.g. ML01; it cannot be changed later.",
+    "kind": "Company type",
+    "kinds": {
+      "BUYER": "Buyer",
+      "SUPPLIER": "Supplier"
+    },
+    "companyEmail": "Company contact email",
+    "taxCode": "Tax code",
+    "displayName": "Full name",
+    "email": "Sign-in email",
+    "password": "Password",
+    "passwordHint": "At least 12 characters.",
+    "confirm": "Repeat the password",
+    "mismatch": "The passwords do not match.",
+    "submit": "Register and sign in",
+    "haveAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "noAccount": "No account yet?",
+    "signUp": "Register a company",
+    "errors": {
+      "EMAIL_TAKEN": "This email already has an account.",
+      "ORGANIZATION_CODE_TAKEN": "This company code is taken.",
+      "PASSWORD_MINIMUM_12_CHARACTERS": "The password needs at least 12 characters.",
+      "SIGNUP_DISABLED": "Registration is switched off.",
+      "INVALID_EMAIL": "The email is not valid.",
+      "UNKNOWN": "Registration failed. Check the details and try again."
+    }
   }
 }
