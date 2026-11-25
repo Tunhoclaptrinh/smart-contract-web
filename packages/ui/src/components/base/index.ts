@@ -6,6 +6,7 @@ export * from "./CardGrid";
 export * from "./StatisticCard";
 export * from "./PageContainer";
 export * from "./PageHeader";
+export * from "./DataTable";
 export * from "./SearchInput";
 export * from "./DebounceSelect";
 export * from "./TabSwitcher";

@@ -2,6 +2,7 @@
 
 Mỗi bước dựng phần nền ghi một mục; mới nhất ở trên.
 
+- **feat(ui): add DataTable with filters, column settings, import and export** — bảng dữ liệu: sắp xếp, phân trang, bộ lọc nâng cao, chọn cột, thẻ trên điện thoại, nhập và xuất
 - **feat(ui): add base components** — nút, thẻ, thống kê, khung trang, ô tìm kiếm, modal và drawer biểu mẫu, xác nhận, chi tiết, trạng thái (bộ UniFlow)
 - **feat(ui): add hooks for lists, filters, paging and resources** — hook dùng chung: `useListState`, `useFilters`, `usePagination`, `useResource`, `useAccess`…
 - **feat(ui): add the theme, design tokens and app config provider** — `packages/ui`: theme Ant Design, token màu sáng/tối, `UiProvider`, `AppConfigContext`, tiện ích xuất/lưu/kiểm tra
