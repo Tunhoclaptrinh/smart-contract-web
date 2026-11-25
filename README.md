@@ -7,8 +7,16 @@ The base (UI kit, layout, i18n, sign-in, generic CRUD screens) is ported from Co
 ```bash
 pnpm install
 pnpm dev          # http://127.0.0.1:5173, API proxied to http://127.0.0.1:3000
-pnpm check        # typecheck, lint, format, test, build
+pnpm check        # typecheck, lint, format, tests with the 50% coverage gate, build
+pnpm coverage     # tests and coverage report (coverage/)
 ```
+
+The API is `btl-backend` (`pnpm dev` there, port 3000). Tests never call it: they answer requests with MSW (`src/test/server.ts`).
+
+## State and access
+
+- Global client state: Redux Toolkit (`src/shared/state`), the session slice behind `useSession()`. Server data: TanStack Query.
+- Access: route guard (`navConfig` route permissions), `withPermission` for screens, `<Can>` for parts of a screen; the API checks every call again.
 
 ## Layout
 
