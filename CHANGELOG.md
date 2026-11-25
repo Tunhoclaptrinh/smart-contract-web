@@ -2,6 +2,7 @@
 
 Mỗi bước dựng phần nền ghi một mục; mới nhất ở trên.
 
+- **feat(auth): add withPermission and Can** — HOC `withPermission` (lớp chặn thứ hai sau route guard, dùng cho ma trận quyền), Render Props `<Can>` (ẩn hoặc truyền cờ cho phép vào hàm con, dùng ở trang chủ), `usePermission`, `hasPermissions`; hàm test `renderWithApp` dựng sẵn store, phiên, query, router
 - **feat(auth): add company sign-up** — trang `/register`: công ty (tên, mã, loại, email, mã số thuế) và người quản trị (họ tên, email, mật khẩu ≥ 12 ký tự, nhập lại); gọi `POST /auth/register` rồi đăng nhập luôn; liên kết từ trang đăng nhập; `useSession().signUp`
 - **feat(state): keep the session in a Redux Toolkit store** — slice `session` (đăng nhập, đăng xuất, khôi phục phiên bằng `createAsyncThunk`), hook có kiểu `useAppDispatch`/`useAppSelector`; `useSession()` giữ nguyên chữ ký nên màn chuyển từ CodeCash không phải sửa; dữ liệu server vẫn ở TanStack Query
 - **test: set up Vitest and test the base helpers** — Vitest + Testing Library (jsdom), test định dạng, URL danh sách, bố cục thống kê, trạng thái danh sách

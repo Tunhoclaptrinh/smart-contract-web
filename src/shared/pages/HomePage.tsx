@@ -2,6 +2,7 @@ import { Card, Descriptions, Space, Tag, Typography } from "antd";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useCurrentUser } from "@/shared/auth/session";
+import { Can } from "@/shared/auth/Can";
 import { AppPage } from "@/shared/layout/AppPage";
 import { navFor } from "@/shared/layout/navConfig";
 
@@ -49,6 +50,15 @@ export default function HomePage() {
             ]}
           />
         </Card>
+        <Can permission="users:create">
+          <Card
+            title={t("home.accounts.title")}
+            extra={<Link to="/platform/users">{t("home.accounts.open")}</Link>}
+            data-testid="home-accounts"
+          >
+            {t("home.accounts.body")}
+          </Card>
+        </Can>
         <Card title={t("home.areas")}>
           {areas.length ? (
             <Space size={[8, 8]} wrap data-testid="home-areas">

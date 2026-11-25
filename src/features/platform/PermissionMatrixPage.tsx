@@ -27,6 +27,7 @@ import type {
 import { platform } from "@/shared/api/platform";
 import { useCurrentUser } from "@/shared/auth/session";
 import { AppPage } from "@/shared/layout/AppPage";
+import { withPermission } from "@/shared/auth/Can";
 import { localList, useListQuery } from "@/shared/lib/useListQuery";
 import { columnSearch } from "@/shared/ui/columnSearch";
 import { statSpan } from "@/shared/lib/statLayout";
@@ -59,7 +60,7 @@ const roleColor: Record<Role, { bg: string; value: string }> = {
  * Read-only view of the permission matrix the API enforces. Changing it is a specification
  * change with a second approver (SoD-4), so there are no edit controls here.
  */
-export default function PermissionMatrixPage() {
+function PermissionMatrixPage() {
   const user = useCurrentUser();
   const { t } = useTranslation("platform");
   const { t: tc } = useTranslation("common");
@@ -405,3 +406,6 @@ export default function PermissionMatrixPage() {
     </AppPage>
   );
 }
+
+/** Second check behind the route guard: only roles that may read the matrix see it. */
+export default withPermission(PermissionMatrixPage, "permissions:read");

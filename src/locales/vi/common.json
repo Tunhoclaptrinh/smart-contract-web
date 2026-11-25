@@ -314,7 +314,12 @@
     "role": "Vai trò",
     "organization": "Tổ chức",
     "areas": "Khu vực bạn được mở",
-    "noAreas": "Vai trò của bạn chưa có khu vực nào trong bản này."
+    "noAreas": "Vai trò của bạn chưa có khu vực nào trong bản này.",
+    "accounts": {
+      "title": "Quản trị tài khoản",
+      "open": "Mở danh sách người dùng",
+      "body": "Bạn có quyền tạo và quản lý tài khoản. Tạo tài khoản cho thành viên trong tổ chức của bạn tại danh sách người dùng."
+    }
   },
   "register": {
     "title": "Đăng ký công ty",
@@ -350,5 +355,9 @@
       "INVALID_EMAIL": "Email chưa đúng định dạng.",
       "UNKNOWN": "Không đăng ký được. Kiểm tra lại thông tin và thử lại."
     }
+  },
+  "access": {
+    "forbiddenTitle": "Bạn không có quyền mở màn này",
+    "forbiddenBody": "Vai trò của bạn không được cấp quyền này. Liên hệ quản trị nếu cần."
   }
 }

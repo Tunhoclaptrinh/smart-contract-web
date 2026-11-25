@@ -314,7 +314,12 @@
     "role": "Role",
     "organization": "Organisation",
     "areas": "Areas open to you",
-    "noAreas": "Your role has no area in this version yet."
+    "noAreas": "Your role has no area in this version yet.",
+    "accounts": {
+      "title": "Account administration",
+      "open": "Open the user list",
+      "body": "You may create and manage accounts. Create your organisation's accounts from the user list."
+    }
   },
   "register": {
     "title": "Register a company",
@@ -350,5 +355,9 @@
       "INVALID_EMAIL": "The email is not valid.",
       "UNKNOWN": "Registration failed. Check the details and try again."
     }
+  },
+  "access": {
+    "forbiddenTitle": "You may not open this screen",
+    "forbiddenBody": "Your role has not been given this permission. Ask an administrator if you need it."
   }
 }
