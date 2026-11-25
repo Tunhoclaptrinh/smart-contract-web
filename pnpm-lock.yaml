@@ -207,6 +207,16 @@ importers:
         specifier: ^8.3.4
         version: 8.3.8(@types/node@26.6.6)
 
+  packages/api-client:
+    dependencies:
+      '@codecash/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+
+  packages/config: {}
+
+  packages/contracts: {}
+
 packages:
 
   '@babel/code-frame@7.29.7':
