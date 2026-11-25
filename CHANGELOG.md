@@ -2,6 +2,7 @@
 
 Mỗi bước dựng phần nền ghi một mục; mới nhất ở trên.
 
+- **feat: add the app shell with sign-in, layout and lazy routes** — layout và menu theo quyền, đăng nhập (kèm tài khoản demo), trang chủ, 404 và trang lỗi, route tải lười, chọn ngôn ngữ và giao diện sáng/tối
 - **feat: add shared helpers and UI building blocks** — định dạng số/tiền/ngày, `useListQuery` (trang, lọc, sắp xếp đồng bộ URL); thanh hành động, khối, panel, trạng thái trang, hành động trên dòng, tìm theo cột
 - **feat: add the API layer and the session** — client gọi API dùng chung, kiểu dữ liệu, phiên đăng nhập và quyền của người dùng
 - **feat: add global styles and i18n in Vietnamese and English** — style toàn cục; i18next tự đăng ký mọi tệp `locales/<ngôn ngữ>/<nhóm>.json`
