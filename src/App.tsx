@@ -5,12 +5,16 @@ import dayjs from "dayjs";
 import "dayjs/locale/vi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { Provider as StoreProvider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
-import { SessionProvider } from "./shared/auth/session";
+import { readStoredUserId, SessionProvider } from "./shared/auth/session";
+import { createAppStore } from "./shared/state/store";
 import { OnboardingProvider } from "./shared/onboarding/OnboardingContext";
 import { actionTheme } from "./shared/ui/action-theme";
 
+// A stored session starts in the restoring state, so guarded routes wait instead of redirecting.
+const store = createAppStore({ restoring: readStoredUserId() !== null });
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: { staleTime: 30_000, refetchOnWindowFocus: false, retry: false },
@@ -28,18 +32,20 @@ export function App() {
   }, [i18n.language]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <UiProvider>
-        <ConfigProvider theme={actionTheme}>
-          <ErrorBoundary>
-            <SessionProvider>
-              <OnboardingProvider>
-                <RouterProvider router={router} />
-              </OnboardingProvider>
-            </SessionProvider>
-          </ErrorBoundary>
-        </ConfigProvider>
-      </UiProvider>
-    </QueryClientProvider>
+    <StoreProvider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <UiProvider>
+          <ConfigProvider theme={actionTheme}>
+            <ErrorBoundary>
+              <SessionProvider>
+                <OnboardingProvider>
+                  <RouterProvider router={router} />
+                </OnboardingProvider>
+              </SessionProvider>
+            </ErrorBoundary>
+          </ConfigProvider>
+        </UiProvider>
+      </QueryClientProvider>
+    </StoreProvider>
   );
 }

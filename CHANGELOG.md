@@ -2,6 +2,7 @@
 
 Mỗi bước dựng phần nền ghi một mục; mới nhất ở trên.
 
+- **feat(state): keep the session in a Redux Toolkit store** — slice `session` (đăng nhập, đăng xuất, khôi phục phiên bằng `createAsyncThunk`), hook có kiểu `useAppDispatch`/`useAppSelector`; `useSession()` giữ nguyên chữ ký nên màn chuyển từ CodeCash không phải sửa; dữ liệu server vẫn ở TanStack Query
 - **test: set up Vitest and test the base helpers** — Vitest + Testing Library (jsdom), test định dạng, URL danh sách, bố cục thống kê, trạng thái danh sách
 - **feat(platform): add the generic resource CRUD screen and the permission matrix** — một màn CRUD cho mọi tài nguyên: danh sách, lọc, tìm kiếm, thêm, sửa, xoá, nhập và xuất; ma trận quyền chỉ đọc
 - **feat: add the app shell with sign-in, layout and lazy routes** — layout và menu theo quyền, đăng nhập (kèm tài khoản demo), trang chủ, 404 và trang lỗi, route tải lười, chọn ngôn ngữ và giao diện sáng/tối

@@ -6,16 +6,16 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
   type ReactNode,
 } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
-  getUser,
   signIn as signInRequest,
   signInDemo as signInDemoRequest,
 } from "../api/auth.api";
 import type { User } from "../api/types";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
+import { restoreSession, signedIn, signedOut } from "../state/sessionSlice";
 
 const STORAGE_KEY = "scw.session.userId";
 
@@ -29,9 +29,11 @@ interface SessionValue {
   signOut: () => void;
 }
 
-const SessionContext = createContext<SessionValue | null>(null);
+/** The actions; the state itself (user, restoring) lives in the Redux store. */
+type SessionActions = Pick<SessionValue, "signIn" | "signInDemo" | "signOut">;
+const SessionContext = createContext<SessionActions | null>(null);
 
-function readStoredUserId(): string | null {
+export function readStoredUserId(): string | null {
   try {
     return localStorage.getItem(STORAGE_KEY);
   } catch {
@@ -50,29 +52,23 @@ function writeStoredUserId(userId: string | null): void {
 
 export function SessionProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient();
-  const [user, setUser] = useState<User | null>(null);
-  const [restoring, setRestoring] = useState(() => readStoredUserId() !== null);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const storedUserId = readStoredUserId();
     if (!storedUserId) return;
-    let cancelled = false;
-    void getUser(storedUserId).then((restored) => {
-      if (cancelled) return;
-      setUser(restored);
-      if (!restored) writeStoredUserId(null);
-      setRestoring(false);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    void dispatch(restoreSession(storedUserId))
+      .unwrap()
+      .then((restored) => {
+        if (!restored) writeStoredUserId(null);
+      });
+  }, [dispatch]);
 
   useEffect(() => {
     const clear = () => {
       writeStoredUserId(null);
       queryClient.clear();
-      setUser(null);
+      dispatch(signedOut());
     };
     window.addEventListener("codecash:unauthorized", clear);
     const refresh = () =>
@@ -92,15 +88,15 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       window.removeEventListener("codecash:unauthorized", clear);
       window.removeEventListener("codecash:workflow-changed", refresh);
     };
-  }, [queryClient]);
+  }, [queryClient, dispatch]);
   const start = useCallback(
-    (signedIn: User) => {
-      writeStoredUserId(signedIn.id);
+    (user: User) => {
+      writeStoredUserId(user.id);
       queryClient.clear();
-      setUser(signedIn);
-      return signedIn;
+      dispatch(signedIn(user));
+      return user;
     },
-    [queryClient],
+    [queryClient, dispatch],
   );
   const signIn = useCallback(
     async (email: string, password: string) =>
@@ -117,12 +113,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem("codecash.accessToken");
     writeStoredUserId(null);
     queryClient.clear();
-    setUser(null);
-  }, [queryClient]);
+    dispatch(signedOut());
+  }, [queryClient, dispatch]);
 
   const value = useMemo(
-    () => ({ user, restoring, signIn, signInDemo, signOut }),
-    [user, restoring, signIn, signInDemo, signOut],
+    () => ({ signIn, signInDemo, signOut }),
+    [signIn, signInDemo, signOut],
   );
 
   return (
@@ -130,11 +126,13 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   );
 }
 
+/** Same shape as before the Redux store: screens keep calling useSession() unchanged. */
 export function useSession(): SessionValue {
-  const context = useContext(SessionContext);
-  if (!context)
+  const actions = useContext(SessionContext);
+  const { user, restoring } = useAppSelector((state) => state.session);
+  if (!actions)
     throw new Error("useSession must be used inside <SessionProvider>");
-  return context;
+  return { user, restoring, ...actions };
 }
 
 /** For screens that only render for a signed-in user. */
