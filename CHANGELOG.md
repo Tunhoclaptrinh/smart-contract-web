@@ -2,6 +2,7 @@
 
 Mỗi bước dựng phần nền ghi một mục; mới nhất ở trên.
 
+- **feat: add shared helpers and UI building blocks** — định dạng số/tiền/ngày, `useListQuery` (trang, lọc, sắp xếp đồng bộ URL); thanh hành động, khối, panel, trạng thái trang, hành động trên dòng, tìm theo cột
 - **feat: add the API layer and the session** — client gọi API dùng chung, kiểu dữ liệu, phiên đăng nhập và quyền của người dùng
 - **feat: add global styles and i18n in Vietnamese and English** — style toàn cục; i18next tự đăng ký mọi tệp `locales/<ngôn ngữ>/<nhóm>.json`
 - **feat(ui): add DataTable with filters, column settings, import and export** — bảng dữ liệu: sắp xếp, phân trang, bộ lọc nâng cao, chọn cột, thẻ trên điện thoại, nhập và xuất
