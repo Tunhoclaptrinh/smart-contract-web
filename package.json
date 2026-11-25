@@ -15,6 +15,7 @@
     "format": "prettier --write src packages",
     "format:check": "prettier --check src packages",
     "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm coverage && pnpm build",
+    "check:base": "node scripts/check-base-untouched.mjs",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
