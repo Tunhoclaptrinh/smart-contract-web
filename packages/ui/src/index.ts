@@ -1,6 +1,7 @@
 export * from "./Provider";
 export * from "./theme";
 export * from "./context/AppConfigContext";
+export * from "./components/base";
 export * from "./hooks/useDebounce";
 export * from "./hooks/useFilters";
 export * from "./hooks/useLocalStorage";
