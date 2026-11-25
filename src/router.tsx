@@ -32,6 +32,17 @@ function pages() {
       path: "/home",
       lazy: () => import("@/shared/pages/HomePage").then(asRoute),
     },
+    // Platform base: the generic CRUD screen for every resource and the permission matrix.
+    // Business screens are added here, one lazy route each, as they are moved in.
+    {
+      path: "/platform/permissions",
+      lazy: () =>
+        import("@/features/platform/PermissionMatrixPage").then(asRoute),
+    },
+    {
+      path: "/platform/:resource?",
+      lazy: () => import("@/features/platform/ResourcePage").then(asRoute),
+    },
     {
       path: "*",
       lazy: () => import("@/shared/pages/NotFoundPage").then(asRoute),
