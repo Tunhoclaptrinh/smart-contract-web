@@ -2,6 +2,7 @@
 
 Mỗi bước dựng phần nền ghi một mục; mới nhất ở trên.
 
+- **docs: let the repository admin merge when CI is green** — bảo vệ nhánh không áp dụng cho admin, để trưởng nhóm merge việc nền khi chưa có người duyệt; thành viên vẫn cần 1 người duyệt và CI xanh
 - **docs: name base task branches core/<task>; allow running CI by hand** — Git không cho có cùng lúc nhánh `base` và `base/<việc>`, nên nhánh việc của phần nền đổi thành `core/<việc>`; CI thêm `workflow_dispatch`
 - **docs: keep the base on its own branch** — nhánh `base` chỉ chứa phần nền, `main` chứa nền cộng nghiệp vụ; quy trình sửa nền rồi đồng bộ sang `main`, quy trình làm nghiệp vụ, quy tắc bảo vệ nhánh (`docs/QUY_TRINH_NHANH.md`); script bật bảo vệ nhánh trên GitHub (`scripts/protect-branches.sh`)
 - **ci: verify every push** — GitHub Actions chạy typecheck, lint, format, test có ngưỡng độ phủ, build, lưu báo cáo độ phủ; `.env.example`; README ghi cách chạy cùng backend, state và phân quyền

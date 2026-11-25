@@ -39,7 +39,9 @@ Phần nền thiếu thứ gì khi đang làm nghiệp vụ (một thành phần
 
 - chỉ nhận thay đổi qua Pull Request, cần ít nhất 1 người duyệt, và duyệt lại khi có commit mới;
 - phải qua CI (job `verify`) và cập nhật với nhánh đích trước khi merge;
-- cấm force push, cấm xoá nhánh; áp dụng cả với quản trị repo.
+- cấm force push, cấm xoá nhánh.
+
+Quản trị repo (trưởng nhóm) được merge bằng quyền admin khi CI xanh mà chưa có người duyệt (`gh pr merge --admin --merge`); chỉ dùng cho việc phần nền hoặc đồng bộ `base → main` khi cả nhóm chưa ai duyệt được, không dùng để bỏ qua CI.
 
 Bật bằng `scripts/protect-branches.sh <chủ-repo>/<tên-repo>` (cần GitHub CLI `gh` đã đăng nhập, quyền admin repo), chạy một lần sau khi repo có remote và đã push hai nhánh. Kiểm lại ở **Settings → Branches**.
 
