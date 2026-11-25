@@ -2,6 +2,7 @@
 
 Mỗi bước dựng phần nền ghi một mục; mới nhất ở trên.
 
+- **feat(ui): add hooks for lists, filters, paging and resources** — hook dùng chung: `useListState`, `useFilters`, `usePagination`, `useResource`, `useAccess`…
 - **feat(ui): add the theme, design tokens and app config provider** — `packages/ui`: theme Ant Design, token màu sáng/tối, `UiProvider`, `AppConfigContext`, tiện ích xuất/lưu/kiểm tra
 - **feat(api-client): add the typed HTTP client** — `packages/api-client`: client HTTP có kiểu, lỗi API thống nhất
 - **feat(contracts): add shared types, resources and the permission matrix** — `packages/contracts`: kiểu dữ liệu, định nghĩa tài nguyên CRUD (`resources.json`), ma trận quyền (`permissions.json`), kiểm tra trường, bộ lọc danh sách
