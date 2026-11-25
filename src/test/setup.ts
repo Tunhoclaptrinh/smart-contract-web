@@ -1,7 +1,8 @@
 import "@testing-library/jest-dom/vitest";
-import { afterEach } from "vitest";
+import { afterAll, afterEach, beforeAll } from "vitest";
 import { cleanup } from "@testing-library/react";
 import i18n from "@/i18n";
+import { server } from "./server";
 
 // antd's responsive helpers ask for matchMedia, which jsdom does not provide.
 if (!window.matchMedia)
@@ -20,4 +21,22 @@ if (!window.matchMedia)
 // Numbers and dates format in Vietnamese, as in the product.
 await i18n.changeLanguage("vi");
 
-afterEach(() => cleanup());
+// Every request goes to the MSW server; one nobody answered fails the test.
+beforeAll(() => {
+  server.listen({ onUnhandledRequest: "error" });
+  // The app calls relative URLs (/api/v1/...); Node's fetch needs them absolute.
+  const fetchWithBase = globalThis.fetch;
+  globalThis.fetch = (input, init) =>
+    fetchWithBase(
+      typeof input === "string" && input.startsWith("/")
+        ? new URL(input, window.location.origin).href
+        : input,
+      init,
+    );
+});
+afterEach(() => {
+  cleanup();
+  server.resetHandlers();
+  localStorage.clear();
+});
+afterAll(() => server.close());

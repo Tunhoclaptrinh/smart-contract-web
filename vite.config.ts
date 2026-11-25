@@ -37,6 +37,20 @@ export default defineConfig({
     environment: "jsdom",
     include: ["src/**/*.test.{ts,tsx}"],
     setupFiles: ["src/test/setup.ts"],
+    coverage: {
+      provider: "v8",
+      // The logic the team writes: state, auth, helpers and feature logic. Ported UI kit
+      // components and page markup are covered by the screens' interaction tests instead.
+      include: [
+        "src/shared/state/**",
+        "src/shared/auth/Can.tsx",
+        "src/shared/lib/**",
+        "src/features/*/lib/**",
+        "src/features/*/hooks/**",
+      ],
+      exclude: ["**/*.test.*"],
+      thresholds: { lines: 50, statements: 50, functions: 50, branches: 50 },
+    },
   },
   server: {
     port: 5173,
