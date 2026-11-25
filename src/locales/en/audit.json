@@ -1,0 +1,321 @@
+{
+  "breadcrumb": {
+    "activityLog": "Activity log"
+  },
+  "title": "Activity log",
+  "export": {
+    "fileName": "activity-log.csv"
+  },
+  "filters": {
+    "contract": "Contract",
+    "actor": "Performed by",
+    "all": "All",
+    "from": "From date",
+    "to": "To date",
+    "searchPlaceholder": "Search actor, contract, milestone or event ID",
+    "mine": "Done by",
+    "mineYes": "Me"
+  },
+  "table": {
+    "columns": {
+      "time": "Time",
+      "actor": "Performed by",
+      "category": "Type",
+      "action": "Action",
+      "contract": "Contract · milestone",
+      "origin": "Source",
+      "activity": "Activity",
+      "evidence": "Evidence"
+    },
+    "actorRoleColumn": "Role",
+    "empty": "No activity matches the filters",
+    "you": "You"
+  },
+  "contractRef": {
+    "withMilestone": "{{contract}} · MS{{milestoneNo}}"
+  },
+  "actorNames": {
+    "SYSTEM": "System"
+  },
+  "actorRoles": {
+    "SYSTEM": "Engine (automatic)",
+    "BUYER": "Buyer",
+    "SUPPLIER": "Supplier",
+    "APPROVER": "Approver",
+    "CONTRACT_OWNER": "Contract owner",
+    "FINANCE_APPROVER": "Finance approver",
+    "SECONDARY_APPROVER": "Secondary approver",
+    "LEGAL_REVIEWER": "Contract officer",
+    "ADMIN_AUDITOR": "Controller",
+    "SYSTEM_ADMIN": "System administrator",
+    "AUDITOR": "Integrity checker",
+    "ORG_ADMIN": "Company administrator"
+  },
+  "categories": {
+    "SYSTEM": "System",
+    "APPROVAL": "Approval",
+    "EVIDENCE": "Evidence submitted",
+    "DISPUTE": "Dispute",
+    "SIGN": "Signature"
+  },
+  "actions": {
+    "EVENT": "Recorded {{event}} ({{status}}) · {{id}}",
+    "DECISION": "Engine re-evaluated: {{from}} → {{to}} ({{reason}})",
+    "DECISION_FIRST": "Engine evaluated: {{to}} ({{reason}})",
+    "SIGNATURE": "Signed the contract, step {{step}}/{{total}}",
+    "SIGNATURE_FINAL": "Signed the contract, step {{step}}/{{total}}; CONTRACT_SIGNED recorded, contract effective",
+    "DIGITIZATION_CONFIRMED_one": "Locked the digitised terms, {{count}} milestone created",
+    "DIGITIZATION_CONFIRMED_other": "Locked the digitised terms, {{count}} milestones created",
+    "EXCEPTION_PROPOSED": "Proposed to void event {{id}} (BR-19)",
+    "EXCEPTION_APPROVED": "The organisation's controller approved voiding {{id}}; the engine re-evaluated",
+    "EXCEPTION_REJECTED": "Rejected the proposal to void {{id}}",
+    "PAYMENT": "Payment instruction of {{amount}} million VND approved (idempotency key)",
+    "REQUEST_INFO": "Requested more information: {{text}}",
+    "WORKFLOW_ACTION": "{{action}}",
+    "PAYMENT_DELIVERY_ACKNOWLEDGED": "The payment gateway accepted the instruction ({{channel}}, attempt {{attempts}}, reference {{reference}})",
+    "PAYMENT_DELIVERY_FAILED": "Sending the payment instruction failed ({{channel}}, attempt {{attempts}}, error {{error}})",
+    "PAYMENT_DELIVERY_PENDING": "Payment instruction waiting to be sent ({{channel}})",
+    "EVENT_SHORT": "Recorded {{event}} ({{status}})",
+    "AMENDMENT_PROPOSED": "Proposed amendment PL-{{number}}",
+    "AMENDMENT_ACCEPTED": "Accepted amendment PL-{{number}}",
+    "AMENDMENT_REJECTED": "Rejected amendment PL-{{number}}",
+    "AMENDMENT_WITHDRAWN": "Withdrew amendment PL-{{number}}",
+    "DIGITIZATION_EDITED_one": "Corrected the digitised terms ({{count}} milestone)",
+    "DIGITIZATION_EDITED_other": "Corrected the digitised terms ({{count}} milestones)",
+    "LIQUIDATION_PROPOSED": "Made the liquidation record",
+    "LIQUIDATION_ACCEPTED": "Confirmed the contract liquidation",
+    "LIQUIDATION_REJECTED": "Rejected the liquidation record",
+    "LIQUIDATION_WITHDRAWN": "Withdrew the liquidation record",
+    "ACCEPTANCE_REQUEST_OPEN": "Sent an acceptance request",
+    "ACCEPTANCE_REQUEST_CONFIRMED": "Filed documents for an acceptance request; dated at the request",
+    "ACCEPTANCE_REQUEST_DECLINED": "Returned an acceptance request",
+    "PAYMENT_WITH_INTEREST": "Payment instruction of {{amount}} million VND plus {{interest}} million late-payment interest approved (idempotency key)",
+    "CONTRACT_RULES_SET_one": "Set {{count}} rule of the contract",
+    "CONTRACT_RULES_SET_other": "Set {{count}} rules of the contract"
+  },
+  "workflowActions": {
+    "saveContractDraft": "Saved the contract file",
+    "saveSignatureSlots": "Saved signature positions",
+    "confirmDigitization": "Locked the digitised terms",
+    "sendSigningRequest": "Sent a signing request",
+    "confirmSigningRequest": "Confirmed a signature",
+    "rejectSigningRequest": "Rejected a signature",
+    "cancelSigningRequest": "Cancelled a signing request",
+    "cancelSigning": "Cancelled the signing order",
+    "attachEvidenceFile": "Attached evidence",
+    "removeEvidenceFile": "Removed evidence",
+    "submitEvidence": "Submitted evidence",
+    "castVote": "Recorded an approval decision",
+    "openDispute": "Opened a dispute",
+    "resolveDispute": "Closed a dispute",
+    "transferToAccounting": "Transferred a payment",
+    "proposeException": "Proposed an exception",
+    "decideException": "Decided an exception",
+    "getSigningRequest": "Signing request updated",
+    "EXTRACT_TERMS": "Read the terms from the contract document",
+    "CONFIRM_EXTRACTION": "Confirm the extracted terms",
+    "recordPaymentDelivery": "Record the payment order delivery",
+    "attachSigningTransaction": "Send the signing request to the signing service",
+    "failSigningRequest": "Could not reach the signing service",
+    "applySigningResult": "Receive the result from the signing service",
+    "proposeAmendment": "Propose amendment",
+    "decideAmendment": "Answer amendment",
+    "withdrawAmendment": "Withdraw amendment",
+    "editDigitizedMilestones": "Edit digitised milestones",
+    "proposeLiquidation": "Make liquidation record",
+    "decideLiquidation": "Answer liquidation record",
+    "withdrawLiquidation": "Withdraw liquidation record",
+    "requestAcceptance": "Requested acceptance",
+    "declineAcceptance": "Returned an acceptance request",
+    "setContractRules": "Set the contract's own rules"
+  },
+  "detail": {
+    "view": "View details",
+    "entryId": "Entry ID"
+  },
+  "exceptions": {
+    "title": "Evidence exceptions",
+    "tiles": {
+      "OPEN": "No proposal yet",
+      "PROPOSED": "Waiting for a second controller",
+      "DECIDED": "Decided"
+    },
+    "columns": {
+      "milestone": "Milestone",
+      "reason": "Why held",
+      "events": "Voidable events",
+      "requests": "Proposals",
+      "amount": "Milestone value (million VND)",
+      "buyer": "Buyer",
+      "supplier": "Supplier",
+      "contract": "Contract"
+    },
+    "state": {
+      "PROPOSED": "Waiting",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected"
+    },
+    "none": "None",
+    "open": "Open the trace and act",
+    "searchPlaceholder": "Search contract, milestone, buyer or event ID"
+  },
+  "integrity": {
+    "title": "Integrity check",
+    "rerun": "Check again",
+    "ok": "Intact",
+    "broken": "Tampered",
+    "chain": {
+      "title": "Audit log chain",
+      "sealed": "Sealed entries",
+      "unsealed": "Older entries, before the chain",
+      "head": "Chain head",
+      "firstBroken": "First break",
+      "problems": {
+        "SEQUENCE_GAP": "Entry removed or inserted",
+        "LINK_BROKEN": "Link to the previous entry broken",
+        "CONTENT_CHANGED": "Content edited"
+      },
+      "anchor": {
+        "label": "Saved chain head",
+        "placeholder": "Paste the saved head, as number:hash",
+        "check": "Compare with saved head",
+        "clear": "Clear saved head",
+        "result": "Against the saved head",
+        "hint": "Copy the chain head somewhere else (minutes, email, submission). Paste it here later: if the whole log was rewritten or truncated, it will not match.",
+        "MATCH": "Matches",
+        "MISMATCH": "Does not match: the log was rewritten",
+        "NOT_FOUND": "Entry not found: the log was truncated",
+        "loadCurrent": "Load current anchor"
+      },
+      "lastAnchor": {
+        "label": "Latest anchor",
+        "value": "Entry #{{seq}}, anchored {{at}}",
+        "none": "No anchor confirmed yet"
+      },
+      "continuesFrom": "Continues the archived chain"
+    },
+    "evidence": {
+      "title": "Evidence recorded in the app",
+      "sealed": "Sealed events",
+      "unsealed": "Older events, before sealing",
+      "columns": {
+        "event": "Event",
+        "contract": "Contract",
+        "problem": "Problem"
+      },
+      "problems": {
+        "CHANGED": "Edited after it was recorded",
+        "MISSING": "Deleted"
+      }
+    },
+    "decisions": {
+      "title": "Decision reconciliation",
+      "matched": "Matching",
+      "sealed": "Sealed in the log",
+      "sealProblems": "Edited outside the workflow",
+      "run": "Run",
+      "fingerprint": "Input SHA-256",
+      "columns": {
+        "milestone": "Milestone",
+        "stored": "Stored",
+        "fresh": "Engine now",
+        "frozen": "Locked"
+      },
+      "frozen": "Paid or rejected",
+      "missing": "No longer in the data"
+    },
+    "errors": {
+      "INVALID_ANCHOR": "The saved head must be number:hash (64 hex characters).",
+      "UNKNOWN": "The check failed. Try again later."
+    },
+    "dataPack": {
+      "title": "Organiser's original data",
+      "columns": {
+        "table": "Table",
+        "rows": "Rows",
+        "result": "Result"
+      },
+      "same": "Unchanged",
+      "changed": "Edited",
+      "none": "This data was imported before sealing existed, so it cannot be compared."
+    }
+  },
+  "actionCodes": {
+    "DECISION": "Engine decided {{decision}}",
+    "SIGNATURE": "Contract signature",
+    "DIGITIZATION_CONFIRMED": "Digitised terms locked",
+    "EXCEPTION": "Evidence exception",
+    "PAYMENT": "Payment transfer",
+    "REQUEST_INFO": "Information request",
+    "EXTRACT_TERMS": "Extract terms",
+    "CONFIRM_EXTRACTION": "Confirm extracted terms",
+    "LOGIN": "Sign in",
+    "LOGOUT": "Sign out",
+    "VIEW": "Inspect record",
+    "DOWNLOAD": "Download document",
+    "REQUEST_FAILED": "Failed request",
+    "ANCHOR_REQUEST": "Request anchor",
+    "ANCHOR_CONFIRMED": "Anchor confirmed",
+    "ANCHOR_FAILED": "Anchor failed",
+    "RULE_VERSION_CREATE": "Draft rule version",
+    "RULE_VERSION_SAVE": "Save rule version",
+    "RULE_VERSION_SUBMIT": "Validate and submit rules",
+    "RULE_VERSION_PUBLISH": "Publish rules",
+    "EXPORT_REQUEST": "List export requested",
+    "SIGNATURE_EXPORT": "Signature proofs exported",
+    "ANCHOR_EXPORT": "Anchor bundle exported",
+    "SYSTEM_WRITE": "System data written",
+    "PAYMENT_DELIVERY": "Payment instruction sent",
+    "MARK_NOTIFICATIONS_READ": "Mark notifications as read",
+    "BULK_DELETE": "Delete several records",
+    "CREATE": "Create a record",
+    "DELETE": "Delete a record",
+    "EVALUATE": "Run the Data Pack evaluation",
+    "IMPORT": "Import data",
+    "IMPORT_DATA_PACK": "Load the Data Pack",
+    "LOGIN_DEMO": "Sign in with a demo account",
+    "REFRESH_PDF_LAYOUT": "Refresh the PDF layout",
+    "RESET_DEMO_DATA": "Reset demo data",
+    "RESET_PASSWORD": "Reset a password",
+    "UPDATE": "Edit a record",
+    "UPLOAD": "Upload a document",
+    "VOID": "Void a record",
+    "AMENDMENT": "Contract amendment",
+    "DIGITIZATION_EDITED": "Digitised terms corrected",
+    "LIQUIDATION": "Contract liquidation",
+    "CONTRACT_RULES_SET": "Contract's own rules"
+  },
+  "auditDetail": {
+    "transactionId": "Transaction ID",
+    "requestId": "Request ID",
+    "seq": "Sealed sequence",
+    "hash": "Entry hash",
+    "outcome": "Outcome",
+    "errorCode": "Error code",
+    "record": "Record",
+    "field": "Changed field",
+    "before": "Before",
+    "after": "After",
+    "noChanges": "No data changed, or this older entry predates detailed change capture."
+  },
+  "lite": {
+    "checkedAt": "Checked at {{time}}",
+    "exceptionsNote": "One person proposes, a second person approves."
+  },
+  "paymentChannel": {
+    "SIMULATED": "simulated gateway",
+    "WEBHOOK": "payment gateway"
+  },
+  "links": {
+    "title": "Reconcile",
+    "more": "Open related",
+    "event": "See the event on its milestone",
+    "milestone": "Open milestone",
+    "contract": "Open contract",
+    "download": "Download the evidence file"
+  },
+  "scope": {
+    "all": "Everyone",
+    "mine": "Mine ({{count}})"
+  }
+}

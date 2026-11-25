@@ -1,0 +1,321 @@
+{
+  "breadcrumb": {
+    "activityLog": "Nhật ký hoạt động"
+  },
+  "title": "Nhật ký hoạt động",
+  "export": {
+    "fileName": "nhat-ky-hoat-dong.csv"
+  },
+  "filters": {
+    "contract": "Hợp đồng",
+    "actor": "Người thực hiện",
+    "all": "Tất cả",
+    "from": "Từ ngày",
+    "to": "Đến ngày",
+    "searchPlaceholder": "Tìm theo người thực hiện, mã hợp đồng, mã mốc, mã sự kiện (không cần dấu)",
+    "mine": "Người thực hiện",
+    "mineYes": "Do tôi thực hiện"
+  },
+  "table": {
+    "columns": {
+      "time": "Thời điểm",
+      "actor": "Người thực hiện",
+      "category": "Loại",
+      "action": "Việc đã làm",
+      "contract": "Hợp đồng · mốc",
+      "origin": "Nguồn",
+      "activity": "Hoạt động",
+      "evidence": "Chứng từ"
+    },
+    "actorRoleColumn": "Vai trò",
+    "empty": "Không có hoạt động nào khớp bộ lọc",
+    "you": "Bạn"
+  },
+  "contractRef": {
+    "withMilestone": "{{contract}} · MS{{milestoneNo}}"
+  },
+  "actorNames": {
+    "SYSTEM": "Hệ thống"
+  },
+  "actorRoles": {
+    "SYSTEM": "Engine (tự động)",
+    "BUYER": "Bên mua",
+    "SUPPLIER": "Nhà cung cấp",
+    "APPROVER": "Người phê duyệt",
+    "CONTRACT_OWNER": "Chủ hợp đồng",
+    "FINANCE_APPROVER": "Phê duyệt tài chính",
+    "SECONDARY_APPROVER": "Phê duyệt cấp 2",
+    "LEGAL_REVIEWER": "Cán bộ hợp đồng",
+    "ADMIN_AUDITOR": "Kiểm soát viên",
+    "SYSTEM_ADMIN": "Quản trị hệ thống",
+    "AUDITOR": "Kiểm tra toàn vẹn",
+    "ORG_ADMIN": "Quản trị công ty"
+  },
+  "categories": {
+    "SYSTEM": "Hệ thống",
+    "APPROVAL": "Phê duyệt",
+    "EVIDENCE": "Nộp chứng từ",
+    "DISPUTE": "Tranh chấp",
+    "SIGN": "Ký"
+  },
+  "actions": {
+    "EVENT": "Ghi nhận {{event}} ({{status}}) · {{id}}",
+    "DECISION": "Engine đánh giá lại: {{from}} → {{to}} ({{reason}})",
+    "DECISION_FIRST": "Engine đánh giá: {{to}} ({{reason}})",
+    "SIGNATURE": "Ký hợp đồng, bước {{step}}/{{total}}",
+    "SIGNATURE_FINAL": "Ký hợp đồng, bước {{step}}/{{total}}; ghi CONTRACT_SIGNED, hợp đồng có hiệu lực",
+    "DIGITIZATION_CONFIRMED_one": "Khoá điều khoản số hoá, tạo {{count}} mốc",
+    "DIGITIZATION_CONFIRMED_other": "Khoá điều khoản số hoá, tạo {{count}} mốc",
+    "EXCEPTION_PROPOSED": "Đề xuất vô hiệu event {{id}} (BR-19)",
+    "EXCEPTION_APPROVED": "Kiểm soát viên của doanh nghiệp duyệt vô hiệu {{id}}; engine đánh giá lại",
+    "EXCEPTION_REJECTED": "Từ chối đề xuất vô hiệu {{id}}",
+    "PAYMENT": "Duyệt lệnh chi {{amount}} triệu VND (khoá chống trùng)",
+    "REQUEST_INFO": "Yêu cầu bổ sung: {{text}}",
+    "WORKFLOW_ACTION": "{{action}}",
+    "PAYMENT_DELIVERY_ACKNOWLEDGED": "Cổng thanh toán đã nhận lệnh chi ({{channel}}, lần gửi {{attempts}}, mã tham chiếu {{reference}})",
+    "PAYMENT_DELIVERY_FAILED": "Gửi lệnh chi không thành công ({{channel}}, lần gửi {{attempts}}, lỗi {{error}})",
+    "PAYMENT_DELIVERY_PENDING": "Lệnh chi chờ gửi ({{channel}})",
+    "EVENT_SHORT": "Ghi nhận {{event}} ({{status}})",
+    "AMENDMENT_PROPOSED": "Lập phụ lục PL-{{number}}",
+    "AMENDMENT_ACCEPTED": "Chấp nhận phụ lục PL-{{number}}",
+    "AMENDMENT_REJECTED": "Từ chối phụ lục PL-{{number}}",
+    "AMENDMENT_WITHDRAWN": "Rút lại phụ lục PL-{{number}}",
+    "DIGITIZATION_EDITED_one": "Chỉnh tay bản số hoá ({{count}} mốc)",
+    "DIGITIZATION_EDITED_other": "Chỉnh tay bản số hoá ({{count}} mốc)",
+    "LIQUIDATION_PROPOSED": "Lập biên bản thanh lý",
+    "LIQUIDATION_ACCEPTED": "Xác nhận thanh lý hợp đồng",
+    "LIQUIDATION_REJECTED": "Từ chối biên bản thanh lý",
+    "LIQUIDATION_WITHDRAWN": "Rút lại biên bản thanh lý",
+    "ACCEPTANCE_REQUEST_OPEN": "Gửi đề nghị nghiệm thu",
+    "ACCEPTANCE_REQUEST_CONFIRMED": "Nộp chứng từ theo đề nghị nghiệm thu; tính theo thời điểm đề nghị",
+    "ACCEPTANCE_REQUEST_DECLINED": "Trả lại đề nghị nghiệm thu",
+    "PAYMENT_WITH_INTEREST": "Duyệt lệnh chi {{amount}} triệu VND cộng lãi chậm trả {{interest}} triệu (khoá chống trùng)",
+    "CONTRACT_RULES_SET_one": "Đặt {{count}} luật riêng của hợp đồng",
+    "CONTRACT_RULES_SET_other": "Đặt {{count}} luật riêng của hợp đồng"
+  },
+  "workflowActions": {
+    "saveContractDraft": "Lưu hồ sơ hợp đồng",
+    "saveSignatureSlots": "Lưu vị trí chữ ký",
+    "confirmDigitization": "Khoá điều khoản số hoá",
+    "sendSigningRequest": "Gửi yêu cầu ký",
+    "confirmSigningRequest": "Xác nhận ký",
+    "rejectSigningRequest": "Từ chối ký",
+    "cancelSigningRequest": "Hủy yêu cầu ký",
+    "cancelSigning": "Hủy trình tự ký",
+    "attachEvidenceFile": "Đính kèm chứng từ",
+    "removeEvidenceFile": "Gỡ chứng từ",
+    "submitEvidence": "Nộp chứng từ",
+    "castVote": "Ghi ý kiến phê duyệt",
+    "openDispute": "Mở tranh chấp",
+    "resolveDispute": "Đóng tranh chấp",
+    "transferToAccounting": "Chuyển chi",
+    "proposeException": "Đề xuất ngoại lệ",
+    "decideException": "Quyết định ngoại lệ",
+    "getSigningRequest": "Cập nhật yêu cầu ký",
+    "EXTRACT_TERMS": "Đọc điều khoản từ văn bản hợp đồng",
+    "CONFIRM_EXTRACTION": "Xác nhận điều khoản đã đọc",
+    "recordPaymentDelivery": "Ghi nhận kết quả chuyển lệnh chi",
+    "attachSigningTransaction": "Gửi yêu cầu ký tới dịch vụ ký",
+    "failSigningRequest": "Không gửi được yêu cầu tới dịch vụ ký",
+    "applySigningResult": "Nhận kết quả ký từ dịch vụ ký",
+    "proposeAmendment": "Lập phụ lục",
+    "decideAmendment": "Trả lời phụ lục",
+    "withdrawAmendment": "Rút lại phụ lục",
+    "editDigitizedMilestones": "Chỉnh sửa mốc số hoá",
+    "proposeLiquidation": "Lập biên bản thanh lý",
+    "decideLiquidation": "Trả lời biên bản thanh lý",
+    "withdrawLiquidation": "Rút lại biên bản thanh lý",
+    "requestAcceptance": "Đề nghị nghiệm thu",
+    "declineAcceptance": "Trả lại đề nghị nghiệm thu",
+    "setContractRules": "Đặt luật riêng của hợp đồng"
+  },
+  "detail": {
+    "view": "Xem chi tiết",
+    "entryId": "Mã bản ghi"
+  },
+  "exceptions": {
+    "title": "Ngoại lệ chứng từ",
+    "tiles": {
+      "OPEN": "Chưa có đề xuất",
+      "PROPOSED": "Chờ người thứ hai",
+      "DECIDED": "Đã quyết định"
+    },
+    "columns": {
+      "milestone": "Mốc",
+      "reason": "Lý do giữ",
+      "events": "Event có thể vô hiệu",
+      "requests": "Đề xuất",
+      "amount": "Giá trị mốc (triệu VND)",
+      "buyer": "Bên mua",
+      "supplier": "Nhà cung cấp",
+      "contract": "Hợp đồng"
+    },
+    "state": {
+      "PROPOSED": "Chờ duyệt",
+      "APPROVED": "Đã duyệt",
+      "REJECTED": "Từ chối"
+    },
+    "none": "Chưa có",
+    "open": "Mở truy vết và xử lý",
+    "searchPlaceholder": "Tìm theo mã hợp đồng, mã mốc, bên mua, mã sự kiện (không cần dấu)"
+  },
+  "integrity": {
+    "title": "Kiểm tra toàn vẹn",
+    "rerun": "Kiểm tra lại",
+    "ok": "Toàn vẹn",
+    "broken": "Có sai lệch",
+    "chain": {
+      "title": "Chuỗi nhật ký kiểm toán",
+      "sealed": "Bản ghi đã niêm phong",
+      "unsealed": "Bản ghi cũ, trước khi có chuỗi",
+      "head": "Mã đầu chuỗi",
+      "firstBroken": "Chỗ hỏng đầu tiên",
+      "problems": {
+        "SEQUENCE_GAP": "Mất hoặc chèn bản ghi",
+        "LINK_BROKEN": "Liên kết với bản ghi trước bị đứt",
+        "CONTENT_CHANGED": "Nội dung bị sửa"
+      },
+      "anchor": {
+        "label": "Mã đầu chuỗi đã lưu",
+        "placeholder": "Dán mã đã lưu, dạng số:mã băm",
+        "check": "So với mã đã lưu",
+        "clear": "Bỏ mã đã lưu",
+        "result": "So với mã đã lưu",
+        "hint": "Chép mã đầu chuỗi ra nơi khác (biên bản, email, hồ sơ nộp). Lần sau dán vào đây: nếu cả nhật ký bị viết lại hoặc bị cắt bớt, kết quả sẽ không khớp.",
+        "MATCH": "Khớp",
+        "MISMATCH": "Không khớp: nhật ký đã bị viết lại",
+        "NOT_FOUND": "Không thấy bản ghi đó: nhật ký đã bị cắt bớt",
+        "loadCurrent": "Nạp mốc hiện tại"
+      },
+      "lastAnchor": {
+        "label": "Mốc neo gần nhất",
+        "value": "Mục #{{seq}}, neo lúc {{at}}",
+        "none": "Chưa có mốc neo nào được xác nhận"
+      },
+      "continuesFrom": "Nối tiếp chuỗi đã lưu trữ"
+    },
+    "evidence": {
+      "title": "Chứng từ ghi trong app",
+      "sealed": "Sự kiện đã niêm phong",
+      "unsealed": "Sự kiện cũ, trước khi có niêm phong",
+      "columns": {
+        "event": "Sự kiện",
+        "contract": "Hợp đồng",
+        "problem": "Vấn đề"
+      },
+      "problems": {
+        "CHANGED": "Nội dung đã bị sửa sau khi ghi",
+        "MISSING": "Đã bị xoá"
+      }
+    },
+    "decisions": {
+      "title": "Đối soát quyết định",
+      "matched": "Khớp",
+      "sealed": "Đã niêm phong trong nhật ký",
+      "sealProblems": "Bị sửa ngoài quy trình",
+      "run": "Lượt chạy",
+      "fingerprint": "SHA-256 dữ liệu đầu vào",
+      "columns": {
+        "milestone": "Mốc",
+        "stored": "Đã lưu",
+        "fresh": "Engine tính lại",
+        "frozen": "Đã khoá"
+      },
+      "frozen": "Đã chi hoặc bị từ chối",
+      "missing": "Không còn trong dữ liệu"
+    },
+    "errors": {
+      "INVALID_ANCHOR": "Mã đã lưu không đúng dạng số:mã băm (64 ký tự hex).",
+      "UNKNOWN": "Không kiểm tra được. Thử lại sau."
+    },
+    "dataPack": {
+      "title": "Dữ liệu gốc của BTC",
+      "columns": {
+        "table": "Bảng",
+        "rows": "Số dòng",
+        "result": "Kết quả"
+      },
+      "same": "Giữ nguyên",
+      "changed": "Đã bị sửa",
+      "none": "Dữ liệu này được nhập trước khi có niêm phong nên không đối chiếu được."
+    }
+  },
+  "actionCodes": {
+    "DECISION": "Engine ra quyết định {{decision}}",
+    "SIGNATURE": "Ký hợp đồng",
+    "DIGITIZATION_CONFIRMED": "Khoá điều khoản số hoá",
+    "EXCEPTION": "Ngoại lệ chứng từ",
+    "PAYMENT": "Chuyển chi",
+    "REQUEST_INFO": "Yêu cầu bổ sung",
+    "EXTRACT_TERMS": "Trích xuất điều khoản",
+    "CONFIRM_EXTRACTION": "Xác nhận điều khoản trích xuất",
+    "LOGIN": "Đăng nhập",
+    "LOGOUT": "Đăng xuất",
+    "VIEW": "Xem hồ sơ",
+    "DOWNLOAD": "Tải tài liệu",
+    "REQUEST_FAILED": "Thao tác thất bại",
+    "ANCHOR_REQUEST": "Yêu cầu niêm phong",
+    "ANCHOR_CONFIRMED": "Niêm phong đã đối chiếu",
+    "ANCHOR_FAILED": "Niêm phong thất bại",
+    "RULE_VERSION_CREATE": "Soạn phiên bản quy tắc",
+    "RULE_VERSION_SAVE": "Lưu phiên bản quy tắc",
+    "RULE_VERSION_SUBMIT": "Kiểm tra và gửi duyệt quy tắc",
+    "RULE_VERSION_PUBLISH": "Phát hành quy tắc",
+    "EXPORT_REQUEST": "Yêu cầu xuất danh sách",
+    "SIGNATURE_EXPORT": "Xuất bằng chứng chữ ký",
+    "ANCHOR_EXPORT": "Xuất gói neo hash",
+    "SYSTEM_WRITE": "Ghi dữ liệu hệ thống",
+    "PAYMENT_DELIVERY": "Gửi lệnh chi",
+    "MARK_NOTIFICATIONS_READ": "Đánh dấu thông báo đã đọc",
+    "BULK_DELETE": "Xoá nhiều bản ghi",
+    "CREATE": "Tạo bản ghi",
+    "DELETE": "Xoá bản ghi",
+    "EVALUATE": "Chạy đánh giá Data Pack",
+    "IMPORT": "Nhập dữ liệu",
+    "IMPORT_DATA_PACK": "Nạp Data Pack",
+    "LOGIN_DEMO": "Đăng nhập tài khoản demo",
+    "REFRESH_PDF_LAYOUT": "Làm mới bố cục PDF",
+    "RESET_DEMO_DATA": "Khôi phục dữ liệu demo",
+    "RESET_PASSWORD": "Đặt lại mật khẩu",
+    "UPDATE": "Sửa bản ghi",
+    "UPLOAD": "Tải tài liệu lên",
+    "VOID": "Huỷ bản ghi",
+    "AMENDMENT": "Phụ lục hợp đồng",
+    "DIGITIZATION_EDITED": "Chỉnh tay bản số hoá",
+    "LIQUIDATION": "Thanh lý hợp đồng",
+    "CONTRACT_RULES_SET": "Luật riêng của hợp đồng"
+  },
+  "auditDetail": {
+    "transactionId": "Mã giao dịch",
+    "requestId": "Mã yêu cầu",
+    "seq": "Thứ tự niêm phong",
+    "hash": "Hash bản ghi",
+    "outcome": "Kết quả",
+    "errorCode": "Lý do lỗi",
+    "record": "Bản ghi",
+    "field": "Trường thay đổi",
+    "before": "Trước",
+    "after": "Sau",
+    "noChanges": "Thao tác không đổi dữ liệu hoặc bản ghi cũ chưa có chi tiết trước/sau."
+  },
+  "lite": {
+    "checkedAt": "Kiểm tra lúc {{time}}",
+    "exceptionsNote": "Một người đề xuất, người thứ hai duyệt."
+  },
+  "paymentChannel": {
+    "SIMULATED": "cổng mô phỏng",
+    "WEBHOOK": "cổng thanh toán"
+  },
+  "links": {
+    "title": "Đối soát",
+    "more": "Mở liên quan",
+    "event": "Xem chứng từ trên mốc",
+    "milestone": "Mở mốc",
+    "contract": "Mở hợp đồng",
+    "download": "Tải tệp chứng từ"
+  },
+  "scope": {
+    "all": "Mọi người",
+    "mine": "Do tôi ({{count}})"
+  }
+}

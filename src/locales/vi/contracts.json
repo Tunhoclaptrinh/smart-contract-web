@@ -1,0 +1,268 @@
+{
+  "breadcrumb": {
+    "contracts": "Hợp đồng",
+    "upload": "Tải hợp đồng lên"
+  },
+  "contractList": {
+    "upload": "Tải hợp đồng lên",
+    "disputeFlag": "Có tranh chấp",
+    "tiles": {
+      "YOUR_TURN": "Đến lượt tôi",
+      "PENDING_CONDITIONS": "Đang chờ điều kiện",
+      "NEEDS_REVIEW": "Có mốc bị từ chối",
+      "AWAITING_SIGNATURE": "Nháp và đang ký",
+      "ALL_MILESTONES_ELIGIBLE": "Mọi mốc đủ điều kiện"
+    },
+    "filters": {
+      "searchPlaceholder": "Tìm theo mã, tên hợp đồng, bên mua, nhà cung cấp (không cần dấu)",
+      "typeLabel": "Loại hợp đồng",
+      "policyLabel": "Chính sách phê duyệt",
+      "originLabel": "Nguồn dữ liệu"
+    },
+    "table": {
+      "columns": {
+        "contract": "Hợp đồng",
+        "buyer": "Bên mua",
+        "supplier": "Nhà cung cấp",
+        "value": "Giá trị (triệu VND)",
+        "payable": "Đủ điều kiện chi (triệu VND)",
+        "penalty": "Tiền phạt (triệu VND)",
+        "progress": "Tiến độ các mốc",
+        "status": "Trạng thái",
+        "waiting": "Đang chờ",
+        "actions": "Thao tác"
+      }
+    },
+    "progress": {
+      "eligible": "{{eligible}}/{{total}} mốc đủ điều kiện",
+      "hold_one": "{{count}} giữ",
+      "hold_other": "{{count}} giữ",
+      "penalty_one": "{{count}} phạt",
+      "penalty_other": "{{count}} phạt",
+      "none": "Chưa có mốc"
+    },
+    "waiting": {
+      "you": "Bạn:",
+      "draft": "Hoàn tất hồ sơ và số hoá điều khoản",
+      "signing": "Chờ {{name}} ký ({{signed}}/{{total}})"
+    },
+    "actions": {
+      "signNow": "Ký ngay",
+      "completeDraft": "Tiếp tục hồ sơ",
+      "act": "Xử lý ngay",
+      "open": "Mở hợp đồng",
+      "detail": "Xem nhanh",
+      "verify": "Kiểm tra chữ ký",
+      "activity": "Xem nhật ký",
+      "more": "Thao tác khác"
+    },
+    "tabs": {
+      "ALL": "Tất cả"
+    },
+    "detail": {
+      "title": "Tên hợp đồng"
+    },
+    "modal": {
+      "overview": "Tổng quan",
+      "term": "Thời hạn",
+      "penaltyTerms": "Điều khoản phạt",
+      "penaltyValue": "Ân hạn {{grace}} ngày · {{rate}}%/ngày · trần {{cap}}%",
+      "eligible": "Đủ điều kiện chi",
+      "penalty": "Phạt",
+      "held": "Đang giữ",
+      "rejected": "Bị từ chối",
+      "transferred": "Đã chuyển chi",
+      "milestone": "Mốc",
+      "milestones_one": "{{count}} mốc",
+      "milestones_other": "{{count}} mốc",
+      "participants": "Người tham gia",
+      "events_one": "Hồ sơ & sự kiện ({{count}})",
+      "events_other": "Hồ sơ & sự kiện ({{count}})",
+      "at": "Thời điểm",
+      "event": "Sự kiện",
+      "actor": "Người thực hiện",
+      "due": "Hạn",
+      "paid": "Đủ điều kiện chi",
+      "discard": "Đóng",
+      "cancelSigning": "Hủy luồng ký",
+      "cancelBody": "Hủy luồng ký của {{code}} và đưa hợp đồng về bản nháp. Chỉ làm được khi chưa ai ký; thao tác được ghi nhật ký.",
+      "cancelled": "Đã hủy luồng ký, hợp đồng về bản nháp",
+      "openPage": "Mở trang chi tiết",
+      "paymentTerms": "Thời hạn thanh toán",
+      "paymentValue": "{{days}} ngày sau khi hoàn thành · lãi chậm trả {{rate}}%/năm"
+    }
+  },
+  "contractUpload": {
+    "form": {
+      "type": {
+        "label": "Loại hợp đồng"
+      },
+      "code": {
+        "label": "Mã hợp đồng",
+        "value": "{{code}} (hệ thống cấp)"
+      },
+      "title": {
+        "label": "Tên hợp đồng"
+      },
+      "supplier": {
+        "label": "Nhà cung cấp"
+      },
+      "reviewer": {
+        "label": "Người rà soát bản số hóa",
+        "option": "{{role}}, {{organization}}"
+      },
+      "file": {
+        "label": "Tệp hợp đồng",
+        "meta": "{{size}} · {{pages}} trang",
+        "metaNoPages": "{{size}}",
+        "replace": "Thay tệp",
+        "replaceHint": "Thay tệp sau khi đã cấu hình sẽ buộc kiểm tra lại vị trí ký và bản số hóa, để chữ ký không rơi sai chỗ.",
+        "errors": {
+          "type": "Chỉ chấp nhận tệp PDF hoặc DOCX.",
+          "size": "Tệp vượt quá 20 MB.",
+          "required": "Chọn tệp hợp đồng."
+        },
+        "choose": "Chọn tệp",
+        "sizeKb": "{{size}} KB",
+        "sizeMb": "{{size}} MB"
+      },
+      "appendix": {
+        "label": "Phụ lục đính kèm",
+        "optional": "không bắt buộc",
+        "invalid": "Chỉ nhận PDF/DOCX có nội dung, tối đa 20 MB mỗi tệp và 20 phụ lục.",
+        "add": "Thêm phụ lục"
+      },
+      "actions": {
+        "cancel": "Hủy",
+        "continue": "Tiếp tục: gán vị trí ký"
+      },
+      "value": {
+        "label": "Giá trị hợp đồng (đã gồm VAT)",
+        "unit": "triệu VND",
+        "hint": "Tổng tiền phải trả, đã gồm thuế GTGT. Hoá đơn của mỗi mốc phải ghi đúng số tiền của mốc tính từ giá trị này."
+      },
+      "start": {
+        "label": "Ngày bắt đầu"
+      },
+      "end": {
+        "label": "Ngày kết thúc"
+      },
+      "policy": {
+        "label": "Chính sách phê duyệt chi"
+      },
+      "penalty": {
+        "grace": "Ân hạn (ngày)",
+        "rate": "Phạt / ngày",
+        "cap": "Trần phạt"
+      },
+      "signers": {
+        "label": "Người ký và thứ tự ký",
+        "hint": "Từ 1 đến 4 người. Một người ký sẽ hoàn tất quy trình; từ 2 người phải có đại diện mỗi bên. Ký lần lượt; lượt cuối bắt buộc ký số.",
+        "person": "Chọn người ký",
+        "up": "Lên",
+        "down": "Xuống",
+        "remove": "Bỏ người này",
+        "add": "Thêm người ký",
+        "errors": {
+          "count": "Cần từ 1 đến 4 người ký.",
+          "missing": "Chọn người cho mọi bước ký.",
+          "duplicate": "Một người chỉ ký một lần.",
+          "bothSides": "Khi có từ 2 người ký, cần đại diện của cả bên mua và nhà cung cấp."
+        },
+        "sideAt": "Bên ký {{index}}",
+        "personAt": "Người ký {{index}}",
+        "count": "{{count}}/{{max}} người ký"
+      },
+      "errors": {
+        "TITLE_REQUIRED": "Nhập tên hợp đồng.",
+        "INVALID_TYPE": "Loại hợp đồng không hợp lệ.",
+        "INVALID_POLICY": "Chính sách phê duyệt không hợp lệ.",
+        "INVALID_VALUE": "Giá trị phải là số dương, tối đa 2 chữ số thập phân.",
+        "INVALID_DATES": "Ngày kết thúc phải sau ngày bắt đầu.",
+        "INVALID_PENALTY": "Tham số phạt không hợp lệ (ân hạn 0–60 ngày, phạt 0–5%/ngày, trần 0–8%).",
+        "PENALTY_INCONSISTENT": "Mức phạt mỗi ngày và trần phạt phải cùng bằng 0 (không phạt) hoặc cùng lớn hơn 0.",
+        "INVALID_SUPPLIER": "Chọn nhà cung cấp trong danh sách.",
+        "SIGNER_COUNT": "Cần từ 1 đến 4 người ký.",
+        "INVALID_SIGNER": "Người ký phải thuộc đúng bên và không trùng nhau.",
+        "SIGNERS_BOTH_SIDES": "Khi có từ 2 người ký, cần đại diện của cả bên mua và nhà cung cấp.",
+        "INVALID_REVIEWER": "Người rà soát phải là cán bộ hợp đồng của bên mua.",
+        "FILE_REQUIRED": "Chọn tệp hợp đồng.",
+        "DRAFT_LOCKED": "Hợp đồng đã khoá điều khoản; hủy luồng ký để sửa.",
+        "INVALID_CODE": "Mã hợp đồng đã đổi, tải lại trang.",
+        "BUYER_EDITORS_ONLY": "Chỉ cán bộ hợp đồng hoặc chủ hợp đồng bên mua được tạo hồ sơ.",
+        "UNKNOWN": "Không lưu được hồ sơ.",
+        "PENALTY_OVER_LEGAL_CAP": "Trần phạt tối đa 8% giá trị phần nghĩa vụ bị vi phạm (Điều 301 Luật Thương mại 2005)."
+      },
+      "placeholders": {
+        "type": "Chọn loại hợp đồng",
+        "title": "VD: Cung cấp thiết bị phòng thực hành",
+        "supplier": "Tìm và chọn nhà cung cấp",
+        "reviewer": "Chọn cán bộ hợp đồng bên mua",
+        "value": "0.01–1000000.00",
+        "date": "YYYY-MM-DD",
+        "policy": "Chọn chính sách phê duyệt",
+        "grace": "0–60",
+        "rate": "0.00–5.00",
+        "cap": "0.00–8.00",
+        "paymentTerm": "1–180",
+        "latePaymentRate": "0.00–100.00"
+      },
+      "workflow": {
+        "label": "Quy trình mốc",
+        "standard": "Chuẩn: {{name}}",
+        "stages": "Các mốc: {{stages}}"
+      },
+      "payment": {
+        "term": "Thời hạn thanh toán (ngày)",
+        "termHint": "Số ngày Bên mua phải chi kể từ khi mốc hoàn thành (đủ chứng từ). Phê duyệt nội bộ của Bên mua không kéo dài thời hạn này.",
+        "rate": "Lãi chậm trả",
+        "rateHint": "Lãi Bên mua trả trên số tiền chậm chi, tính theo ngày (Điều 306 Luật Thương mại 2005). Nhập 0 nếu chỉ cần theo dõi thời hạn.",
+        "rateSuffix": "%/năm"
+      }
+    },
+    "preview": {
+      "title": "Xem trước",
+      "selectFile": "Chọn tệp hoặc tạo hợp đồng mẫu để xem tài liệu thật.",
+      "loading": "Đang kết xuất tài liệu…",
+      "unavailable": "Không kết xuất được tài liệu. Hãy kiểm tra tệp hoặc tải xuống để mở bằng trình soạn thảo.",
+      "downloadPdf": "Tải bản PDF xem trước",
+      "noStoredFile": "Hồ sơ chưa có tệp gốc được lưu. Dữ liệu mẫu của ban tổ chức không kèm bản hợp đồng.",
+      "downloadOriginal": "Tải tệp gốc",
+      "updating": "Đang cập nhật…",
+      "working": "Nội dung đang soạn",
+      "selected": "Tài liệu đã chọn"
+    },
+    "sample": {
+      "generate": "Tạo hợp đồng mẫu",
+      "download": "Tải tệp"
+    },
+    "templates": {
+      "choose": "Chọn mẫu hợp đồng",
+      "notice": "Mẫu do quản trị cấu hình. Bạn có thể thêm/bớt người ký và chỉnh điều khoản riêng; thay đổi ở đây không sửa mẫu gốc.",
+      "body": "Nội dung riêng của hợp đồng",
+      "bodyHint": "Tên biến: title, buyer, supplier, valueMillion, startDate, endDate; đặt trong hai cặp ngoặc nhọn. Để trống dùng nội dung mặc định."
+    },
+    "demo": {
+      "title": "Hợp đồng cung cấp thiết bị — dùng thử",
+      "body": "Nội dung mẫu để kiểm thử: {{supplier}} cung cấp thiết bị cho {{buyer}} theo {{title}}. Hai bên đối chiếu biên bản bàn giao trước khi xử lý thanh toán."
+    },
+    "sections": {
+      "details": "Thông tin hợp đồng",
+      "terms": "Điều khoản thanh toán",
+      "signing": "Thiết lập ký",
+      "document": "Tài liệu hợp đồng"
+    }
+  },
+  "lite": {
+    "singleSigner": "Chỉ một người ký: hợp đồng có hiệu lực ngay khi người đó ký.",
+    "stale": "Nội dung đã đổi sau khi tạo tệp. Hãy tạo lại hợp đồng mẫu.",
+    "fileEmpty": "Chưa chọn tệp · PDF hoặc DOCX, tối đa 20 MB",
+    "previewFailed": "Không xem trước được tài liệu.",
+    "progress": "{{eligible}}/{{total}} mốc",
+    "checks": {
+      "title": "Cần bổ sung",
+      "noFile": "Chưa chọn tệp hợp đồng.",
+      "noSigners": "Chưa chọn người ký."
+    }
+  }
+}

@@ -166,12 +166,48 @@ importers:
 
   .:
     dependencies:
+      '@ant-design/icons':
+        specifier: ^6.0.0
+        version: 6.3.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@codecash/api-client':
+        specifier: workspace:*
+        version: link:packages/api-client
+      '@codecash/contracts':
+        specifier: workspace:*
+        version: link:packages/contracts
+      '@codecash/ui':
+        specifier: workspace:*
+        version: link:packages/ui
+      '@fontsource-variable/plus-jakarta-sans':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@tanstack/react-query':
+        specifier: ^5.104.5
+        version: 5.108.4(@types/react@19.3.0)(react@19.3.1)
+      antd:
+        specifier: ^6.6.1
+        version: 6.7.2(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      dayjs:
+        specifier: ^1.11.11
+        version: 1.11.23
+      i18next:
+        specifier: ^26.5.3
+        version: 26.7.2(typescript@5.9.3)
+      i18next-browser-languagedetector:
+        specifier: ^8.2.1
+        version: 8.3.1
       react:
         specifier: ^19.3.1
         version: 19.3.1
       react-dom:
         specifier: ^19.3.1
         version: 19.3.1(react@19.3.1)
+      react-i18next:
+        specifier: ^17.1.0
+        version: 17.1.13(i18next@26.7.2(typescript@5.9.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@5.9.3)
+      react-router-dom:
+        specifier: ^7.18.4
+        version: 7.18.7(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
     devDependencies:
       '@types/node':
         specifier: ^26.6.5
@@ -429,6 +465,9 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@fontsource-variable/plus-jakarta-sans@5.3.0':
+    resolution: {integrity: sha512-/l/4r0yyWK9JzAlmA0LiYgGgmJe/Gswt4jTJEzr5QhJfwMbvJZDmYWyW0M4X7yCK69BajMVlV/Lx8g7WDc1+sw==}
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -1222,6 +1261,9 @@ packages:
   html-parse-stringify@4.0.1:
     resolution: {integrity: sha512-0zHsZJrK7S3K2aucXWL6ycoYJ/iNtIcFHC/nYQgFklPtrv5LpJctIiSCroWZWeuoXvuyFdzp6KzjJQ+OT5MfFw==}
 
+  i18next-browser-languagedetector@8.3.1:
+    resolution: {integrity: sha512-W7dfKWlmaxuy5zsKsu8vKm7SQ0R6T1Tw7XRMKCh3bt98q9m5Q73GKF1PiqtvcwzC+AZvfUCugbfcIYQkDfHeAg==}
+
   i18next@26.7.2:
     resolution: {integrity: sha512-RsOY3BeaCDdkk52NeJSFAXELQ2rQXBO/tOub6L8ue2ICPfR/FRDWDOfEDg4xMPd1SqO5goVYQ6i72qWEUB/PPw==}
     peerDependencies:
@@ -1889,6 +1931,8 @@ snapshots:
     dependencies:
       '@eslint/core': 0.17.0
       levn: 0.4.1
+
+  '@fontsource-variable/plus-jakarta-sans@5.3.0': {}
 
   '@humanfs/core@0.19.2':
     dependencies:
@@ -2749,6 +2793,10 @@ snapshots:
       hermes-estree: 0.25.1
 
   html-parse-stringify@4.0.1: {}
+
+  i18next-browser-languagedetector@8.3.1:
+    dependencies:
+      '@babel/runtime': 7.29.15
 
   i18next@26.7.2(typescript@5.9.3):
     optionalDependencies:

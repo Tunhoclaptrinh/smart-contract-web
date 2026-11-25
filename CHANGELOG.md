@@ -2,6 +2,7 @@
 
 Mỗi bước dựng phần nền ghi một mục; mới nhất ở trên.
 
+- **feat: add global styles and i18n in Vietnamese and English** — style toàn cục; i18next tự đăng ký mọi tệp `locales/<ngôn ngữ>/<nhóm>.json`
 - **feat(ui): add DataTable with filters, column settings, import and export** — bảng dữ liệu: sắp xếp, phân trang, bộ lọc nâng cao, chọn cột, thẻ trên điện thoại, nhập và xuất
 - **feat(ui): add base components** — nút, thẻ, thống kê, khung trang, ô tìm kiếm, modal và drawer biểu mẫu, xác nhận, chi tiết, trạng thái (bộ UniFlow)
 - **feat(ui): add hooks for lists, filters, paging and resources** — hook dùng chung: `useListState`, `useFilters`, `usePagination`, `useResource`, `useAccess`…

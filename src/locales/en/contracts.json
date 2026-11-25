@@ -1,0 +1,268 @@
+{
+  "breadcrumb": {
+    "contracts": "Contracts",
+    "upload": "Upload contract"
+  },
+  "contractList": {
+    "upload": "Upload a contract",
+    "disputeFlag": "Dispute",
+    "tiles": {
+      "YOUR_TURN": "My turn",
+      "PENDING_CONDITIONS": "Pending conditions",
+      "NEEDS_REVIEW": "A milestone was rejected",
+      "AWAITING_SIGNATURE": "Drafts and signing",
+      "ALL_MILESTONES_ELIGIBLE": "All milestones eligible"
+    },
+    "filters": {
+      "searchPlaceholder": "Search code, title, buyer or supplier",
+      "typeLabel": "Contract type",
+      "policyLabel": "Approval policy",
+      "originLabel": "Data source"
+    },
+    "table": {
+      "columns": {
+        "contract": "Contract",
+        "buyer": "Buyer",
+        "supplier": "Supplier",
+        "value": "Value (million VND)",
+        "payable": "Eligible (million VND)",
+        "penalty": "Penalty (million VND)",
+        "progress": "Milestones",
+        "status": "Status",
+        "waiting": "Waiting for",
+        "actions": "Actions"
+      }
+    },
+    "progress": {
+      "eligible": "{{eligible}}/{{total}} milestones eligible",
+      "hold_one": "{{count}} held",
+      "hold_other": "{{count}} held",
+      "penalty_one": "{{count}} penalty",
+      "penalty_other": "{{count}} penalties",
+      "none": "No milestones yet"
+    },
+    "waiting": {
+      "you": "You:",
+      "draft": "Complete the file and digitise the terms",
+      "signing": "Waiting for {{name}} to sign ({{signed}}/{{total}})"
+    },
+    "actions": {
+      "signNow": "Sign now",
+      "completeDraft": "Continue the file",
+      "act": "Act now",
+      "open": "Open contract",
+      "detail": "Quick view",
+      "verify": "Verify signatures",
+      "activity": "View activity",
+      "more": "More actions"
+    },
+    "tabs": {
+      "ALL": "All"
+    },
+    "detail": {
+      "title": "Contract title"
+    },
+    "modal": {
+      "overview": "Overview",
+      "term": "Term",
+      "penaltyTerms": "Penalty terms",
+      "penaltyValue": "Grace {{grace}} days · {{rate}}%/day · cap {{cap}}%",
+      "eligible": "Eligible",
+      "penalty": "Penalty",
+      "held": "Held",
+      "rejected": "Rejected",
+      "transferred": "Transferred",
+      "milestone": "Milestone",
+      "milestones_one": "{{count}} milestone",
+      "milestones_other": "{{count}} milestones",
+      "participants": "Participants",
+      "events_one": "Records & events ({{count}})",
+      "events_other": "Records & events ({{count}})",
+      "at": "Time",
+      "event": "Event",
+      "actor": "By",
+      "due": "Due",
+      "paid": "Eligible",
+      "discard": "Close",
+      "cancelSigning": "Cancel signing",
+      "cancelBody": "Cancel the signing of {{code}} and return it to draft. Only possible while nobody has signed; the action is logged.",
+      "cancelled": "Signing cancelled; the contract is a draft again",
+      "openPage": "Open the detail page",
+      "paymentTerms": "Payment term",
+      "paymentValue": "{{days}} days after completion · late-payment interest {{rate}}% a year"
+    }
+  },
+  "contractUpload": {
+    "form": {
+      "type": {
+        "label": "Contract type"
+      },
+      "code": {
+        "label": "Contract code",
+        "value": "{{code}} (assigned by the system)"
+      },
+      "title": {
+        "label": "Contract title"
+      },
+      "supplier": {
+        "label": "Supplier"
+      },
+      "reviewer": {
+        "label": "Digitization reviewer",
+        "option": "{{role}}, {{organization}}"
+      },
+      "file": {
+        "label": "Contract file",
+        "meta": "{{size}} · {{pages}} pages",
+        "metaNoPages": "{{size}}",
+        "replace": "Replace file",
+        "replaceHint": "Replacing the file after configuration forces a new check of the signature positions and the digitized copy, so that no signature lands in the wrong place.",
+        "errors": {
+          "type": "Only PDF or DOCX files are accepted.",
+          "size": "The file is larger than 20 MB.",
+          "required": "Choose the contract file."
+        },
+        "choose": "Choose a file",
+        "sizeKb": "{{size}} KB",
+        "sizeMb": "{{size}} MB"
+      },
+      "appendix": {
+        "label": "Attached appendices",
+        "optional": "optional",
+        "invalid": "Use non-empty PDF/DOCX files, up to 20 MB per file and 20 appendices.",
+        "add": "Add appendix"
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "continue": "Continue: assign signature positions"
+      },
+      "value": {
+        "label": "Contract value (VAT included)",
+        "unit": "million VND",
+        "hint": "The total payable, value added tax included. Each milestone invoice must state exactly the milestone amount cut from this value."
+      },
+      "start": {
+        "label": "Start date"
+      },
+      "end": {
+        "label": "End date"
+      },
+      "policy": {
+        "label": "Payment approval policy"
+      },
+      "penalty": {
+        "grace": "Grace (days)",
+        "rate": "Penalty / day",
+        "cap": "Penalty cap"
+      },
+      "signers": {
+        "label": "Signers and signing order",
+        "hint": "One to four signers. A single signature completes the workflow; two or more signers must represent both parties. Sign in order; the final step requires digital signing.",
+        "person": "Pick the signer",
+        "up": "Up",
+        "down": "Down",
+        "remove": "Remove",
+        "add": "Add a signer",
+        "errors": {
+          "count": "One to four signers are required.",
+          "missing": "Pick a person for every step.",
+          "duplicate": "A person signs only once.",
+          "bothSides": "With two or more signers, both buyer and supplier must be represented."
+        },
+        "sideAt": "Party for signer {{index}}",
+        "personAt": "Signer {{index}}",
+        "count": "{{count}}/{{max}} signers"
+      },
+      "errors": {
+        "TITLE_REQUIRED": "Enter the contract title.",
+        "INVALID_TYPE": "Invalid contract type.",
+        "INVALID_POLICY": "Invalid approval policy.",
+        "INVALID_VALUE": "The value must be positive with at most two decimals.",
+        "INVALID_DATES": "The end date must come after the start date.",
+        "INVALID_PENALTY": "Invalid penalty terms (grace 0–60 days, 0–5%/day, cap 0–8%).",
+        "PENALTY_INCONSISTENT": "The daily rate and the cap must both be 0 (no penalty) or both above 0.",
+        "INVALID_SUPPLIER": "Pick a supplier from the list.",
+        "SIGNER_COUNT": "One to four signers are required.",
+        "INVALID_SIGNER": "Signers must belong to their side and not repeat.",
+        "SIGNERS_BOTH_SIDES": "With two or more signers, both buyer and supplier must be represented.",
+        "INVALID_REVIEWER": "The reviewer must be a buyer contract officer.",
+        "FILE_REQUIRED": "Choose the contract file.",
+        "DRAFT_LOCKED": "The terms are locked; cancel the signing to edit.",
+        "INVALID_CODE": "The contract code changed; reload the page.",
+        "BUYER_EDITORS_ONLY": "Only buyer contract officers and owners can create a file.",
+        "UNKNOWN": "The file could not be saved.",
+        "PENALTY_OVER_LEGAL_CAP": "The penalty cap may not exceed 8% of the value of the breached obligation (Law on Commerce 2005, Article 301)."
+      },
+      "placeholders": {
+        "type": "Choose contract type",
+        "title": "e.g. Supply equipment for the practice lab",
+        "supplier": "Find and choose a supplier",
+        "reviewer": "Choose the buyer's contract officer",
+        "value": "0.01–1000000.00",
+        "date": "YYYY-MM-DD",
+        "policy": "Choose approval policy",
+        "grace": "0–60",
+        "rate": "0.00–5.00",
+        "cap": "0.00–8.00",
+        "paymentTerm": "1–180",
+        "latePaymentRate": "0.00–100.00"
+      },
+      "workflow": {
+        "label": "Milestone workflow",
+        "standard": "Standard: {{name}}",
+        "stages": "Milestones: {{stages}}"
+      },
+      "payment": {
+        "term": "Payment term (days)",
+        "termHint": "Days the buyer has to pay once the milestone is complete (all documents in). The buyer's internal approvals do not extend it.",
+        "rate": "Late-payment interest",
+        "rateHint": "Interest the buyer pays on an overdue amount, per day (Article 306 of the Commercial Law 2005). Enter 0 to track the term only.",
+        "rateSuffix": "% a year"
+      }
+    },
+    "preview": {
+      "title": "Preview",
+      "selectFile": "Select a file or generate a sample to preview the actual document.",
+      "loading": "Rendering document…",
+      "unavailable": "The document could not be rendered. Check the file or download it to open in your editor.",
+      "downloadPdf": "Download preview PDF",
+      "noStoredFile": "No original file has been stored. The organiser dataset does not include contract files.",
+      "downloadOriginal": "Download original file",
+      "updating": "Updating…",
+      "working": "Working draft",
+      "selected": "Selected document"
+    },
+    "sample": {
+      "generate": "Generate sample contract",
+      "download": "Download file"
+    },
+    "templates": {
+      "choose": "Choose a contract template",
+      "notice": "Administrators manage templates. Adjust signers and terms for this draft without changing the source template.",
+      "body": "Contract content override",
+      "bodyHint": "Variables: title, buyer, supplier, valueMillion, startDate, endDate; enclose in double braces. Leave blank for default content."
+    },
+    "demo": {
+      "title": "Equipment supply agreement — demo",
+      "body": "Sample terms for testing: {{supplier}} supplies equipment to {{buyer}} under {{title}}. The parties review delivery evidence before processing payment."
+    },
+    "sections": {
+      "details": "Contract details",
+      "terms": "Payment terms",
+      "signing": "Signing setup",
+      "document": "Contract document"
+    }
+  },
+  "lite": {
+    "singleSigner": "Single signer: the contract takes effect as soon as they sign.",
+    "stale": "The content changed after the file was generated. Generate the sample again.",
+    "fileEmpty": "No file selected · PDF or DOCX, up to 20 MB",
+    "previewFailed": "The document cannot be previewed.",
+    "progress": "{{eligible}}/{{total}} milestones",
+    "checks": {
+      "title": "To complete",
+      "noFile": "No contract file selected.",
+      "noSigners": "No signers selected."
+    }
+  }
+}

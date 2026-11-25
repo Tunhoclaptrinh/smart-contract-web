@@ -1,0 +1,319 @@
+{
+  "brand": {
+    "name": "CodeCash",
+    "product": "Smart Contract Workflow"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "tasks": "My tasks",
+    "dashboard": "Contract overview",
+    "contracts": "Contracts",
+    "myContracts": "My contracts",
+    "upload": "Upload contract",
+    "activity": "Activity log",
+    "verify": "Verify signature",
+    "groups": {
+      "workflow": "Contract workflow",
+      "data": "Data & administration",
+      "monitoring": "Monitoring & audit",
+      "help": "Help"
+    },
+    "home": "Home",
+    "exceptions": "Evidence exceptions",
+    "integrity": "Integrity check",
+    "guide": "User guide"
+  },
+  "topbar": {
+    "notifications": "Notifications",
+    "account": "Account menu",
+    "language": "Language",
+    "signOut": "Sign out",
+    "openMenu": "Open navigation",
+    "collapse": "Collapse sidebar",
+    "expand": "Expand sidebar",
+    "noPendingTasks": "No pending tasks",
+    "themeLight": "Switch to light theme",
+    "themeDark": "Switch to dark theme",
+    "guide": "Quick guide",
+    "openInbox": "Open my tasks",
+    "resetDemo": {
+      "action": "Reset demo data",
+      "title": "Reset the demo data to its initial state?",
+      "body": "Everything done in the current demo is archived together with its log, then the initial data is loaded again. Everyone has to sign in again.",
+      "ok": "Reset",
+      "done": "The initial data is restored. Please sign in again.",
+      "failed": "The demo data could not be reset."
+    }
+  },
+  "languages": {
+    "vi": "Tiếng Việt",
+    "en": "English"
+  },
+  "roles": {
+    "CONTRACT_OWNER": {
+      "name": "Contract owner",
+      "short": "CO"
+    },
+    "LEGAL_REVIEWER": {
+      "name": "Buyer contract officer",
+      "short": "CO"
+    },
+    "SUPPLIER": {
+      "name": "Supplier",
+      "short": "SUP"
+    },
+    "FINANCE_APPROVER": {
+      "name": "Finance approver",
+      "short": "FA"
+    },
+    "ADMIN_AUDITOR": {
+      "name": "Controller",
+      "short": "CT"
+    },
+    "SECONDARY_APPROVER": {
+      "name": "Secondary approver",
+      "short": "SA"
+    },
+    "SYSTEM_ADMIN": {
+      "name": "System administrator",
+      "short": "SA"
+    },
+    "AUDITOR": {
+      "name": "Integrity checker",
+      "short": "IC"
+    },
+    "ORG_ADMIN": {
+      "name": "Company administrator",
+      "short": "CA"
+    }
+  },
+  "login": {
+    "title": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "errors": {
+      "INVALID_CREDENTIALS": "Email or password is incorrect."
+    },
+    "subtitle": "Digitize contracts, sign them digitally and track their payment conditions from data.",
+    "highlights": {
+      "sign": "Sequential digital signing that protects data integrity and the contract's legal standing",
+      "evidence": "Evidence submission, checks and multi-step approval",
+      "audit": "Integrity-controlled log with the full history"
+    },
+    "demoAccounts": "Demo accounts",
+    "demoUnavailable": "Could not connect to load demo accounts.",
+    "demoEmpty": "No demo accounts are currently available.",
+    "demoAll": "All organizations",
+    "emailPlaceholder": "name@example.com",
+    "demoSearch": "Search name, email, company, role or contract code…"
+  },
+  "common": {
+    "loading": "Loading…",
+    "loadError": "Could not load this page. Please try again.",
+    "retry": "Try again",
+    "notFound": "Nothing to show here.",
+    "backToTasks": "Back to my tasks"
+  },
+  "errors": {
+    "notFound": {
+      "title": "Page not found",
+      "body": "This address does not exist or you are not allowed to view it.",
+      "back": "Back to home"
+    },
+    "route": {
+      "title": "Unable to display this page",
+      "body": "Something went wrong while loading this screen. Reload the page; if it keeps happening, tell an administrator.",
+      "reload": "Reload page"
+    }
+  },
+  "sider": {
+    "organization": "Organization"
+  },
+  "onboarding": {
+    "title": "Welcome to CodeCash",
+    "subtitle": "Pick a language and a theme to get started.",
+    "language": "Language",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "suggested": "Suggested",
+    "start": "Get started",
+    "footnote": "You can change both at any time from the header.",
+    "tips": {
+      "done": "Got it",
+      "guide": {
+        "title": "Quick guide",
+        "body": "Click here to see these tips again."
+      },
+      "language": {
+        "title": "Language",
+        "body": "Switch between Vietnamese and English."
+      },
+      "theme": {
+        "title": "Light or dark",
+        "body": "Change the theme to whatever is easier on your eyes."
+      },
+      "title": "Quick tips for the header"
+    }
+  },
+  "importPreview": {
+    "title": "Check import data",
+    "confirm_one": "Import {{count}} valid row",
+    "confirm_other": "Import {{count}} valid rows",
+    "cancel": "Cancel",
+    "total_one": "Total: {{count}}",
+    "total_other": "Total: {{count}}",
+    "valid_one": "Valid: {{count}}",
+    "valid_other": "Valid: {{count}}",
+    "invalid_one": "Errors: {{count}}",
+    "invalid_other": "Errors: {{count}}",
+    "errorsOnly": "Show only rows with errors",
+    "partial": "{{error}} rows are invalid. Import to add the {{valid}} valid rows and skip the rest, or fix the file and import again.",
+    "none": "No row is valid. Fix the file using the errors below and import again.",
+    "allValid_one": "The {{count}} row is valid.",
+    "allValid_other": "All {{count}} rows are valid.",
+    "status": "Status",
+    "rowValid": "Valid",
+    "rowInvalid": "Error",
+    "errorsColumn": "Problems found",
+    "errors": {
+      "REQUIRED": "Required field missing",
+      "INVALID_OPTION": "Value not in the allowed list",
+      "INVALID_REFERENCE": "Referenced record not found",
+      "DUPLICATE_RECORD": "Duplicate code or email",
+      "UNKNOWN_FIELD": "Unsupported column",
+      "INVALID_EMAIL": "Invalid email",
+      "INVALID_NUMBER": "Must be a non-negative number",
+      "INVALID_BOOLEAN": "Must be true or false",
+      "INVALID_STRING": "Invalid text value",
+      "INVALID_BODY": "Invalid row"
+    }
+  },
+  "modal": {
+    "fullscreen": "Full screen",
+    "exitFullscreen": "Exit full screen"
+  },
+  "columnSearch": {
+    "placeholder": "Search this column…",
+    "search": "Search",
+    "reset": "Reset",
+    "filter": "Filter this column",
+    "trigger": "Search this column"
+  },
+  "guide": {
+    "title": "User guide",
+    "button": "Guide",
+    "openFull": "Open the guide",
+    "topics": {
+      "start": "Getting started",
+      "roles": "Roles and permissions",
+      "tables": "Working with lists",
+      "tasks": "My tasks",
+      "contracts": "Contracts",
+      "decision": "Milestone decision",
+      "evidence": "Submitting evidence",
+      "approval": "Payment approval",
+      "dispute": "Disputes",
+      "signing": "Uploading and signing",
+      "exceptions": "Evidence exceptions",
+      "integrity": "Integrity check",
+      "activity": "Activity log",
+      "data": "Data Pack results",
+      "admin": "Administration"
+    },
+    "samples": {
+      "title": "Download contracts to try signing",
+      "summary": "Unsigned PDFs · Templates for 1–4 signers.",
+      "details": "Instructions and signer accounts",
+      "notice": "Unsigned demo files. Download a PDF, select Phú Minh (S015), configure the matching signers below, then upload to a new contract.",
+      "pdf": "PDF · {{count}} signers",
+      "all": "Download all PDFs + DOCX",
+      "signers": "For the chosen count use: owner@novaan.vn, supplier@phuminh.vn, finance@novaan.vn, legal@novaan.vn. Search by email in Demo accounts. These are unsigned workflow test files."
+    }
+  },
+  "forms": {
+    "required": "Please enter {{field}}.",
+    "email": "Enter a valid email address.",
+    "invalid": "{{field}} has an invalid format or is outside the allowed range.",
+    "enter": "Enter {{field}}",
+    "choose": "Choose {{field}}"
+  },
+  "demoFill": {
+    "action": "Fill sample",
+    "all": "Fill sample data",
+    "hint": "Fill empty fields only; does not save or submit.",
+    "completeFirst": "Complete required fields before generating a file."
+  },
+  "tableActions": {
+    "more": "More actions"
+  },
+  "technical": {
+    "codes": "Trace codes",
+    "title": "Technical details",
+    "source": "Data source",
+    "document": "Document reference",
+    "channel": "Recorded via",
+    "run": "Evaluation run",
+    "party": "Party code"
+  },
+  "contractPane": {
+    "title": "Contract document",
+    "simulated": "Simulated copy",
+    "simulatedHint": "The organiser provides contract data only; this document is rebuilt from the contract's own terms, milestones and signers.",
+    "download": "Download original",
+    "toSignatures": "Go to signatures",
+    "loading": "Preparing the document…",
+    "unavailable": "The contract document cannot be shown right now. Download the original or try again later.",
+    "signedCaption": "Digitally signed · {{method}} · {{at}}",
+    "imageCaption": "Signed with an image · {{at}}",
+    "current": "Step {{step}} · waiting for {{name}}",
+    "waiting": "Step {{step}} · {{name}}",
+    "seal": "DEMO",
+    "open": "View contract",
+    "ownPreview": "Preview · your signature appears here when you sign"
+  },
+  "routeForbidden": "Your role cannot open that screen, so you were taken to your role's home page.",
+  "person": {
+    "you": "You",
+    "organization": "Organisation",
+    "title": "Job title"
+  },
+  "notifications": {
+    "tabs": {
+      "tasks": "My tasks",
+      "alerts": "Alerts",
+      "updates": "Updates"
+    },
+    "groups": {
+      "late": "Late",
+      "waiting": "Waiting for you"
+    },
+    "empty": {
+      "tasks": "Nothing is waiting for you",
+      "alerts": "No alerts in your scope",
+      "updates": "No updates from others yet"
+    },
+    "markRead": "Mark all as read",
+    "due": "Due {{date}}",
+    "openActivity": "Open the activity log",
+    "openOverview": "Open the contract overview",
+    "newTasks_one": "{{count}} new task for you",
+    "newTasks_other": "{{count}} new tasks for you",
+    "live": {
+      "live": "Live",
+      "liveHint": "Changes arrive as they happen",
+      "connecting": "Connecting",
+      "connectingHint": "Opening the live update channel",
+      "offline": "Reconnecting",
+      "offlineHint": "Live channel lost; still refreshing every 30 seconds"
+    }
+  },
+  "home": {
+    "greeting": "Hello, {{name}}",
+    "role": "Role",
+    "organization": "Organisation",
+    "areas": "Areas open to you",
+    "noAreas": "Your role has no area in this version yet."
+  }
+}
