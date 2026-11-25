@@ -31,3 +31,10 @@ packages/
   api-client/        typed HTTP client
   config/            shared TypeScript config
 ```
+
+## Branches
+
+`base` holds the shared base only; `main` holds the base plus the business features. Base changes go
+`base/<task>` → `base` → `main` (merge commit `sync: base → main`); features go `feat/<area>-<task>`
+→ `main`. Both branches are protected (pull request, one review, CI). Details:
+[docs/QUY_TRINH_NHANH.md](docs/QUY_TRINH_NHANH.md).

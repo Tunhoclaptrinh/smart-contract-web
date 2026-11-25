@@ -2,6 +2,7 @@
 
 Mỗi bước dựng phần nền ghi một mục; mới nhất ở trên.
 
+- **docs: keep the base on its own branch** — nhánh `base` chỉ chứa phần nền, `main` chứa nền cộng nghiệp vụ; quy trình sửa nền rồi đồng bộ sang `main`, quy trình làm nghiệp vụ, quy tắc bảo vệ nhánh (`docs/QUY_TRINH_NHANH.md`); script bật bảo vệ nhánh trên GitHub (`scripts/protect-branches.sh`)
 - **ci: verify every push** — GitHub Actions chạy typecheck, lint, format, test có ngưỡng độ phủ, build, lưu báo cáo độ phủ; `.env.example`; README ghi cách chạy cùng backend, state và phân quyền
 - **test: mock the API with MSW and gate coverage at 50%** — máy chủ giả MSW cho mọi test (yêu cầu không ai trả lời thì test hỏng), test luồng đăng ký qua client HTTP thật (thành công, trùng email, mật khẩu không khớp), test helper; `pnpm coverage` bắt ngưỡng 50% cho state, quyền, helper và logic của từng feature
 - **feat(auth): add withPermission and Can** — HOC `withPermission` (lớp chặn thứ hai sau route guard, dùng cho ma trận quyền), Render Props `<Can>` (ẩn hoặc truyền cờ cho phép vào hàm con, dùng ở trang chủ), `usePermission`, `hasPermissions`; hàm test `renderWithApp` dựng sẵn store, phiên, query, router
