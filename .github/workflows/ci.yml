@@ -2,6 +2,8 @@ name: CI
 on:
   push:
   pull_request:
+  # Run by hand from the Actions tab (or `gh workflow run CI`), for example after a settings change.
+  workflow_dispatch:
 permissions:
   contents: read
 concurrency:

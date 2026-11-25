@@ -3,3 +3,5 @@ packages:
 
 allowBuilds:
   esbuild: true
+  # Only its browser service worker setup; tests use msw/node.
+  msw: false
