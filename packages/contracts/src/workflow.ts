@@ -1,0 +1,1707 @@
+/**
+ * Workflow domain shared by the API and the web app. The web copy is
+ * packages/contracts/src/workflow.ts and must stay identical (tests/foundation/domain-types.test.mjs).
+ * Vocabulary follows the organiser's Data Pack and docs/NGHIEP_VU.md.
+ * Money is a decimal string in millions of VND ("1290.00"), never a float.
+ */
+
+/** Where a record comes from: the organiser's Data Pack, demo seed data, or an action in the app. */
+export type Origin = "DATA_PACK" | "SEED" | "APP";
+
+/**
+ * System roles (spec 17). Three internal roles keep SoD-1: the controller handles exceptions, the
+ * system administrator manages configuration and accounts, the auditor only reads. A company's
+ * own administrator (ORG_ADMIN) manages the business accounts of that company and nothing else.
+ */
+export type Role =
+  | "CONTRACT_OWNER"
+  | "FINANCE_APPROVER"
+  | "SECONDARY_APPROVER"
+  | "LEGAL_REVIEWER"
+  | "ADMIN_AUDITOR"
+  | "SYSTEM_ADMIN"
+  | "AUDITOR"
+  | "SUPPLIER"
+  | "ORG_ADMIN";
+
+export type PartyType = "BUYER" | "SUPPLIER" | "APPROVER";
+export type Side = "BUYER" | "SUPPLIER";
+export type ApprovalRole =
+  "CONTRACT_OWNER" | "FINANCE_APPROVER" | "SECONDARY_APPROVER";
+
+export type ContractType =
+  "GOODS_SUPPLY" | "SERVICES" | "SOFTWARE_IMPLEMENTATION" | "MAINTENANCE";
+export type WorkflowTemplate =
+  | "WF_GOODS_4STAGE"
+  | "WF_SERVICE_4STAGE"
+  | "WF_SOFTWARE_5STAGE"
+  | "WF_MAINTENANCE_3STAGE";
+export type ApprovalPolicy =
+  | "AUTO_IF_ALL_CONDITIONS"
+  | "SINGLE_BUYER_APPROVAL"
+  | "DUAL_APPROVAL"
+  | "FINANCE_PLUS_OWNER";
+
+export type MilestoneType =
+  | "SIGNING"
+  | "DELIVERY"
+  | "ACCEPTANCE"
+  | "WARRANTY"
+  | "KICKOFF"
+  | "INTERIM_DELIVERY"
+  | "FINAL_ACCEPTANCE"
+  | "WARRANTY_CLOSE"
+  | "REQUIREMENTS_APPROVAL"
+  | "UAT_PASS"
+  | "GO_LIVE_ACCEPTANCE"
+  | "ACTIVATION"
+  | "SERVICE_COMPLETION";
+
+/** Events that prove a condition; the matrix of spec 4.2 says which side may create each. */
+export type BusinessEventType =
+  | "CONTRACT_SIGNED"
+  | "KICKOFF_CONFIRMED"
+  | "REQUIREMENTS_APPROVED"
+  | "UAT_PASSED"
+  | "ACCEPTANCE"
+  | "DELIVERY"
+  | "INVOICE"
+  | "GO_LIVE"
+  | "SERVICE_ACTIVATED"
+  | "SERVICE_COMPLETED"
+  | "WARRANTY_COMPLETED";
+export type SupportEventType =
+  "APPROVAL" | "REJECTION" | "DISPUTE_OPENED" | "DISPUTE_RESOLVED";
+export type EventType = BusinessEventType | SupportEventType;
+export type EventStatus =
+  "CONFIRMED" | "APPROVED" | "REJECTED" | "OPEN" | "RESOLVED";
+
+export type Decision = "RELEASE" | "HOLD" | "REJECT" | "PENALTY";
+export type ReasonCode =
+  | "OPEN_DISPUTE"
+  | "REJECTION_PRESENT"
+  | "UNAUTHORIZED_EVENT"
+  | "MISSING_REQUIRED_EVENT"
+  | "APPROVAL_QUORUM_NOT_MET"
+  | "LATE_COMPLETION"
+  | "ALL_CONDITIONS_MET"
+  | "UNRESOLVED_CONDITION";
+
+/** Milestone status of spec 9.2; COMPLETED once the simulated payment is recorded (Silver). */
+export type MilestoneStatus =
+  | "WAITING_EVIDENCE"
+  | "WAITING_APPROVAL"
+  | "ON_HOLD"
+  | "REJECTED"
+  | "ELIGIBLE_FOR_PAYMENT"
+  | "PAID_WITH_PENALTY"
+  | "COMPLETED";
+
+/** Lifecycle until the contract is signed, then the aggregate of spec 9.3. */
+export type ContractStatus =
+  | "DRAFT"
+  | "AWAITING_SIGNATURE"
+  | "PENDING_CONDITIONS"
+  | "NEEDS_REVIEW"
+  | "ALL_MILESTONES_ELIGIBLE"
+  /** Every milestone is paid or rejected; the contract still waits for its liquidation. */
+  | "CLOSED"
+  /** Both parties confirmed the liquidation record; nothing more can happen. */
+  | "LIQUIDATED";
+
+/** Who must act next on a milestone (spec 9.5), derived from the latest evaluation. */
+export type NextStep =
+  | { kind: "SUBMIT"; side: Side; eventTypes: BusinessEventType[] }
+  | { kind: "APPROVE"; roles: ApprovalRole[] }
+  | { kind: "RESOLVE_DISPUTE" }
+  | { kind: "REVIEW_EXCEPTION" }
+  | { kind: "MANUAL_REVIEW" }
+  | { kind: "OUTSIDE_SYSTEM" }
+  | { kind: "TRANSFER" }
+  | { kind: "SIGN_CONTRACT" }
+  | { kind: "NONE" };
+
+/** Someone who can act on a pending item; only accounts of the contract's two parties are listed. */
+export interface PersonRef {
+  userId: string;
+  name: string;
+  title: string | null;
+  organizationId: string;
+  isYou: boolean;
+}
+
+export type PendingKind =
+  | "EVIDENCE"
+  | "APPROVAL"
+  | "DISPUTE"
+  | "REJECTION"
+  | "UNAUTHORIZED"
+  | "DATA_ISSUE"
+  | "PAYMENT";
+
+/** BLOCKING: the item decides the rule that holds the milestone now; WAITING: a later rule needs it. */
+export type PendingState = "DONE" | "WAITING" | "BLOCKING";
+
+export type PendingActionKind =
+  | "SUBMIT"
+  | "APPROVE"
+  | "RESOLVE"
+  | "PROPOSE_EXCEPTION"
+  | "TRANSFER"
+  | "CONTACT";
+
+/** One condition of a milestone and who answers for it. Computed by the API, shown as is. */
+export interface PendingItem {
+  key: string;
+  kind: PendingKind;
+  state: PendingState;
+  /** The rule of the milestone's scope this item feeds, when the scope has one. */
+  rule: { id: string; priority: number } | null;
+  /** The event type of evidence items, the approval role of approval items. */
+  subject: BusinessEventType | ApprovalRole | null;
+  side: Side;
+  organization: { id: string; name: string };
+  /** System roles of the accounts expected to act. */
+  roles: Role[];
+  people: PersonRef[];
+  /** Who did it and when, for DONE items. */
+  done: {
+    by: PersonRef | null;
+    byName: string;
+    at: string;
+    eventId: string | null;
+  } | null;
+  /** Since when the milestone waits for this item; null when the data does not say. */
+  waitingSince: string | null;
+  waitingDays: number | null;
+  /** The milestone's due date for evidence; null where nothing sets a deadline. */
+  dueBy: string | null;
+  /** Last day of the grace period; the late penalty runs after it. */
+  graceUntil: string | null;
+  /** Days past the due date while still open (same count as the evidence screen). */
+  overdueDays: number;
+  action: { kind: PendingActionKind; href: string; mine: boolean } | null;
+}
+
+/** "Who the milestone waits for", compact for lists: one entry per blocking party and role. */
+export interface WaitingOn {
+  kind: PendingKind;
+  side: Side;
+  organizationName: string;
+  roles: Role[];
+  subjects: Array<BusinessEventType | ApprovalRole>;
+}
+
+export interface PartyRef {
+  id: string;
+  name: string;
+  type: PartyType;
+}
+
+export interface MilestoneCounts {
+  total: number;
+  eligible: number;
+  completed: number;
+  hold: number;
+  rejected: number;
+  penalty: number;
+}
+
+export interface ContractRow {
+  id: string;
+  title: string;
+  type: ContractType;
+  origin: Origin;
+  buyer: PartyRef;
+  supplier: PartyRef;
+  valueMillion: string;
+  signingDate: string | null;
+  startDate: string;
+  /** The end date in force: the signed one, or the one of the latest accepted amendment. */
+  endDate: string;
+  /** The end date as signed, when an amendment has moved it; null otherwise. */
+  signedEndDate: string | null;
+  approvalPolicy: ApprovalPolicy;
+  status: ContractStatus;
+  milestones: MilestoneCounts;
+  /** Sum the decisions make eligible (RELEASE and PENALTY), and the penalties deducted. */
+  payableMillion: string;
+  penaltyMillion: string;
+  /** First milestone where someone has to act; null when nothing is pending. */
+  next: {
+    milestoneId: string;
+    sequence: number;
+    type: MilestoneType;
+    step: NextStep;
+    dueDate: string;
+  } | null;
+  /** The signed-in user is the one who has to act next. */
+  yourTurn: boolean;
+  openDispute: boolean;
+  signing: {
+    signed: number;
+    total: number;
+    currentSigner: string | null;
+  } | null;
+}
+
+export interface ContractList {
+  organizationName: string;
+  contracts: ContractRow[];
+}
+
+export interface Requirement {
+  eventType: BusinessEventType;
+  side: Side;
+  state: "VALID" | "MISSING" | "UNAUTHORIZED";
+  eventId: string | null;
+  at: string | null;
+}
+
+export interface MilestoneRow {
+  id: string;
+  contractId: string;
+  sequence: number;
+  type: MilestoneType;
+  name: string;
+  origin: Origin;
+  dueDate: string;
+  graceDays: number;
+  plannedMillion: string;
+  paymentPercent: string;
+  requiredEventTypes: BusinessEventType[];
+  approvalRequired: boolean;
+  quorum: number;
+  approvalRoles: ApprovalRole[];
+  latePenalty: boolean;
+  penaltyRatePct: string;
+  maxPenaltyPct: string;
+  releaseRuleCode: string;
+  status: MilestoneStatus;
+  decision: Decision;
+  reasonCode: ReasonCode;
+  ruleId: string;
+  payableMillion: string;
+  penaltyMillion: string;
+  daysLate: number;
+  completedAt: string | null;
+  validApprovals: number;
+  openDispute: boolean;
+  requirements: Requirement[];
+  next: NextStep;
+  waitingOn: WaitingOn[];
+  paid: boolean;
+}
+
+export interface EventActor {
+  partyId: string;
+  name: string;
+  /** Looked up in the parties table, never taken from the event row (BR-04). */
+  type: PartyType | null;
+  approvalRole: ApprovalRole | null;
+}
+
+export interface EventRow {
+  id: string;
+  contractId: string;
+  milestoneId: string;
+  contractSequence: number;
+  at: string;
+  type: EventType;
+  status: EventStatus;
+  actor: EventActor;
+  source: string;
+  documentId: string;
+  amountMillion: string | null;
+  referenceEventId: string | null;
+  note: string;
+  origin: Origin;
+  /** Person who recorded it in the app, when known. */
+  recordedBy: string | null;
+  fileName: string | null;
+  /** The document behind an event recorded in the app; null for imported events. */
+  document: EventDocument | null;
+  /** The invoice's own data, entered with an INVOICE document; null for imported events. */
+  invoice: InvoiceData | null;
+}
+
+/**
+ * What a Vietnamese invoice states (Nghị định 123/2020/NĐ-CP, Thông tư 78/2021/TT-BTC): template
+ * symbol (`1C26TAA`: kind, with/without tax-authority code, year, type, the seller's own letters),
+ * number, issue date, the seller's tax code and the total. The total must equal the milestone's
+ * planned payment (as in all 140 Data Pack invoices); a penalty is deducted from the payment, not
+ * from the invoice.
+ */
+export interface InvoiceData {
+  symbol: string;
+  number: string;
+  issueDate: string;
+  sellerTaxCode: string;
+  amountMillion: string;
+}
+
+/** An evidence document: stored by its SHA-256 and signed by the person who submitted it. */
+export interface EvidenceDocument {
+  sha256: string;
+  fileName: string;
+  sizeBytes: number;
+  mediaType: string;
+  signedBy: string;
+  signedById: string;
+  signedAt: string;
+}
+
+export interface EventDocument extends EvidenceDocument {
+  /** The submitter's signature covers this document's hash, milestone and event type. */
+  signatureValid: boolean;
+  /** The stored file is still there under its hash. */
+  stored: boolean;
+}
+
+export type EventClass =
+  | "EVIDENCE"
+  | "ADDITIONAL"
+  | "APPROVAL"
+  | "APPROVAL_NOT_COUNTED"
+  | "REJECTION"
+  | "OPEN_DISPUTE"
+  | "CLOSED_DISPUTE"
+  | "RESOLUTION"
+  | "DUPLICATE"
+  | "UNAUTHORIZED"
+  | "WRONG_STATUS"
+  | "UNRELATED"
+  | "VOIDED";
+
+export interface ClassifiedEvent extends EventRow {
+  classification: EventClass;
+  duplicateOf: string | null;
+}
+
+export interface Evaluation {
+  milestoneId: string;
+  contractId: string;
+  runId: string;
+  evaluatedAt: string;
+  decision: Decision;
+  reasonCode: ReasonCode;
+  ruleId: string;
+  status: MilestoneStatus;
+  payableMillion: string;
+  penaltyMillion: string;
+  rawPenaltyMillion: string;
+  evidence: string[];
+  missing: BusinessEventType[];
+  unauthorized: string[];
+  duplicates: Array<[string, string]>;
+  unrelated: string[];
+  voided: string[];
+  openDisputeIds: string[];
+  validRejectionCount: number;
+  approvalRequired: boolean;
+  validApprovalCount: number;
+  quorum: number;
+  daysLate: number;
+  completedAt: string | null;
+  conditionsMet: string[];
+  missingConditions: string[];
+  issues: string[];
+  notes: string[];
+  /** Sequence warnings ("<event id>: <CODE>"); they lower confidence and never change the decision. */
+  warnings: string[];
+  /** What happened to each rule of the scope (engine trace); absent on evaluations stored before it. */
+  ruleTrail?: Record<string, RuleOutcome>;
+  confidence: string;
+  specVersion: string;
+  /** How the engine chose the applied rule; a fallback means a safety check held the milestone. */
+  selection?: RuleSelection;
+  /** Rule variables as the engine saw them (decimals and dates as text); absent on older evaluations. */
+  variables?: Record<string, string | boolean | null>;
+}
+
+export type RuleSelection =
+  | "FIRST_MATCH"
+  | "STRUCTURE_FALLBACK"
+  | "ANOMALY_FALLBACK"
+  | "PAYMENT_GUARD_FALLBACK"
+  | "RULE_ERROR_FALLBACK"
+  | "AMOUNT_GUARD_FALLBACK";
+
+export interface RuleRow {
+  id: string;
+  priority: number;
+  name: string;
+  group: string;
+  condition: string;
+  decision: Decision;
+  reasonCode: ReasonCode;
+  payableFormula: string;
+  penaltyFormula: string;
+  description: string;
+}
+
+/**
+ * OVERRIDDEN: a paying rule matched but a data anomaly sent the milestone to ELSE; SET_ASIDE: it matched but a
+ * payment or amount safety check held the milestone; FAILED: it could not be evaluated.
+ */
+export type RuleOutcome =
+  | "NOT_MATCHED"
+  | "MATCHED"
+  | "OVERRIDDEN"
+  | "NOT_EVALUATED"
+  | "SET_ASIDE"
+  | "FAILED";
+
+export type Trigger =
+  | { kind: "IMPORT" }
+  | { kind: "EVENTS"; eventIds: string[]; actorName: string }
+  | {
+      kind: "EXCEPTION";
+      exceptionId: string;
+      eventId: string;
+      actorName: string;
+    }
+  | { kind: "PAYMENT"; paymentId: string; actorName: string }
+  | { kind: "CONTRACT"; actorName: string };
+
+export interface StatusSnapshot {
+  status: MilestoneStatus;
+  decision: Decision;
+  reasonCode: ReasonCode;
+}
+
+export interface StatusChange {
+  id: string;
+  milestoneId: string;
+  contractId: string;
+  runId: string;
+  at: string;
+  from: StatusSnapshot | null;
+  to: StatusSnapshot;
+  trigger: Trigger;
+}
+
+/**
+ * The payment instruction a paying decision becomes: what to pay, to whom and why. The engine's decision
+ * draws it up; finance approves it and it is sent to the payment gateway.
+ */
+/**
+ * The buyer's payment term on a milestone and the late-payment interest owed when it is paid on a
+ * given day (domain/late-payment.ts). Only contracts that state payment terms have one.
+ */
+export interface LatePayment {
+  termDays: number;
+  /** Annual late-payment interest rate, percent. */
+  ratePct: string;
+  /** Completion date, or the closing of the latest dispute when later. */
+  startsOn: string;
+  dueOn: string;
+  daysLate: number;
+  interestMillion: string;
+}
+
+export interface PaymentInstruction {
+  decision: Decision;
+  /** The amount the engine decided (after any late-delivery penalty). */
+  amountMillion: string;
+  penaltyMillion: string;
+  /** Payment term and late-payment interest; null when the contract states no payment terms. */
+  latePayment?: LatePayment | null;
+  /** What the buyer transfers: the decided amount plus any late-payment interest. */
+  totalMillion?: string;
+  payer: { id: string; name: string };
+  payee: { id: string; name: string };
+  runId: string;
+  /** The sealed hash of the decision behind the instruction (the audit chain holds it too). */
+  decisionDigest: string;
+}
+
+/** What happened when an approved instruction was sent to the payment gateway. */
+export interface PaymentDelivery {
+  /** SIMULATED when no gateway is configured; WEBHOOK posts to PAYMENT_GATEWAY_URL. */
+  channel: "SIMULATED" | "WEBHOOK";
+  status: "PENDING" | "ACKNOWLEDGED" | "FAILED";
+  attempts: number;
+  lastAttemptAt: string | null;
+  /** The gateway's own reference once it acknowledged the instruction. */
+  reference: string | null;
+  error: string | null;
+}
+
+export interface Payment {
+  /** Also the idempotency key the gateway receives, so a resend never pays twice. */
+  id: string;
+  milestoneId: string;
+  contractId: string;
+  runId: string;
+  decision: Decision;
+  amountMillion: string;
+  /** Late-payment interest added on approval; absent or "0.00" when none was owed. */
+  lateInterestMillion?: string;
+  /** The amount transferred: amountMillion plus the interest. */
+  totalMillion?: string;
+  transferredBy: string;
+  transferredAt: string;
+  instruction?: PaymentInstruction;
+  delivery?: PaymentDelivery;
+}
+
+export type ExceptionState = "PROPOSED" | "APPROVED" | "REJECTED";
+
+export interface ExceptionRequest {
+  id: string;
+  milestoneId: string;
+  contractId: string;
+  eventId: string;
+  action: "VOID";
+  reason: string;
+  proposedBy: { userId: string; name: string };
+  proposedAt: string;
+  status: ExceptionState;
+  decidedBy: { userId: string; name: string } | null;
+  decidedAt: string | null;
+  decisionNote: string | null;
+}
+
+export interface Preview {
+  decision: Decision;
+  reasonCode: ReasonCode;
+  status: MilestoneStatus;
+  payableMillion: string;
+  penaltyMillion: string;
+  daysLate: number;
+}
+
+/**
+ * A milestone right after one moment of its history (as-of evaluation, BR-16). Before the due date
+ * a milestone still missing evidence is PLANNED (no event yet) or IN_PROGRESS.
+ */
+export interface TimelinePoint {
+  at: string;
+  /** Events recorded at that moment. */
+  events: EventRow[];
+  decision: Decision;
+  reasonCode: ReasonCode;
+  ruleId: string;
+  status: MilestoneStatus | "PLANNED" | "IN_PROGRESS";
+  payableMillion: string;
+  penaltyMillion: string;
+  daysLate: number;
+  missing: BusinessEventType[];
+  approvals: { valid: number; quorum: number };
+  openDisputeIds: string[];
+}
+
+export interface Participant {
+  side: Side;
+  kind: "ORGANIZATION" | "APPROVER" | "OFFICER" | "REPRESENTATIVE";
+  partyId: string;
+  name: string;
+  personName: string | null;
+  role: Role | null;
+  approvalRole: ApprovalRole | null;
+  email: string | null;
+  origin: Origin;
+  identityOrigin?: Origin;
+}
+
+export type TimelineEntry =
+  | { kind: "EVENT"; at: string; event: EventRow }
+  | { kind: "STATUS"; at: string; change: StatusChange };
+
+export interface ContractOverview {
+  contract: ContractRow;
+  workflowTemplate: WorkflowTemplate;
+  /** Display name of an `APP_` workflow from the pinned rule version; null for organiser ones. */
+  workflowName: string | null;
+  ruleSetId: string;
+  graceDays: number;
+  penaltyRatePct: string;
+  maxPenaltyPct: string;
+  /** The buyer's payment term and late-payment interest; null when the contract states none. */
+  paymentTermDays: number | null;
+  latePaymentRatePct: string | null;
+  autoReleaseAllowed: boolean;
+  milestones: MilestoneRow[];
+  totals: {
+    valueMillion: string;
+    eligibleMillion: string;
+    penaltyMillion: string;
+    paidMillion: string;
+    heldMillion: string;
+    rejectedMillion: string;
+  };
+  participants: Participant[];
+  events: EventRow[];
+  timeline: TimelineEntry[];
+  signing: SigningSummary | null;
+  lifecycle: ContractLifecycle;
+  /** Amendments (phụ lục) of the schedule, newest first. */
+  amendments: Amendment[];
+  /** What needs attention on the contract as a whole, decided by the API. */
+  notices: ContractNotice[];
+  /** The signed-in user may propose an amendment now / accept or reject the open one. */
+  canProposeAmendment: boolean;
+  canDecideAmendment: boolean;
+  canWithdrawAmendment: boolean;
+  /** The latest liquidation record, if any (biên bản thanh lý). */
+  liquidation: Liquidation | null;
+  canProposeLiquidation: boolean;
+  canDecideLiquidation: boolean;
+  canWithdrawLiquidation: boolean;
+}
+
+/**
+ * The liquidation record (biên bản thanh lý): once every milestone is paid or rejected, the buyer
+ * proposes it with the settled figures, the supplier confirms or rejects it. Confirmed, the
+ * contract is closed for good: no documents, approvals, disputes or amendments any more.
+ */
+export interface Liquidation {
+  state: AmendmentState;
+  note: string;
+  totals: {
+    valueMillion: string;
+    paidMillion: string;
+    penaltyMillion: string;
+    rejectedMillion: string;
+  };
+  proposedBy: { id: string; name: string };
+  proposedAt: string;
+  decidedBy: { id: string; name: string } | null;
+  decidedAt: string | null;
+  decisionNote: string | null;
+  /** SHA-256 of the canonical record both parties confirm. */
+  digest: string;
+}
+
+export type AmendmentState = "PROPOSED" | "ACCEPTED" | "REJECTED" | "WITHDRAWN";
+
+export type AcceptanceRequestState = "OPEN" | "CONFIRMED" | "DECLINED";
+
+/**
+ * The supplier's request that the buyer confirms a milestone (đề nghị nghiệm thu). The buyer's
+ * documents (ACCEPTANCE, UAT_PASSED, ...) set the completion date (BR-11), so without this the
+ * supplier would pay the late penalty for a buyer who files late. While a request is open, the
+ * buyer's documents are recorded at the time of the request; the buyer may decline it with a
+ * reason when the work is not ready, and the supplier then asks again.
+ */
+export interface AcceptanceRequest {
+  id: string;
+  contractId: string;
+  milestoneId: string;
+  sequence: number;
+  state: AcceptanceRequestState;
+  /** The buyer's required documents that were missing when the supplier asked. */
+  eventTypes: BusinessEventType[];
+  note: string | null;
+  requestedBy: { id: string; name: string };
+  /** Server time of the request: the timestamp the buyer's documents take when confirmed. */
+  requestedAt: string;
+  /** Last day for the buyer's answer before the buyer's controller is told. */
+  respondBy: string;
+  decidedBy: { id: string; name: string } | null;
+  /** When the buyer actually filed the documents or declined. */
+  decidedAt: string | null;
+  decisionNote: string | null;
+  /** The events recorded at the time of the request. */
+  eventIds: string[];
+}
+
+/**
+ * An amendment (phụ lục) to a signed contract's schedule: the buyer proposes new due dates for open
+ * milestones and/or a new end date, with a reason; the supplier accepts or rejects it. The signed
+ * terms stay as they were (their digest still verifies); an accepted amendment moves the milestone
+ * due dates the engine reads and the end date in force, and its own digest is kept.
+ */
+export interface Amendment {
+  id: string;
+  contractCode: string;
+  /** PL-01, PL-02, ... within the contract. */
+  number: number;
+  state: AmendmentState;
+  reason: string;
+  endDate: { from: string; to: string } | null;
+  dueDates: {
+    sequence: number;
+    milestoneId: string;
+    /** Null when the milestone had no due date yet. */
+    from: string | null;
+    to: string;
+  }[];
+  proposedBy: { id: string; name: string };
+  proposedAt: string;
+  decidedBy: { id: string; name: string } | null;
+  decidedAt: string | null;
+  decisionNote: string | null;
+  /** SHA-256 of the canonical change set the parties agreed to. */
+  digest: string;
+}
+
+/**
+ * MISSING_DUE_DATE: open milestones without a due date (they stay on hold until an amendment);
+ * SIGNED_AFTER_START: the last signature came after the start date; PAST_END: the end date has
+ * passed with milestones still open; SETTLED: every milestone is paid or closed.
+ */
+export type ContractNotice =
+  | { code: "MISSING_DUE_DATE"; milestones: number[] }
+  | { code: "SIGNED_AFTER_START"; days: number }
+  | { code: "PAST_END"; date: string; open: number }
+  /** `liquidable`: the next step is the liquidation record (not for the organiser's contracts). */
+  | { code: "SETTLED"; liquidable: boolean }
+  | { code: "LIQUIDATED"; at: string };
+
+/**
+ * The contract as a state machine: drafted, signed, each payment milestone settled (paid, or closed by
+ * a rejection), closed. Every stage carries when it was reached and, for a milestone, the decision that
+ * settles it.
+ */
+export interface ContractLifecycle {
+  stages: LifecycleStage[];
+}
+
+export type LifecycleStageState = "DONE" | "CURRENT" | "PENDING";
+
+export type LifecycleStage =
+  | { kind: "DRAFTED"; state: LifecycleStageState; at: string | null }
+  | {
+      kind: "SIGNED";
+      state: LifecycleStageState;
+      at: string | null;
+      signed: number;
+      total: number;
+    }
+  | {
+      kind: "MILESTONE";
+      state: LifecycleStageState;
+      at: string | null;
+      milestoneId: string;
+      sequence: number;
+      type: MilestoneType;
+      status: MilestoneStatus;
+      decision: Decision;
+      reasonCode: ReasonCode;
+      payableMillion: string;
+      paid: boolean;
+      /** What last changed the milestone's status. */
+      trigger: Trigger["kind"] | null;
+    }
+  | {
+      kind: "CLOSED";
+      state: LifecycleStageState;
+      at: string | null;
+      /** True when the step is a liquidation both parties confirm; false for the organiser's
+       * contracts, which simply complete with their last milestone. */
+      liquidation: boolean;
+    };
+
+/**
+ * A contract as a smart contract: what both parties bound themselves to, the engine that executes it and,
+ * clause by clause, the rules each payment milestone runs with and what they decided so far.
+ */
+export interface SmartContractView {
+  contract: ContractRow;
+  binding: {
+    /** DOCUMENT_BYTES: signatures cover the uploaded file; TERMS_SNAPSHOT: the recorded terms only. */
+    basis: "DOCUMENT_BYTES" | "TERMS_SNAPSHOT" | null;
+    /** SHA-256 the signatures cover: the document bytes, or the terms snapshot without a document. */
+    signedDigest: string | null;
+    /** SHA-256 of the terms, signer order, signing areas and, when pinned, the rule version. */
+    termsDigest: string | null;
+    /** False when the stored document no longer matches the signed digest. */
+    intact: boolean;
+    ruleSetId: string;
+    /** The published rule version both parties signed, for contracts made in the application. */
+    ruleVersion: { id: string; hash: string } | null;
+    signed: number;
+    total: number;
+    lastSignedAt: string | null;
+  };
+  engine: {
+    policyId: string;
+    policyVersion: string;
+    /** SHA-256 of the policy pack file the engine and the API read. */
+    policySha256: string;
+    /** SHA-256 of the rules of every scope this contract's milestones run with. */
+    rulesSha256: string;
+  };
+  clauses: Array<{
+    milestone: MilestoneRow;
+    rules: Array<RuleRow & { outcome: RuleOutcome }>;
+  }>;
+}
+
+export interface MilestoneDetail {
+  contract: ContractRow;
+  milestone: MilestoneRow;
+  evaluation: Evaluation;
+  /** Every condition of the milestone with who answers for it, blocking items first. */
+  pending: PendingItem[];
+  rules: Array<RuleRow & { outcome: RuleOutcome }>;
+  /** The rule variables of the evaluation with their labels from the rule vocabulary. */
+  variables: Array<{
+    name: string;
+    label: { vi: string; en: string };
+    value: string | boolean | null;
+  }>;
+  events: ClassifiedEvent[];
+  money: {
+    plannedMillion: string;
+    dueDate: string;
+    graceDays: number;
+    deadline: string;
+    completedAt: string | null;
+    daysLate: number;
+    latePenalty: boolean;
+    penaltyRatePct: string;
+    maxPenaltyPct: string;
+    capMillion: string;
+    rawPenaltyMillion: string;
+    penaltyMillion: string;
+    payableMillion: string;
+  };
+  history: StatusChange[];
+  payment: Payment | null;
+  /** The instruction a paying decision draws up, before finance approves it; null otherwise. */
+  instruction: PaymentInstruction | null;
+  exceptions: ExceptionRequest[];
+  /** The supplier's acceptance requests on this milestone, newest first. */
+  acceptanceRequests: AcceptanceRequest[];
+  actions: {
+    /** The supplier may ask the buyer to confirm the milestone now. */
+    requestAcceptance: boolean;
+    /** The buyer's contract officer may decline the open acceptance request. */
+    declineAcceptance: boolean;
+    submit: boolean;
+    approve: boolean;
+    reject: boolean;
+    openDispute: boolean;
+    resolveDispute: boolean;
+    transfer: boolean;
+    proposeException: boolean;
+    /** The buyer's controller checks the owner's proposals; the supplier's only watches them. */
+    decideException: boolean;
+  };
+}
+
+export interface Attachment {
+  id: string;
+  eventType: BusinessEventType | "OTHER";
+  fileName: string;
+  sizeMb: number;
+  /** SHA-256 of the stored file; absent on attachments made before files were kept. */
+  sha256?: string;
+  /** INVOICE attachments: the invoice's data, checked when attached. */
+  invoice?: InvoiceData;
+  addedBy: string;
+  addedAt: string;
+}
+
+export interface EvidenceSlot {
+  eventType: BusinessEventType;
+  side: Side;
+  state: Requirement["state"];
+  /** The signed-in user's side may submit this type (spec 4.2 and 17). */
+  mine: boolean;
+  evidence: EventRow | null;
+  attachment: Attachment | null;
+}
+
+export interface EvidenceWorkspace {
+  contract: ContractRow;
+  milestone: MilestoneRow;
+  side: Side;
+  slots: EvidenceSlot[];
+  extras: Attachment[];
+  overdueDays: number;
+  canSubmit: boolean;
+  /** The supplier's tax code on record; an invoice must state it as the seller's. */
+  sellerTaxCode: string | null;
+  /** The open acceptance request: the buyer's documents will be recorded at its time. */
+  acceptanceRequest: AcceptanceRequest | null;
+  /** Engine result if the attached documents were submitted now (dry run). */
+  preview: Preview | null;
+}
+
+export interface ApprovalSlot {
+  role: ApprovalRole;
+  required: boolean;
+  partyId: string;
+  personName: string;
+  state: "APPROVED" | "PENDING" | "REJECTED";
+  at: string | null;
+  eventId: string | null;
+  isYou: boolean;
+}
+
+export interface ApprovalView {
+  contract: ContractRow;
+  milestone: MilestoneRow;
+  evaluation: Evaluation;
+  slots: ApprovalSlot[];
+  evidence: EventRow[];
+  /** Engine result if the signed-in approver approves now (dry run). */
+  preview: Preview | null;
+  canApprove: boolean;
+  canReject: boolean;
+  blockedReason: string | null;
+}
+
+export interface DisputeCase {
+  opened: EventRow;
+  resolution: EventRow | null;
+  state: "OPEN" | "RESOLVED";
+  /** The side that opened it, from the party table. */
+  side: Side;
+  /** The person who opened it; null for organiser rows, which name only the party. */
+  openedBy: PersonRef | null;
+  resolvedBy: PersonRef | null;
+  /** Days it stayed open: until the resolution, or until today. */
+  openDays: number;
+}
+
+export interface NoteRow {
+  id: string;
+  milestoneId: string;
+  kind: "REQUEST_INFO" | "DISPUTE_NOTE";
+  text: string;
+  author: string;
+  at: string;
+}
+
+export interface DisputeView {
+  contract: ContractRow;
+  milestone: MilestoneRow;
+  evaluation: Evaluation;
+  disputes: DisputeCase[];
+  /** Engine result once every open dispute is closed (dry run). */
+  preview: Preview | null;
+  notes: NoteRow[];
+  canOpen: boolean;
+  canResolve: boolean;
+  /** Accounts that may close a dispute: the buyer's contract owner and contract officer. */
+  resolvers: PersonRef[];
+}
+
+export type TaskKind =
+  | "SUBMIT_EVIDENCE"
+  | "RESUBMIT_EVIDENCE"
+  | "APPROVE_PAYMENT"
+  | "RESOLVE_DISPUTE"
+  | "SIGN_CONTRACT"
+  | "REVIEW_EXCEPTION"
+  | "DECIDE_EXCEPTION"
+  | "COMPLETE_DRAFT"
+  | "TRANSFER_PAYMENT"
+  | "REVIEW_AMENDMENT"
+  | "LIQUIDATE_CONTRACT"
+  | "REVIEW_LIQUIDATION"
+  | "ACCEPTANCE_OVERDUE"
+  | "FOLLOW_UP";
+
+/**
+ * MINE: the user's turn now. UPCOMING: the user's work that a blocking item comes before (it may
+ * be prepared already). WAITING: the user's milestone or contract waits for someone else.
+ */
+export type TaskGroup = "MINE" | "UPCOMING" | "WAITING";
+
+/** Who a task waits for, or what must happen before it: the blocking item in business terms. */
+export interface TaskWaitingFor {
+  kind: PendingKind | "SIGNATURE";
+  subjects: Array<BusinessEventType | ApprovalRole>;
+  organizationName: string;
+  roles: Role[];
+  people: PersonRef[];
+}
+
+export interface TaskRow {
+  id: string;
+  kind: TaskKind;
+  contractId: string;
+  contractTitle: string;
+  milestoneId: string | null;
+  sequence: number | null;
+  milestoneType: MilestoneType | null;
+  dueDate: string | null;
+  overdueDays: number;
+  eventTypes: BusinessEventType[];
+  roles: ApprovalRole[];
+  amountMillion: string | null;
+  reasonCode: ReasonCode | null;
+  badge: "LATE_PENALTY_RISK" | "YOUR_TURN" | "MILESTONE_ON_HOLD" | "ON_TIME";
+  href: string;
+  origin: Origin;
+  group: TaskGroup;
+  /** WAITING: who must act; UPCOMING: what must happen first; MINE: null. */
+  waitingFor: TaskWaitingFor | null;
+  /** Days this work has waited, when the data says since when. */
+  waitingDays: number | null;
+}
+
+/** Decision facts compared by the integrity check. */
+export interface DecisionFacts {
+  decision: Decision;
+  reasonCode: ReasonCode;
+  ruleId: string;
+  payableMillion: string;
+  penaltyMillion: string;
+}
+
+/**
+ * Integrity check (spec 14.5, risk R08): the audit hash chain, the events the app recorded against
+ * the hash sealed with them, and every stored decision against a fresh engine run.
+ */
+export interface IntegrityReport {
+  checkedAt: string;
+  chain: {
+    ok: boolean;
+    sealed: number;
+    /** Entries written before the chain existed: listed, not verified. */
+    unsealed: number;
+    head: { seq: number; hash: string } | null;
+    firstBroken: {
+      seq: number;
+      id: string;
+      problem: "SEQUENCE_GAP" | "LINK_BROKEN" | "CONTENT_CHANGED";
+    } | null;
+    /** Against a head hash saved earlier, when one is given. */
+    anchor: "MATCH" | "MISMATCH" | "NOT_FOUND" | null;
+    /** After a demo reset: the archived chain this one continues. */
+    continuesFrom: { archive: string; headHash: string } | null;
+    /**
+     * Against the latest confirmed anchor, checked on every report: a rewritten chain no longer
+     * matches it, and a chain cut below it no longer has its entry (NOT_FOUND).
+     */
+    lastAnchor: {
+      seq: number;
+      anchoredAt: string;
+      result: "MATCH" | "MISMATCH" | "NOT_FOUND";
+    } | null;
+  };
+  evidence: {
+    sealed: number;
+    /** App events recorded before sealing existed. */
+    unsealed: number;
+    problems: Array<{
+      eventId: string;
+      contractId: string | null;
+      problem: "CHANGED" | "MISSING";
+    }>;
+  };
+  /** The organiser's rows against the hash sealed when they were imported; null without that seal. */
+  dataPack: {
+    sealedAt: string;
+    tables: Array<{
+      name: string;
+      sealedRows: number;
+      rows: number;
+      ok: boolean;
+    }>;
+  } | null;
+  decisions: {
+    checked: number;
+    matched: number;
+    /** Stored decisions whose hash was sealed in the audit chain when they were stored. */
+    sealed: number;
+    /** Stored decisions that no longer match their sealed hash: edited outside the workflow. */
+    sealProblems: Array<{
+      milestoneId: string;
+      contractId: string;
+      sequence: number;
+    }>;
+    runId: string;
+    fingerprint: string;
+    mismatches: Array<{
+      milestoneId: string;
+      contractId: string;
+      sequence: number;
+      /** Paid or rejected: the engine no longer changes it. */
+      frozen: boolean;
+      /** Left out for platform roles, which see where a decision differs but not what it is. */
+      stored?: DecisionFacts;
+      fresh?: DecisionFacts | null;
+    }>;
+  };
+}
+
+/** Many-contract overview of the contracts the signed-in user may see. */
+export interface DashboardView {
+  generatedAt: string;
+  /** The business date the figures are computed for (YYYY-MM-DD). */
+  today: string;
+  contractCount: number;
+  byStatus: Partial<Record<ContractStatus, number>>;
+  byDecision: Partial<Record<Decision, number>>;
+  /**
+   * Million VND, two decimals. planned = paid + payable + penalty + held + rejected: paid and
+   * payable are released amounts (transferred or not yet), penalty is deducted from released
+   * milestones, held and rejected are the planned value of HOLD and REJECT milestones.
+   */
+  amounts: {
+    plannedMillion: string;
+    payableMillion: string;
+    paidMillion: string;
+    heldMillion: string;
+    penaltyMillion: string;
+    rejectedMillion: string;
+  };
+  /** Milestone counts behind the amounts; overdue and dueSoon count unfinished HOLD milestones. */
+  milestones: {
+    total: number;
+    paid: number;
+    payable: number;
+    held: number;
+    rejected: number;
+    overdue: number;
+    dueSoon: number;
+  };
+  /** Planned value by due month (YYYY-MM) and current decision, million VND. */
+  byMonth: Array<{
+    month: string;
+    amounts: Record<Decision, string>;
+    paidMillion: string;
+  }>;
+  /** Why money is held: HOLD milestones by reason, largest first. */
+  holdReasons: Array<{
+    reason: ReasonCode;
+    milestones: number;
+    amountMillion: string;
+  }>;
+  /** Milestones that need a person now (at most 50; attentionCount is the total). */
+  attention: Array<{
+    contractId: string;
+    sequence: number;
+    kind:
+      | "OPEN_DISPUTE"
+      | "OVERDUE"
+      | "DUE_SOON"
+      | "SEQUENCE_WARNING"
+      | "LOW_CONFIDENCE";
+    dueDate?: string;
+    amountMillion: string;
+  }>;
+  attentionCount: number;
+  /**
+   * Every evaluated milestone with a due date, for the calendar: what is due when and where it
+   * stands (OVERDUE and HELD are unfinished HOLD milestones, past or not yet past their date).
+   */
+  dueItems: Array<{
+    date: string;
+    contractId: string;
+    sequence: number;
+    state: "OVERDUE" | "HELD" | "PAYABLE" | "PAID" | "REJECTED";
+    amountMillion: string;
+  }>;
+  /** The ten contracts with the most held value. */
+  contracts: Array<{
+    contractId: string;
+    title: string;
+    status: ContractStatus;
+    milestones: number;
+    held: number;
+    openDisputes: number;
+    overdue: number;
+    plannedMillion: string;
+    paidMillion: string;
+    payableMillion: string;
+    heldMillion: string;
+    nextDue: string | null;
+  }>;
+}
+
+export interface ExceptionQueueRow {
+  contract: ContractRow;
+  milestone: MilestoneRow;
+  evaluation: Evaluation;
+  candidates: EventRow[];
+  requests: ExceptionRequest[];
+}
+
+export type ActivityCategory =
+  "SYSTEM" | "APPROVAL" | "EVIDENCE" | "DISPUTE" | "SIGN";
+
+export type ActivityAction =
+  | {
+      kind: "EVENT";
+      eventType: EventType;
+      status: EventStatus;
+      eventId: string;
+    }
+  | {
+      kind: "DECISION";
+      decision: Decision;
+      reasonCode: ReasonCode;
+      status: MilestoneStatus;
+      previous: MilestoneStatus | null;
+      runId: string;
+    }
+  | { kind: "SIGNATURE"; stepNo: number; totalSteps: number; isFinal: boolean }
+  | { kind: "DIGITIZATION_CONFIRMED"; milestoneCount: number }
+  | { kind: "DIGITIZATION_EDITED"; milestoneCount: number }
+  | { kind: "CONTRACT_RULES_SET"; ruleCount: number }
+  | { kind: "AMENDMENT"; state: AmendmentState; number: number }
+  | { kind: "LIQUIDATION"; state: AmendmentState }
+  | { kind: "ACCEPTANCE_REQUEST"; state: AcceptanceRequestState }
+  | { kind: "EXCEPTION"; state: ExceptionState; eventId: string }
+  | { kind: "PAYMENT"; amountMillion: string; lateInterestMillion?: string }
+  | {
+      kind: "PAYMENT_DELIVERY";
+      channel: PaymentDelivery["channel"];
+      status: PaymentDelivery["status"];
+      attempts: number;
+      reference: string | null;
+      error: string | null;
+    }
+  | { kind: "REQUEST_INFO"; text: string }
+  | { kind: "WORKFLOW_ACTION"; code: string };
+
+export interface ActivityEntry {
+  id: string;
+  at: string;
+  actor: {
+    id: string;
+    displayName: string | null;
+    /** A system role, a party type or "SYSTEM" for the engine. */
+    role: Role | PartyType | ApprovalRole | "SYSTEM";
+  };
+  category: ActivityCategory;
+  action: ActivityAction;
+  contractCode: string;
+  milestoneId: string | null;
+  milestoneNo: number | null;
+  origin: Origin;
+  /**
+   * What the viewer may open from this entry, decided by the API from their permissions and
+   * scope: the contract, the milestone's decision, the event on that screen and its stored file.
+   */
+  links: {
+    contract: boolean;
+    milestone: boolean;
+    eventId: string | null;
+    document: { fileName: string } | null;
+  };
+  /** The viewer did this themselves, or their own party (organisation) did. */
+  mine: boolean;
+  audit?: {
+    seq?: number;
+    hash?: string;
+    transactionId?: string;
+    requestId?: string;
+    outcome?: string;
+    changes?: Array<{
+      resource: string;
+      recordId: string;
+      operation: string;
+      fields: Record<string, { before: unknown; after: unknown }>;
+    }>;
+  };
+}
+
+export interface ActivityFilters {
+  contractCode: string;
+  actorId: string;
+  category: ActivityCategory | "";
+  from: string;
+  to: string;
+}
+
+/* ---------------------------- Signing ---------------------------- */
+
+export type SignMethod =
+  "USB_TOKEN" | "VNPT_SMARTCA" | "VIETTEL_MYSIGN" | "IMAGE";
+export type SignStepStatus = "WAITING" | "CURRENT" | "SIGNED";
+
+export interface SignStep {
+  stepNo: number;
+  party: Side;
+  signerUserId: string;
+  signerName: string;
+  signerTitle: string;
+  signerRole: Role | null;
+  organizationId: string;
+  /** The last step must carry a digital signature (no signature image). */
+  isFinal: boolean;
+  status: SignStepStatus;
+  signedAt: string | null;
+  method: SignMethod | null;
+  proofSource?: "LOCAL_ED25519" | "HTTP_ED25519_BRIDGE" | "REMOTE_CA";
+  localProof?:
+    | {
+        provider: "LOCAL_ED25519";
+        payload: Record<string, unknown>;
+        publicKey: string;
+        keyFingerprint: string;
+        signature: string;
+      }
+    | RemoteSignatureProof;
+}
+
+/** A certificate of the remote signing provider's (demo) CA, in canonical JSON. */
+export interface RemoteSignerCertificate {
+  version: 1;
+  serial: string;
+  subject: { subscriberId: string; commonName: string; organization: string };
+  issuer: { commonName: string; keyFingerprint: string };
+  publicKey: string;
+  keyFingerprint: string;
+  notBefore: string;
+  notAfter: string;
+  keyUsage: string[];
+  policy: string;
+  signature: string;
+}
+
+/**
+ * A signature made by the remote signing service after the person confirmed on their device:
+ * the payload CodeCash prepared, its hash, the signature over that hash and the certificate.
+ */
+export interface RemoteSignatureProof {
+  provider: "REMOTE_CA";
+  payload: Record<string, unknown>;
+  hash: string;
+  signature: string;
+  keyFingerprint: string;
+  transactionId: string;
+  certificate: RemoteSignerCertificate;
+}
+
+export interface SignStepView extends SignStep {
+  signerEmail?: string;
+  organizationName: string;
+}
+
+export type SlotLook = "NAME_AND_TIME" | "WITH_TITLE";
+
+/** Top-left coordinates in a 520-unit-wide page. Actual page height comes from PDF metadata. */
+export interface SignatureSlot {
+  page: number;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  look: SlotLook;
+}
+
+/** Slots keyed by sign step number. `null` means the step has no slot yet. */
+export type SlotMap = Record<number, SignatureSlot | null>;
+
+export interface Rect {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+export interface PdfPagePreview {
+  pageNo: number;
+  width?: number;
+  height?: number;
+  widthPt?: number;
+  heightPt?: number;
+  contentCheck?: "TEXT" | "MANUAL";
+  anchors?: Array<{
+    stepNo: number;
+    x: number;
+    y: number;
+    w?: number;
+    h?: number;
+    signerName?: string;
+    party?: Side;
+  }>;
+  heading: "ARTICLE_13" | "ARTICLE_14";
+  textLineCount: number;
+  hasSignatureBlock: boolean;
+  /** Printed "representative" block of each signer: heading and name lines. */
+  blocks: Array<{ stepNo: number; x: number; headingY: number; nameY: number }>;
+  blockedZones: Rect[];
+}
+
+export interface SigningSummary {
+  signed: number;
+  total: number;
+  steps: SignStepView[];
+  origin: Origin;
+}
+
+export interface SigningConfig {
+  contractCode: string;
+  documentId?: string;
+  documentSha256?: string;
+  layoutVersion?: number;
+  title: string;
+  supplierName: string;
+  valueMillion: string;
+  fileName: string;
+  pageCount: number;
+  digitalSignatureRequired: boolean;
+  origin: Origin;
+  steps: SignStepView[];
+  slots: SlotMap;
+  previewPages: PdfPagePreview[];
+}
+
+export type SigningRequestStatus =
+  "PENDING" | "COMPLETED" | "CANCELLED" | "REJECTED" | "EXPIRED";
+
+export interface SigningRequest {
+  id: string;
+  contractCode: string;
+  stepNo: number;
+  method: SignMethod;
+  status: SigningRequestStatus;
+  code: string;
+  sentAt: string;
+  expiresAt: string;
+  autoConfirmAt: string | null;
+  documentDigest?: string;
+  termsDigest?: string;
+  /** Confirmed on a device through the remote signing service, not in this app. */
+  remote?: boolean;
+  /** Where the person confirms: the signing app on a phone, or a USB token. */
+  channel?: "MOBILE_APP" | "USB_TOKEN" | null;
+  /** The signing service's transaction, once the request reached it. */
+  transactionId?: string | null;
+  /** SHA-256 of the canonical payload the person signs (shown on both screens). */
+  hash?: string | null;
+  /** Why the request stopped when the service could not be reached. */
+  failure?: string | null;
+}
+
+export interface SignerCertificate {
+  holder: string;
+  expiryMonth: number;
+  expiryYear: number;
+}
+
+export interface SigningOverview extends SigningConfig {
+  simulated: boolean;
+  currentStepNo: number | null;
+  myStepNo: number | null;
+  lastMethod: SignMethod;
+  certificates: Partial<Record<SignMethod, SignerCertificate>>;
+  anySigned: boolean;
+}
+
+export type SignatureCheck = "VALID" | "INVALID" | "UNVERIFIED";
+
+export interface VerifiedSignature {
+  stepNo: number;
+  party: Side;
+  signerName: string;
+  signedAt: string;
+  method: SignMethod;
+  certExpiryMonth: number;
+  certExpiryYear: number;
+  status: SignatureCheck;
+  contentIntact: boolean;
+  cryptoValid?: boolean;
+  certificateTrusted?: boolean;
+  proofBasis?: "DOCUMENT_BYTES" | "TERMS_SNAPSHOT";
+  keyFingerprint?: string;
+}
+
+export interface VerificationResult {
+  contractCode: string;
+  stepCount: number;
+  signatures: VerifiedSignature[];
+  effectiveAt: string | null;
+  milestonesOpened: number;
+  origin: Origin;
+}
+
+/* ------------------------- Upload and digitisation ------------------------- */
+
+export type ContractFileKind = "PDF" | "DOCX";
+
+export interface ContractFile {
+  name: string;
+  sizeBytes: number;
+  kind: ContractFileKind;
+  pages?: number;
+  documentId?: string;
+  sha256?: string;
+}
+
+export interface DraftSigner {
+  party: Side;
+  userId: string;
+}
+
+export type DraftState = "DRAFT" | "DIGITIZED" | "SIGNING" | "ACTIVE";
+
+export interface ContractTemplateSnapshot {
+  id: string;
+  version: number;
+  name: string;
+  documentBody: string;
+}
+
+export interface ContractDraft {
+  templateId?: string;
+  templateVersion?: number;
+  templateSnapshot?: ContractTemplateSnapshot;
+  documentBody?: string;
+  ruleVersion?: { id: string; hash: string };
+  /** The organiser workflow of the type, or an `APP_` workflow of the pinned rule version. */
+  workflowTemplate?: string;
+  code: string;
+  state: DraftState;
+  origin: Origin;
+  type: ContractType;
+  title: string;
+  supplierId: string;
+  reviewerId: string;
+  valueMillion: string;
+  startDate: string;
+  endDate: string;
+  approvalPolicy: ApprovalPolicy;
+  graceDays: number;
+  penaltyRatePct: string;
+  maxPenaltyPct: string;
+  /** Days the buyer has to pay a milestone once it is complete; null when not stated. */
+  paymentTermDays?: number | null;
+  /** Annual late-payment interest rate, percent; set together with paymentTermDays. */
+  latePaymentRatePct?: string | null;
+  signers: DraftSigner[];
+  file: ContractFile;
+  appendixNames: string[];
+  appendixDocuments?: Array<{ id: string; name: string; sha256: string }>;
+}
+
+export interface PersonOption {
+  userId: string;
+  name: string;
+  title: string;
+  role: Role;
+  organizationId: string;
+  organizationName: string;
+}
+
+export interface SigningPreset {
+  id: string;
+  name: string;
+  version: number;
+  description: string;
+  defaults: Pick<
+    ContractDraft,
+    | "type"
+    | "approvalPolicy"
+    | "valueMillion"
+    | "graceDays"
+    | "penaltyRatePct"
+    | "maxPenaltyPct"
+    | "documentBody"
+  >;
+  signers: DraftSigner[];
+}
+
+export interface UploadFormOptions {
+  types: ContractType[];
+  policies: ApprovalPolicy[];
+  suppliers: { id: string; name: string }[];
+  reviewers: PersonOption[];
+  buyerSigners: PersonOption[];
+  supplierSigners: Record<string, PersonOption[]>;
+  presets: SigningPreset[];
+  /**
+   * Stage list per contract type, from the rule version a new draft pins: the organiser workflow
+   * and the version's own `APP_` workflows for that type.
+   */
+  workflows: Record<
+    ContractType,
+    {
+      template: WorkflowTemplate;
+      stages: MilestoneType[];
+      alternatives: Array<{
+        template: string;
+        name: string;
+        stages: MilestoneType[];
+      }>;
+    }
+  >;
+}
+
+export type SourceStatus =
+  "MATCH" | "NEEDS_CONFIRMATION" | "CONFIRMED" | "EDITED";
+
+/**
+ * A person's correction of one digitised milestone, so the data says what the signed document
+ * says. The stages themselves (count, order, milestone types) come from the workflow and its rule
+ * scopes; another structure is a workflow of a rule version (section 6.3).
+ */
+export interface MilestoneEdit {
+  sequence: number;
+  paymentPercent: string;
+  /** Null leaves the date to be confirmed (it is then held until an amendment). */
+  dueDate: string | null;
+  eventTypes: BusinessEventType[];
+  latePenalty: boolean;
+  /** NONE releases the milestone without the contract's approvals once its conditions hold. */
+  approval: "CONTRACT" | "NONE";
+}
+export type SourceClauseKind =
+  "TOTAL_VALUE" | "DELIVERY" | "LATE_PENALTY" | "APPROVALS";
+
+/**
+ * Where a term sits in the contract text: the article of the system's contract template, and, when
+ * the reviewed extraction found the value in the uploaded file, its page and the line quoted.
+ */
+export interface SourceClause {
+  kind: SourceClauseKind;
+  article: number;
+  page: number | null;
+  quote: string | null;
+}
+
+export interface DigitizedMilestone {
+  sequence: number;
+  type: MilestoneType;
+  valueMillion: string;
+  paymentPercent: string;
+  dueDate: string | null;
+  eventTypes: BusinessEventType[];
+  /** Which side records each required document (spec 4.2). */
+  documents: { eventType: BusinessEventType; side: Side }[];
+  /** Roles that approve this milestone; empty when the stage needs no approval. */
+  approvalRoles: ApprovalRole[];
+  penalty: { ratePct: string; capPct: string; graceDays: number } | null;
+  /**
+   * MATCH: cut from the workflow of the contract type, as stated in the contract's schedule;
+   * NEEDS_CONFIRMATION: stated as a relative term, its date is entered; CONFIRMED: entered.
+   */
+  source: SourceStatus;
+  sourceClause: SourceClauseKind | null;
+  relativeTermMonths: number | null;
+}
+
+export interface Digitization {
+  contractCode: string;
+  contractValueMillion: string;
+  clauses: SourceClause[];
+  milestones: DigitizedMilestone[];
+  approvers: ApprovalRole[];
+  requiredApprovals: number;
+  suggestedDueDate: string | null;
+  locked: boolean;
+  /** Who corrected the milestones by hand, if anyone (MilestoneEdit). */
+  edited: { by: string; at: string } | null;
+  /** The contract's own rules, added from sentence templates (ContractRule). */
+  contractRules: ContractRule[];
+  /** Who last set the contract's own rules, if anyone. */
+  contractRulesEdited: { by: string; at: string } | null;
+}
+
+/**
+ * One of a contract's own rules: a sentence template (rule-workflows RULE_TEMPLATES) for the
+ * milestones of one type, with the template's whole-number parameter. Signed with the contract.
+ */
+export interface ContractRule {
+  id: string;
+  template:
+    | "LATE_REVIEW"
+    | "MIN_APPROVALS"
+    | "LARGE_REVIEW"
+    | "WAIVE_SHORT_DELAY"
+    | "HALF_PENALTY";
+  milestoneType: string;
+  value: number | null;
+}
