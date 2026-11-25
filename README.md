@@ -32,6 +32,12 @@ packages/
   config/            shared TypeScript config
 ```
 
+## For people and AI tools
+
+- `CLAUDE.md` (`AGENTS.md` for other tools): sibling folders, the old web app in `../codecash`, what a feature branch may change, how to port a screen.
+- `docs/DOI_CHIEU_CODECASH.md`: which CodeCash screen moves where, who owns it, which service it calls.
+- Who does what, day by day: `btl-backend/docs/KICH_BAN_VIBE_CODE.md`.
+
 ## Branches
 
 `base` holds the shared base only; `main` holds the base plus the business features. Base changes go
