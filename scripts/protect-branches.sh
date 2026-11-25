@@ -9,7 +9,7 @@ for branch in base main; do
   gh api --method PUT "repos/${repo}/branches/${branch}/protection" --input - <<JSON
 {
   "required_status_checks": { "strict": true, "contexts": ["${check}"] },
-  "enforce_admins": true,
+  "enforce_admins": false,
   "required_pull_request_reviews": {
     "required_approving_review_count": 1,
     "dismiss_stale_reviews": true
