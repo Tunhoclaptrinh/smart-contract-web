@@ -2,6 +2,7 @@
 
 Mỗi bước dựng phần nền ghi một mục; mới nhất ở trên.
 
+- **test: set up Vitest and test the base helpers** — Vitest + Testing Library (jsdom), test định dạng, URL danh sách, bố cục thống kê, trạng thái danh sách
 - **feat(platform): add the generic resource CRUD screen and the permission matrix** — một màn CRUD cho mọi tài nguyên: danh sách, lọc, tìm kiếm, thêm, sửa, xoá, nhập và xuất; ma trận quyền chỉ đọc
 - **feat: add the app shell with sign-in, layout and lazy routes** — layout và menu theo quyền, đăng nhập (kèm tài khoản demo), trang chủ, 404 và trang lỗi, route tải lười, chọn ngôn ngữ và giao diện sáng/tối
 - **feat: add shared helpers and UI building blocks** — định dạng số/tiền/ngày, `useListQuery` (trang, lọc, sắp xếp đồng bộ URL); thanh hành động, khối, panel, trạng thái trang, hành động trên dòng, tìm theo cột
