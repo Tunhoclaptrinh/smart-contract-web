@@ -18,6 +18,14 @@ if (!window.matchMedia)
       dispatchEvent: () => false,
     }) as MediaQueryList;
 
+// Tables and virtual lists measure their container; jsdom has no layout, so the observer is a no-op.
+if (!("ResizeObserver" in globalThis))
+  (globalThis as { ResizeObserver?: unknown }).ResizeObserver = class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  };
+
 // Numbers and dates format in Vietnamese, as in the product.
 await i18n.changeLanguage("vi");
 
