@@ -1,12 +1,13 @@
 import type { AuthResult, Role } from "@codecash/contracts";
 import { ApiError as HttpError } from "@codecash/api-client";
-import { platform } from "./platform";
+import { ACCESS_TOKEN_KEY, platform } from "./platform";
 
 const RESTORE_RETRIES = 4;
 import type { User } from "./types";
 
+/** Keeps the access token only; the refresh token stays in its httpOnly cookie. */
 function storeSession(result: AuthResult): User {
-  localStorage.setItem("codecash.accessToken", result.token);
+  localStorage.setItem(ACCESS_TOKEN_KEY, result.accessToken ?? result.token);
   return result.user;
 }
 
@@ -90,4 +91,90 @@ export interface SignUpInput {
 /** Creates the company and its administrator account, then signs in as that administrator. */
 export async function signUp(input: SignUpInput): Promise<User> {
   return storeSession(await platform.post<AuthResult>("/auth/register", input));
+}
+
+/** Starts a password reset; the answer never says whether the email has an account. */
+export async function requestPasswordReset(email: string): Promise<void> {
+  await platform.post("/auth/forgot-password", { email: email.trim() });
+}
+
+/** Sets a new password with the code from the reset message; every other session ends. */
+export async function resetPassword(
+  token: string,
+  newPassword: string,
+): Promise<{ email: string }> {
+  return platform.post<{ reset: true; email: string }>("/auth/reset-password", {
+    token,
+    newPassword,
+  });
+}
+
+/** The signed-in user changes its own password; the answer is a fresh session for this tab. */
+export async function changePassword(
+  currentPassword: string,
+  newPassword: string,
+): Promise<User> {
+  return storeSession(
+    await platform.post<AuthResult>("/auth/password", {
+      currentPassword,
+      newPassword,
+    }),
+  );
+}
+
+export interface InvitationPreview {
+  email: string;
+  displayName: string;
+  role: Role;
+  organization: string;
+  expiresAt: string;
+}
+
+export async function getInvitation(token: string): Promise<InvitationPreview> {
+  return platform.get<InvitationPreview>(
+    `/auth/invitations/${encodeURIComponent(token)}`,
+  );
+}
+
+/** Activates an invited account with the chosen password and signs in. */
+export async function acceptInvitation(
+  token: string,
+  password: string,
+  displayName?: string,
+): Promise<User> {
+  return storeSession(
+    await platform.post<AuthResult>("/auth/invitations/accept", {
+      token,
+      password,
+      ...(displayName?.trim() ? { displayName: displayName.trim() } : {}),
+    }),
+  );
+}
+
+export interface InviteInput {
+  email: string;
+  displayName: string;
+  role: Role;
+  title?: string;
+  /** System administrator only. */
+  organizationId?: string;
+}
+
+export async function inviteMember(
+  input: InviteInput,
+): Promise<{ userId: string; email: string; expiresAt: string }> {
+  return platform.post("/auth/invitations", input);
+}
+
+export interface OutboxMessage {
+  to: string;
+  subject: string;
+  link: string;
+  kind: "PASSWORD_RESET" | "INVITATION";
+  createdAt: string;
+}
+
+/** Demo deployments: what would have been emailed, so a reset or an invitation can be followed. */
+export async function listOutbox(): Promise<OutboxMessage[]> {
+  return platform.get<OutboxMessage[]>("/auth/outbox");
 }

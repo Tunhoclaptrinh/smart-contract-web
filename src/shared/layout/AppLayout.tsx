@@ -16,7 +16,9 @@ import type { MenuProps } from "antd";
 import {
   BellOutlined,
   LeftOutlined,
+  KeyOutlined,
   LogoutOutlined,
+  UserAddOutlined,
   MenuOutlined,
   RightOutlined,
   UndoOutlined,
@@ -190,6 +192,22 @@ export function AppLayout() {
       ),
     },
     { type: "divider" },
+    {
+      key: "password",
+      icon: <KeyOutlined />,
+      label: t("auth.change.title"),
+      onClick: () => navigate("/account/password"),
+    },
+    ...(hasPermission("users:create")
+      ? [
+          {
+            key: "invite",
+            icon: <UserAddOutlined />,
+            label: t("auth.invite.title"),
+            onClick: () => navigate("/account/invite"),
+          },
+        ]
+      : []),
     ...(canResetDemo
       ? [
           {

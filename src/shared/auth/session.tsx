@@ -1,4 +1,4 @@
-import { platform } from "../api/platform";
+import { ACCESS_TOKEN_KEY, platform } from "../api/platform";
 import { WORKFLOW_KEYS } from "../api/domain";
 import {
   createContext,
@@ -31,12 +31,14 @@ interface SessionValue {
   /** Signs up a company with its account administrator and signs in as that administrator. */
   signUp: (input: SignUpInput) => Promise<User>;
   signOut: () => void;
+  /** Starts the session of a user signed in some other way (invitation accepted, password changed). */
+  adopt: (user: User) => User;
 }
 
 /** The actions; the state itself (user, restoring) lives in the Redux store. */
 type SessionActions = Pick<
   SessionValue,
-  "signIn" | "signInDemo" | "signUp" | "signOut"
+  "signIn" | "signInDemo" | "signUp" | "signOut" | "adopt"
 >;
 const SessionContext = createContext<SessionActions | null>(null);
 
@@ -122,15 +124,15 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
   const signOut = useCallback(() => {
     void platform.post("/auth/logout", {}).catch(() => {});
-    localStorage.removeItem("codecash.accessToken");
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
     writeStoredUserId(null);
     queryClient.clear();
     dispatch(signedOut());
   }, [queryClient, dispatch]);
 
   const value = useMemo(
-    () => ({ signIn, signInDemo, signUp, signOut }),
-    [signIn, signInDemo, signUp, signOut],
+    () => ({ signIn, signInDemo, signUp, signOut, adopt: start }),
+    [signIn, signInDemo, signUp, signOut, start],
   );
 
   return (

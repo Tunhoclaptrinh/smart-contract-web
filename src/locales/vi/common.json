@@ -359,5 +359,76 @@
   "access": {
     "forbiddenTitle": "Bạn không có quyền mở màn này",
     "forbiddenBody": "Vai trò của bạn không được cấp quyền này. Liên hệ quản trị nếu cần."
+  },
+  "auth": {
+    "account": "Tài khoản",
+    "backToLogin": "Về trang đăng nhập",
+    "newPassword": "Mật khẩu mới",
+    "currentPassword": "Mật khẩu hiện tại",
+    "confirmPassword": "Nhập lại mật khẩu mới",
+    "passwordHint": "12–128 ký tự; không dùng mật khẩu phổ biến hay chứa email của bạn.",
+    "mismatch": "Hai mật khẩu chưa khớp.",
+    "forgot": {
+      "link": "Quên mật khẩu?",
+      "title": "Quên mật khẩu",
+      "intro": "Nhập email đăng nhập. Nếu email có tài khoản, bạn sẽ nhận một liên kết đặt lại mật khẩu có hiệu lực 30 phút.",
+      "submit": "Gửi liên kết đặt lại",
+      "sent": "Nếu email có tài khoản, liên kết đặt lại mật khẩu đã được gửi. Hãy kiểm tra hộp thư."
+    },
+    "reset": {
+      "title": "Đặt lại mật khẩu",
+      "submit": "Đặt mật khẩu mới",
+      "done": "Đã đặt mật khẩu mới. Mọi phiên đăng nhập cũ đã kết thúc; hãy đăng nhập lại.",
+      "again": "Gửi lại liên kết"
+    },
+    "change": {
+      "title": "Đổi mật khẩu",
+      "note": "Đổi mật khẩu sẽ đăng xuất mọi thiết bị khác; phiên này vẫn tiếp tục.",
+      "submit": "Đổi mật khẩu",
+      "done": "Đã đổi mật khẩu."
+    },
+    "invitation": {
+      "title": "Nhận lời mời",
+      "organization": "Tổ chức",
+      "role": "Vai trò",
+      "submit": "Kích hoạt tài khoản và đăng nhập"
+    },
+    "invite": {
+      "title": "Mời thành viên",
+      "note": "Người được mời nhận liên kết (hiệu lực 7 ngày) và tự đặt mật khẩu; không ai khác biết mật khẩu của họ.",
+      "jobTitle": "Chức danh",
+      "submit": "Gửi lời mời",
+      "sent": "Đã gửi lời mời tới {{email}}."
+    },
+    "outbox": {
+      "title": "Hộp thư đi (bản demo, chưa gửi email thật)",
+      "to": "Người nhận",
+      "kind": "Loại",
+      "at": "Lúc",
+      "link": "Liên kết",
+      "open": "Mở",
+      "kinds": {
+        "PASSWORD_RESET": "Đặt lại mật khẩu",
+        "INVITATION": "Lời mời"
+      }
+    },
+    "errors": {
+      "INVALID_CREDENTIALS": "Email hoặc mật khẩu không đúng.",
+      "ACCOUNT_TEMPORARILY_LOCKED": "Tài khoản tạm khoá 15 phút vì nhập sai mật khẩu nhiều lần.",
+      "TOO_MANY_REQUESTS": "Bạn thao tác quá nhanh. Đợi một phút rồi thử lại.",
+      "PASSWORD_MINIMUM_12_CHARACTERS": "Mật khẩu cần 12–128 ký tự.",
+      "PASSWORD_TOO_COMMON": "Mật khẩu này quá phổ biến, hãy chọn mật khẩu khác.",
+      "PASSWORD_CONTAINS_EMAIL": "Mật khẩu không được chứa email của bạn.",
+      "CURRENT_PASSWORD_INCORRECT": "Mật khẩu hiện tại không đúng.",
+      "PASSWORD_UNCHANGED": "Mật khẩu mới phải khác mật khẩu hiện tại.",
+      "INVALID_OR_EXPIRED_TOKEN": "Liên kết không còn hiệu lực (đã dùng hoặc quá hạn). Hãy yêu cầu liên kết mới.",
+      "INVITATION_NOT_FOUND": "Lời mời không còn hiệu lực. Hãy nhờ quản trị gửi lại.",
+      "EMAIL_TAKEN": "Email này đã có tài khoản.",
+      "ROLE_NOT_ASSIGNABLE": "Bạn không được cấp vai trò này.",
+      "OTHER_ORGANIZATION": "Tài khoản thuộc tổ chức khác.",
+      "ORGANIZATION_NOT_FOUND": "Không tìm thấy tổ chức.",
+      "PERMISSION_DENIED": "Bạn không có quyền làm việc này.",
+      "UNKNOWN": "Không thực hiện được. Thử lại sau."
+    }
   }
 }

@@ -17,6 +17,21 @@ export const router = createBrowserRouter([
     lazy: () => import("@/shared/auth/RegisterPage").then(asRoute),
     errorElement: <RouteErrorPage />,
   },
+  // Signed-out account pages: forgotten password, reset link, invitation link.
+  ...(
+    [
+      ["/forgot-password", () => import("@/shared/auth/ForgotPasswordPage")],
+      ["/reset-password", () => import("@/shared/auth/ResetPasswordPage")],
+      [
+        "/accept-invitation",
+        () => import("@/shared/auth/AcceptInvitationPage"),
+      ],
+    ] as const
+  ).map(([path, load]) => ({
+    path,
+    lazy: () => load().then(asRoute),
+    errorElement: <RouteErrorPage />,
+  })),
   {
     element: <RequireAuth />,
     errorElement: <RouteErrorPage />,
@@ -47,6 +62,14 @@ function pages() {
     {
       path: "/platform/:resource?",
       lazy: () => import("@/features/platform/ResourcePage").then(asRoute),
+    },
+    {
+      path: "/account/password",
+      lazy: () => import("@/shared/auth/ChangePasswordPage").then(asRoute),
+    },
+    {
+      path: "/account/invite",
+      lazy: () => import("@/shared/auth/InviteMemberPage").then(asRoute),
     },
     {
       path: "*",
