@@ -57,7 +57,7 @@ describe("company sign-up", () => {
         password: "MotMatKhauDai2026!",
       },
     });
-    expect(localStorage.getItem("codecash.accessToken")).toBe("token-1");
+    expect(localStorage.getItem("scw.accessToken")).toBe("token-1");
   });
 
   it("shows the API's reason when the email is taken and stays on the form", async () => {

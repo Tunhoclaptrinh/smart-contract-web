@@ -47,7 +47,7 @@ export interface Actor {
   role: Role;
   organizationId: string;
   roleChipOrganization: string;
-  /** Data Pack party the user acts as; null for internal staff. */
+  /** Sample data party the user acts as; null for internal staff. */
   partyId: string | null;
   title: string;
   permissions: string[];
@@ -78,7 +78,7 @@ export interface ResourceDefinition {
   name: string;
   fields: ResourceField[];
   readOnly?: boolean;
-  /** Records with these origins belong to the Data Pack or the workflow: CRUD may read, not change them. */
+  /** Records with these origins belong to the sample data or the workflow: CRUD may read, not change them. */
   managedOrigins?: string[];
 }
 export const roles: Role[] = [

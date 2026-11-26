@@ -1,7 +1,7 @@
 /*
  * CSS variables in two groups:
  *  1. UniFlow base variables (--bg-*, --border-*, --text-*) read by packages/ui components.
- *  2. CodeCash feature tokens (--color-*) read by feature CSS modules.
+ *  2. Product feature tokens (--color-*) read by feature CSS modules.
  * Neutral values follow `src/theme.ts`; keep both files in step.
  */
 :root {

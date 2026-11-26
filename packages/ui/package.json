@@ -1,5 +1,5 @@
 {
-  "name": "@codecash/ui",
+  "name": "@scw/ui",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -19,8 +19,8 @@
     "react-i18next": "^17.1.0",
     "papaparse": "^5.5.3",
     "dayjs": "^1.11.11",
-    "@codecash/api-client": "workspace:*",
-    "@codecash/contracts": "workspace:*",
+    "@scw/api-client": "workspace:*",
+    "@scw/contracts": "workspace:*",
     "react-router-dom": "^7.18.4"
   },
   "peerDependencies": {

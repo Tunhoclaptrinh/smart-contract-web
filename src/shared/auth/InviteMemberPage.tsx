@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Alert, Button, Card, Form, Input, Select, Table } from "antd";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { ORG_ADMIN_ASSIGNABLE, type Role } from "@codecash/contracts";
+import { ORG_ADMIN_ASSIGNABLE, type Role } from "@scw/contracts";
 import { inviteMember, listOutbox, type InviteInput } from "../api/auth.api";
 import { platform } from "../api/platform";
 import { AppPage } from "../layout/AppPage";

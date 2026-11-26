@@ -1,6 +1,6 @@
 {
   "brand": {
-    "name": "CodeCash",
+    "name": "Smart Contract Workflow",
     "product": "Smart Contract Workflow"
   },
   "nav": {
@@ -131,7 +131,7 @@
     "organization": "Đơn vị"
   },
   "onboarding": {
-    "title": "Chào mừng đến với CodeCash",
+    "title": "Chào mừng đến với Smart Contract Workflow",
     "subtitle": "Chọn ngôn ngữ và giao diện trước khi bắt đầu.",
     "language": "Ngôn ngữ",
     "theme": "Giao diện",
@@ -219,7 +219,7 @@
       "exceptions": "Ngoại lệ chứng từ",
       "integrity": "Kiểm tra toàn vẹn",
       "activity": "Nhật ký hoạt động",
-      "data": "Kết quả Data Pack",
+      "data": "Kiểm chứng bộ luật",
       "admin": "Quản trị hệ thống"
     },
     "samples": {
@@ -260,7 +260,7 @@
   "contractPane": {
     "title": "Văn bản hợp đồng",
     "simulated": "Bản mô phỏng",
-    "simulatedHint": "Ban tổ chức chỉ cung cấp dữ liệu hợp đồng; văn bản này được lập lại từ chính điều khoản, các mốc và người ký của hợp đồng.",
+    "simulatedHint": "Dữ liệu mẫu chỉ có dữ liệu hợp đồng; văn bản này được lập lại từ chính điều khoản, các mốc và người ký của hợp đồng.",
     "download": "Tải tệp gốc",
     "toSignatures": "Đến trang ký",
     "loading": "Đang chuẩn bị văn bản…",

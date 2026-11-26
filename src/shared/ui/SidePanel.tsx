@@ -1,4 +1,4 @@
-import { StatisticsCard } from "@codecash/ui";
+import { StatisticsCard } from "@scw/ui";
 import type { ReactNode } from "react";
 import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
 import { Panel } from "./Panel";

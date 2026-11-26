@@ -95,7 +95,7 @@ export const IconButton = React.forwardRef<HTMLSpanElement, IconButtonProps>(
           opacity: disabled ? 0.4 : 1,
           ...style,
         }}
-        className={`codecash-icon-btn ${className || ""}`}
+        className={`scw-icon-btn ${className || ""}`}
         {...restProps}
       >
         {icon}

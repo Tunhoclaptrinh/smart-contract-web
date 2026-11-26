@@ -51,7 +51,7 @@ hook, helper dùng chung? **Dừng lại**, nói với người dùng cần gì;
    - lời gọi API cũ (`shared/api/domain.ts`, `workflow.ts`) thành hàm trong
      `src/features/<x>/api.ts`, dùng client `platform` (`@/shared/api/platform`, đường dẫn
      `/api/v1/...` như cũ; gateway định tuyến tới service), đúng `openapi.yaml` của service;
-   - import phần nền theo đường dẫn mới (`@/shared/...`, `@codecash/ui`).
+   - import phần nền theo đường dẫn mới (`@/shared/...`, `@scw/ui`).
 4. Route lazy trong `src/router.tsx`; mục menu, `ROUTE_PERMISSIONS` trong `navConfig.ts`; chữ trong
    `src/locales/{vi,en}/<x>.json` (cả hai ngôn ngữ, cùng khoá).
 5. Test ≥ 5 cho mỗi màn: một hàm thuần, một tương tác (`userEvent`), một bất đồng bộ có MSW (thành
@@ -70,7 +70,7 @@ hook, helper dùng chung? **Dừng lại**, nói với người dùng cần gì;
 - Quyền: `withPermission` cho cả màn, `<Can>` / `usePermission` cho một phần; API vẫn kiểm lại.
 - Trình duyệt không quyết định nghiệp vụ: không tự tính tiền, quyết định, trạng thái; chỉ hiển thị
   kết quả API. Tiền, ngày qua `src/shared/lib/format.ts`.
-- Giao diện: Ant Design và thành phần dùng chung (`@codecash/ui`, `src/shared/ui`). Tiêu đề trang là
+- Giao diện: Ant Design và thành phần dùng chung (`@scw/ui`, `src/shared/ui`). Tiêu đề trang là
   breadcrumb, không có phụ đề; ghi chú dùng `Alert` loại info; tab của danh sách nằm trong `DataTable`.
 - Không ghi token, bí mật vào mã; không chép `.env` từ repo cũ.
 

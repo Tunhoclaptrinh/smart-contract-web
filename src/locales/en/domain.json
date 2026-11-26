@@ -4,9 +4,9 @@
     "SEED": "Demo seed",
     "APP": "Created in app",
     "hint": {
-      "DATA_PACK": "Taken as-is from the organiser's Data Pack (contracts, parties, milestones, events, payment_rules).",
-      "SEED": "The Data Pack has no such data (people, signing order, demo contracts...). Added by the team to run every flow, and marked.",
-      "APP": "Created by a user action in the app, recorded in the Data Pack schema."
+      "DATA_PACK": "Taken as-is from the sample dataset (contracts, parties, milestones, events, payment_rules).",
+      "SEED": "The sample data has no such data (people, signing order, demo contracts...). Added by the team to run every flow, and marked.",
+      "APP": "Created by a user action in the app, recorded in the sample data schema."
     }
   },
   "contractType": {
@@ -267,7 +267,7 @@
     "STEP_NOT_FOUND": "Signing step not found.",
     "TITLE_REQUIRED": "Enter the contract title.",
     "UNKNOWN_OUTPUT": "This output file does not exist.",
-    "UNKNOWN_PARTY": "The recording party is not in the Data Pack.",
+    "UNKNOWN_PARTY": "The recording party is not in the sample data.",
     "USER_NOT_FOUND": "Account not found.",
     "INVALID_TITLE": "Contract title must be at most 250 characters.",
     "AUDIT_CHAIN_BROKEN": "The audit chain is broken; investigate before anchoring.",
@@ -348,7 +348,7 @@
     "INVALID_WORKFLOW": "The milestone workflow is not in the pinned rule version or not for this contract type.",
     "APP_WORKFLOW_COUNT": "A version holds at most 8 own workflows.",
     "INVALID_SEEN_AT": "The time marked as read is not valid.",
-    "CONFIRM_ON_DEVICE": "Confirm on your signing device (app or USB token), not in CodeCash.",
+    "CONFIRM_ON_DEVICE": "Confirm on your signing device (app or USB token), not in the web app.",
     "SIGNER_UNAVAILABLE": "The signing service could not be reached.",
     "NOT_REMOTE_REQUEST": "This request does not go through the signing service.",
     "SIGNER_DISABLED": "Signing through the service is off.",
@@ -368,7 +368,7 @@
     "INVOICE_DATE_FUTURE": "The issue date cannot be in the future.",
     "INVOICE_DUPLICATE": "This invoice (same seller, symbol and number) already backs another document.",
     "CANNOT_AMEND": "Only the buyer's contract officer or owner proposes amendments.",
-    "DATA_PACK_LOCKED": "The organiser's contracts stay as given; they cannot be amended.",
+    "DATA_PACK_LOCKED": "Sample contracts stay as given; they cannot be amended.",
     "AMENDMENT_PENDING": "An amendment is already waiting for the supplier.",
     "AMENDMENT_EMPTY": "The amendment changes no due date or end date.",
     "AMENDMENT_NOT_FOUND": "Amendment not found.",

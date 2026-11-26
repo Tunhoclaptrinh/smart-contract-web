@@ -3,7 +3,7 @@ import { App } from "antd";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import type { ActivityEntry, TaskRow } from "@codecash/contracts";
+import type { ActivityEntry, TaskRow } from "@scw/contracts";
 import { listActivity } from "../api/domain";
 import {
   getNotificationCursor,
@@ -30,7 +30,7 @@ export interface Notifications {
   unread: ReadonlySet<string>;
   /**
    * The number on the bell: the user's MINE tasks only, as the business spec requires
-   * (docs/NGHIEP_VU.md). Unread updates show as a dot when there is no number.
+   * (business specification). Unread updates show as a dot when there is no number.
    */
   badge: number;
   /** Some update from others has not been read yet. */

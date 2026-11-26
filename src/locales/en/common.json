@@ -1,6 +1,6 @@
 {
   "brand": {
-    "name": "CodeCash",
+    "name": "Smart Contract Workflow",
     "product": "Smart Contract Workflow"
   },
   "nav": {
@@ -131,7 +131,7 @@
     "organization": "Organization"
   },
   "onboarding": {
-    "title": "Welcome to CodeCash",
+    "title": "Welcome to Smart Contract Workflow",
     "subtitle": "Pick a language and a theme to get started.",
     "language": "Language",
     "theme": "Theme",
@@ -219,7 +219,7 @@
       "exceptions": "Evidence exceptions",
       "integrity": "Integrity check",
       "activity": "Activity log",
-      "data": "Data Pack results",
+      "data": "Rule set verification",
       "admin": "Administration"
     },
     "samples": {
@@ -260,7 +260,7 @@
   "contractPane": {
     "title": "Contract document",
     "simulated": "Simulated copy",
-    "simulatedHint": "The organiser provides contract data only; this document is rebuilt from the contract's own terms, milestones and signers.",
+    "simulatedHint": "The sample dataset holds contract data only; this document is rebuilt from the contract's own terms, milestones and signers.",
     "download": "Download original",
     "toSignatures": "Go to signatures",
     "loading": "Preparing the document…",

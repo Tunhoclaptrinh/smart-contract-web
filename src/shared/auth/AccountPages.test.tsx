@@ -144,7 +144,7 @@ describe("invitation link", () => {
     await typeNewPassword(user);
     await user.click(screen.getByTestId("accept-submit"));
     expect(await screen.findByText("trang chủ")).toBeInTheDocument();
-    expect(localStorage.getItem("codecash.accessToken")).toBe("t-inv");
+    expect(localStorage.getItem("scw.accessToken")).toBe("t-inv");
   });
 
   it("says when the invitation is no longer valid", async () => {
@@ -189,6 +189,6 @@ describe("change password", () => {
     await typeNewPassword(user);
     await user.click(screen.getByTestId("change-submit"));
     expect(await screen.findByTestId("change-done")).toBeInTheDocument();
-    expect(localStorage.getItem("codecash.accessToken")).toBe("t-new");
+    expect(localStorage.getItem("scw.accessToken")).toBe("t-new");
   });
 });

@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider as StoreProvider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
-import type { Role } from "@codecash/contracts";
+import type { Role } from "@scw/contracts";
 import type { User } from "@/shared/api/types";
 import { SessionProvider } from "@/shared/auth/session";
 import { signedIn } from "@/shared/state/sessionSlice";

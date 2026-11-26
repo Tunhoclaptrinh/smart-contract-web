@@ -9,7 +9,7 @@ import {
 import { useSession } from "../auth/session";
 import { WelcomeModal } from "./WelcomeModal";
 
-const STORAGE_KEY = "codecash.onboarding";
+const STORAGE_KEY = "scw.onboarding";
 
 /**
  * First-run flow, shown on the main screen after the first sign-in: `welcome` asks for language

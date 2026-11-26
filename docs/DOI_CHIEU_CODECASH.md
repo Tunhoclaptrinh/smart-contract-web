@@ -7,7 +7,7 @@ Bảng tra cho người và AI. Cột "Nguồn" tính từ `../codecash/apps/web
 
 | Cũ | Ở đây |
 | --- | --- |
-| `packages/ui` (DataTable, form, hook, theme từ UniFlow) | `packages/ui` (`@codecash/ui`) |
+| `packages/ui` (DataTable, form, hook, theme từ UniFlow) | `packages/ui` (`@scw/ui`) |
 | `shared/ui`, `shared/layout`, `shared/lib`, `shared/onboarding`, `shared/pages` | `src/shared/...` (cùng tên) |
 | `shared/auth` (đăng nhập, `useSession`, `RequireAuth`) | `src/shared/auth` + Redux `src/shared/state`; thêm `RegisterPage`, `Can`, `withPermission` |
 | `features/platform/ResourcePage.tsx`, `PermissionMatrixPage.tsx` | `src/features/platform/` |

@@ -115,7 +115,7 @@ export const BaseButton = React.forwardRef<any, BaseButtonProps>(
         style={customStyle}
         loading={loading}
         disabled={disabled}
-        className={`codecash-btn codecash-btn-${variant} ${className || ""}`}
+        className={`scw-btn scw-btn-${variant} ${className || ""}`}
         {...rest}
       >
         {children}

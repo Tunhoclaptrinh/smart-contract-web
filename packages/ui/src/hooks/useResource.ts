@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { ResourceClient } from "@codecash/api-client";
-import type { Entity, ListQuery, PageQuery } from "@codecash/contracts";
+import type { ResourceClient } from "@scw/api-client";
+import type { Entity, ListQuery, PageQuery } from "@scw/contracts";
 import { useListState, type ListFilters } from "./useListState";
 
 /**

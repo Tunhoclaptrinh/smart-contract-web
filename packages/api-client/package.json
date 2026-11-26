@@ -1,5 +1,5 @@
 {
-  "name": "@codecash/api-client",
+  "name": "@scw/api-client",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@codecash/contracts": "workspace:*"
+    "@scw/contracts": "workspace:*"
   },
   "peerDependencies": {},
   "devDependencies": {}

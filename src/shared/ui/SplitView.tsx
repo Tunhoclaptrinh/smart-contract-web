@@ -2,7 +2,7 @@ import { useState, type ReactNode } from "react";
 import { Splitter } from "antd";
 import styles from "./SplitView.module.css";
 
-const PREFIX = "codecash.split.";
+const PREFIX = "scw.split.";
 
 function readSize(key: string): number | undefined {
   try {

@@ -226,7 +226,7 @@
       "loading": "Rendering document…",
       "unavailable": "The document could not be rendered. Check the file or download it to open in your editor.",
       "downloadPdf": "Download preview PDF",
-      "noStoredFile": "No original file has been stored. The organiser dataset does not include contract files.",
+      "noStoredFile": "No original file has been stored. The sample dataset does not include contract files.",
       "downloadOriginal": "Download original file",
       "updating": "Updating…",
       "working": "Working draft",

@@ -1,11 +1,10 @@
 /**
- * Workflow domain shared by the API and the web app. The web copy is
- * packages/contracts/src/workflow.ts and must stay identical (tests/foundation/domain-types.test.mjs).
- * Vocabulary follows the organiser's Data Pack and docs/NGHIEP_VU.md.
+ * Workflow domain types shared by the services and the web app; each service's openapi.yaml is the
+ * contract. Vocabulary follows the business specification (state dictionary).
  * Money is a decimal string in millions of VND ("1290.00"), never a float.
  */
 
-/** Where a record comes from: the organiser's Data Pack, demo seed data, or an action in the app. */
+/** Where a record comes from: the sample data, demo seed data, or an action in the app. */
 export type Origin = "DATA_PACK" | "SEED" | "APP";
 
 /**
@@ -329,7 +328,7 @@ export interface EventRow {
  * What a Vietnamese invoice states (Nghị định 123/2020/NĐ-CP, Thông tư 78/2021/TT-BTC): template
  * symbol (`1C26TAA`: kind, with/without tax-authority code, year, type, the seller's own letters),
  * number, issue date, the seller's tax code and the total. The total must equal the milestone's
- * planned payment (as in all 140 Data Pack invoices); a penalty is deducted from the payment, not
+ * planned payment (as in all 140 sample data invoices); a penalty is deducted from the payment, not
  * from the invoice.
  */
 export interface InvoiceData {
@@ -612,7 +611,7 @@ export type TimelineEntry =
 export interface ContractOverview {
   contract: ContractRow;
   workflowTemplate: WorkflowTemplate;
-  /** Display name of an `APP_` workflow from the pinned rule version; null for organiser ones. */
+  /** Display name of an `APP_` workflow from the pinned rule version; null for built-in ones. */
   workflowName: string | null;
   ruleSetId: string;
   graceDays: number;
@@ -746,7 +745,7 @@ export type ContractNotice =
   | { code: "MISSING_DUE_DATE"; milestones: number[] }
   | { code: "SIGNED_AFTER_START"; days: number }
   | { code: "PAST_END"; date: string; open: number }
-  /** `liquidable`: the next step is the liquidation record (not for the organiser's contracts). */
+  /** `liquidable`: the next step is the liquidation record (not for the contracts). */
   | { code: "SETTLED"; liquidable: boolean }
   | { code: "LIQUIDATED"; at: string };
 
@@ -789,7 +788,7 @@ export type LifecycleStage =
       kind: "CLOSED";
       state: LifecycleStageState;
       at: string | null;
-      /** True when the step is a liquidation both parties confirm; false for the organiser's
+      /** True when the step is a liquidation both parties confirm; false for the
        * contracts, which simply complete with their last milestone. */
       liquidation: boolean;
     };
@@ -952,7 +951,7 @@ export interface DisputeCase {
   state: "OPEN" | "RESOLVED";
   /** The side that opened it, from the party table. */
   side: Side;
-  /** The person who opened it; null for organiser rows, which name only the party. */
+  /** The person who opened it; null for built-in rows, which name only the party. */
   openedBy: PersonRef | null;
   resolvedBy: PersonRef | null;
   /** Days it stayed open: until the resolution, or until today. */
@@ -1087,7 +1086,7 @@ export interface IntegrityReport {
       problem: "CHANGED" | "MISSING";
     }>;
   };
-  /** The organiser's rows against the hash sealed when they were imported; null without that seal. */
+  /** The rows against the hash sealed when they were imported; null without that seal. */
   dataPack: {
     sealedAt: string;
     tables: Array<{
@@ -1352,7 +1351,7 @@ export interface RemoteSignerCertificate {
 
 /**
  * A signature made by the remote signing service after the person confirmed on their device:
- * the payload CodeCash prepared, its hash, the signature over that hash and the certificate.
+ * the payload the platform prepared, its hash, the signature over that hash and the certificate.
  */
 export interface RemoteSignatureProof {
   provider: "REMOTE_CA";
@@ -1541,7 +1540,7 @@ export interface ContractDraft {
   templateSnapshot?: ContractTemplateSnapshot;
   documentBody?: string;
   ruleVersion?: { id: string; hash: string };
-  /** The organiser workflow of the type, or an `APP_` workflow of the pinned rule version. */
+  /** The built-in workflow of the type, or an `APP_` workflow of the pinned rule version. */
   workflowTemplate?: string;
   code: string;
   state: DraftState;
@@ -1603,7 +1602,7 @@ export interface UploadFormOptions {
   supplierSigners: Record<string, PersonOption[]>;
   presets: SigningPreset[];
   /**
-   * Stage list per contract type, from the rule version a new draft pins: the organiser workflow
+   * Stage list per contract type, from the rule version a new draft pins: the built-in workflow
    * and the version's own `APP_` workflows for that type.
    */
   workflows: Record<

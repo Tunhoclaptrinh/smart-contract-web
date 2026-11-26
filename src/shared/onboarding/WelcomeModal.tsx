@@ -6,7 +6,7 @@ import {
   SunOutlined,
 } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import { useAppConfig, type ThemeMode } from "@codecash/ui";
+import { useAppConfig, type ThemeMode } from "@scw/ui";
 import { BrandMark } from "../ui/BrandMark";
 import styles from "./Onboarding.module.css";
 

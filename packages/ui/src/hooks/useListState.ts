@@ -4,7 +4,7 @@ import {
   useQuery,
   type QueryKey,
 } from "@tanstack/react-query";
-import type { FilterValue, ListQuery } from "@codecash/contracts";
+import type { FilterValue, ListQuery } from "@scw/contracts";
 import { useDebounce } from "./useDebounce";
 
 export type ListFilters = Record<string, FilterValue[]>;

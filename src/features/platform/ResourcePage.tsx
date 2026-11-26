@@ -40,16 +40,16 @@ import {
   useResource,
   parseImportFile,
   downloadBlob,
-} from "@codecash/ui";
-import { ApiError as HttpError } from "@codecash/api-client";
+} from "@scw/ui";
+import { ApiError as HttpError } from "@scw/api-client";
 import type {
   Entity,
   ImportValidationReport,
   Origin,
   ResourceDefinition,
   ResourceField,
-} from "@codecash/contracts";
-import { fieldProblem, ORG_ADMIN_ASSIGNABLE } from "@codecash/contracts";
+} from "@scw/contracts";
+import { fieldProblem, ORG_ADMIN_ASSIGNABLE } from "@scw/contracts";
 import { platform } from "@/shared/api/platform";
 import { useCurrentUser } from "@/shared/auth/session";
 import { AppPage } from "@/shared/layout/AppPage";
@@ -169,7 +169,7 @@ function ResourceView({ resource }: { resource: string }) {
       : field.options;
   const readOnly = definition?.readOnly;
   const can = (operation: string) => hasPermission(`${resource}:${operation}`);
-  /** Data Pack and workflow records change only through their own screens (resources.json). */
+  /** Sample-data and workflow records change only through their own screens (resources.json). */
   const editable = (record: Entity, operation: "update" | "delete") =>
     !readOnly &&
     !definition?.managedOrigins?.includes(String(record.origin)) &&

@@ -1,5 +1,5 @@
-import type { Actor } from "@codecash/contracts";
-export type { Role, ContractStatus } from "@codecash/contracts";
+import type { Actor } from "@scw/contracts";
+export type { Role, ContractStatus } from "@scw/contracts";
 
 export interface Organization {
   id: string;

@@ -2,8 +2,8 @@ import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import type { ListQuery } from "@codecash/contracts";
-import { useListState } from "@codecash/ui";
+import type { ListQuery } from "@scw/contracts";
+import { useListState } from "@scw/ui";
 
 const ROWS = Array.from({ length: 25 }, (_, i) => ({ id: i + 1 }));
 

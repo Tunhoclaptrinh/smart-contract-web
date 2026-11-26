@@ -3,7 +3,7 @@ import type { ThemeMode } from "./context/AppConfigContext";
 
 /**
  * Ant Design theme in the UniFlow base layout (light/dark configs with the same token set),
- * branded for CodeCash. `styles/tokens.css` mirrors these values as CSS variables.
+ * branded for the product. `styles/tokens.css` mirrors these values as CSS variables.
  */
 export const brand = {
   primary: "#315bea",

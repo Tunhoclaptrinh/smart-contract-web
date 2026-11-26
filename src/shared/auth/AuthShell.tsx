@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Alert, Card, Form, Input, Typography } from "antd";
 import { useTranslation } from "react-i18next";
-import { ApiError } from "@codecash/api-client";
+import { ApiError } from "@scw/api-client";
 import { PreferenceControls } from "../layout/PreferenceControls";
 import { BrandMark } from "../ui/BrandMark";
 

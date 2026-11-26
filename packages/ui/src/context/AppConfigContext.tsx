@@ -14,9 +14,7 @@ const Context = createContext({
 export function AppConfigProvider({ children }: { children: ReactNode }) {
   const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
     try {
-      return localStorage.getItem("codecash.theme") === "dark"
-        ? "dark"
-        : "light";
+      return localStorage.getItem("scw.theme") === "dark" ? "dark" : "light";
     } catch {
       return "light";
     }
@@ -27,7 +25,7 @@ export function AppConfigProvider({ children }: { children: ReactNode }) {
   const change = (mode: ThemeMode) => {
     setThemeMode(mode);
     try {
-      localStorage.setItem("codecash.theme", mode);
+      localStorage.setItem("scw.theme", mode);
     } catch {}
   };
   return (

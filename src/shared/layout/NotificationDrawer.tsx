@@ -19,7 +19,7 @@ import type {
   ActivityEntry,
   DashboardView,
   TaskRow,
-} from "@codecash/contracts";
+} from "@scw/contracts";
 import { getDashboard } from "../api/domain";
 import {
   formatDate,

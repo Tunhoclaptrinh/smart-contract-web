@@ -2,7 +2,7 @@ import {
   MAX_PAGE_SIZE,
   type FilterValue,
   type ListQuery,
-} from "@codecash/contracts";
+} from "@scw/contracts";
 
 type Filters = Record<string, FilterValue[]>;
 

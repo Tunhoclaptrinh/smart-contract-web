@@ -1,9 +1,9 @@
 /**
- * Workflows a rule version adds for contracts drafted in the app (docs/NGHIEP_VU.md §6.3).
+ * Workflows a rule version adds for contracts drafted in the app (business specification §6.3).
  *
- * The organiser's 16 rule scopes and 4 workflows decide the 405 Data Pack milestones, so a version
+ * The sample data's 16 rule scopes and 4 workflows decide the 405 sample data milestones, so a version
  * may only restate them. A version may also carry its own workflows, coded `APP_…`: their stages
- * and rule scopes are free to differ, because no Data Pack milestone ever uses them. They must
+ * and rule scopes are free to differ, because no sample data milestone ever uses them. They must
  * still be complete (every stage has a scope with the eight reasons and one final ELSE) and pass
  * the engine's safety proof before the version can be published.
  *
@@ -85,7 +85,7 @@ export const RULE_COLUMNS = [
 export const MAX_APP_WORKFLOWS = 8;
 export const MAX_APP_STAGES = 8;
 export const MAX_SCOPE_RULES = 30;
-/** The organiser's 128 rules plus the most a version's own workflows can hold. */
+/** The 128 rules plus the most a version's own workflows can hold. */
 export const MAX_VERSION_RULES =
   128 + MAX_APP_WORKFLOWS * MAX_APP_STAGES * MAX_SCOPE_RULES;
 
@@ -338,8 +338,8 @@ export function appWorkflowProblems(
 }
 
 /**
- * A new app workflow for a contract type, started as a copy of that type's organiser workflow:
- * the same stages and, for each stage, a copy of the organiser's rule scope. The author then
+ * A new app workflow for a contract type, started as a copy of that type's built-in workflow:
+ * the same stages and, for each stage, a copy of the rule scope. The author then
  * changes what the app needs; the copy alone already passes every check.
  */
 export function scaffoldAppWorkflow(input: {
@@ -389,8 +389,8 @@ export function scaffoldAppWorkflow(input: {
 }
 
 /**
- * The rules of a new stage: a copy of the organiser's scope for the same milestone type when one
- * exists, otherwise of the first organiser scope (all organiser scopes give the same eight rules).
+ * The rules of a new stage: a copy of the scope for the same milestone type when one
+ * exists, otherwise of the first built-in scope (all built-in scopes give the same eight rules).
  */
 export function copyScope(
   rules: VersionRule[],
@@ -399,18 +399,18 @@ export function copyScope(
   stageType: string,
   nextNumber: () => number,
 ): VersionRule[] {
-  const organiser = rules.filter((rule) => !isAppRule(rule));
+  const builtIn = rules.filter((rule) => !isAppRule(rule));
   const sourceScope =
-    organiser.find(
+    builtIn.find(
       (rule) =>
         rule.contract_type === contractType &&
         rule.applies_to_milestone_type === stageType,
     )?.release_rule_code ??
-    organiser.find((rule) => rule.applies_to_milestone_type === stageType)
+    builtIn.find((rule) => rule.applies_to_milestone_type === stageType)
       ?.release_rule_code ??
-    organiser[0]?.release_rule_code;
+    builtIn[0]?.release_rule_code;
   return rescopeRules(
-    organiser.filter((rule) => rule.release_rule_code === sourceScope),
+    builtIn.filter((rule) => rule.release_rule_code === sourceScope),
     workflow,
     contractType,
     stageType,
@@ -419,7 +419,7 @@ export function copyScope(
 }
 
 /**
- * Rules of another scope (an organiser scope, or a milestone of the library) moved into a stage of
+ * Rules of another scope (a built-in scope, or a milestone of the library) moved into a stage of
  * an app workflow: same order and content, new ids and the stage's scope.
  */
 export function rescopeRules(
@@ -453,8 +453,8 @@ export const nextRuleNumber = (rules: VersionRule[], workflow: string) =>
   ) + 1;
 
 /**
- * The organiser rules that belong to the same family as `ruleId`: same priority and reason in
- * every organiser scope. The 128 organiser rules are 8 families of 16 identical copies, so an
+ * The built-in rules that belong to the same family as `ruleId`: same priority and reason in
+ * every built-in scope. The 128 built-in rules are 8 families of 16 identical copies, so an
  * edit meant for one family is applied to all of its scopes in one step.
  */
 export function ruleFamily(
@@ -493,7 +493,7 @@ export function divergedFamilies(rules: VersionRule[]): string[] {
  * "Waive the penalty when at most 3 days late" instead of writing the expression, then edits the
  * number in the expression editor. Idea taken from the Contract Smart rule builder.
  *
- * Two kinds, placed between the organiser's blocking rules (10…50) and the late penalty (60):
+ * Two kinds, placed between the blocking rules (10…50) and the late penalty (60):
  * - TIGHTEN (51…55): hold the payment in more cases. They pay nothing.
  * - LOOSEN (56…59): pay more readily than the standard rules: waive or soften a late penalty.
  *   They only ever run after every blocking rule (dispute, rejection, unauthorized or missing

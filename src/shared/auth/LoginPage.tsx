@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fold } from "@codecash/contracts";
+import { fold } from "@scw/contracts";
 import {
   Alert,
   Avatar,
