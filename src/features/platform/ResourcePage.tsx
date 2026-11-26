@@ -22,6 +22,7 @@ import {
 import type { MenuProps } from "antd";
 import {
   CloudUploadOutlined,
+  UserAddOutlined,
   DeleteOutlined,
   DownloadOutlined,
   EditOutlined,
@@ -683,6 +684,17 @@ function ResourceView({ resource }: { resource: string }) {
                 onClick={() => setUploadOpen(true)}
               >
                 {t("upload")}
+              </BaseButton>
+            ) : resource === "users" && hasPermission("users:create") ? (
+              // People join by invitation: they choose their own password (identity).
+              <BaseButton
+                variant="primary"
+                size="small"
+                icon={<UserAddOutlined />}
+                onClick={() => navigate("/account/invite")}
+                data-testid="invite-member"
+              >
+                {t("inviteMember")}
               </BaseButton>
             ) : undefined
           }

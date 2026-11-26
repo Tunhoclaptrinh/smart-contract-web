@@ -473,5 +473,6 @@
     "documents": "Documents",
     "engine": "Sample-data engine"
   },
-  "libraryTitle": "Milestone library"
+  "libraryTitle": "Milestone library",
+  "inviteMember": "Invite a member"
 }
