@@ -97,6 +97,7 @@ export const navByRole = Object.fromEntries(
  */
 const ROUTE_PERMISSIONS: [path: string, permission: string][] = [
   ["/platform/permissions", "permissions:read"],
+  ["/account/invite", "users:create"],
   ...PLATFORM_RESOURCES.map((name): [string, string] => [
     `/platform/${name}`,
     `${name}:read`,

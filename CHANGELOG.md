@@ -2,6 +2,7 @@
 
 Mỗi bước dựng phần nền ghi một mục; mới nhất ở trên.
 
+- **feat(auth): refresh tokens, password reset, invitations, change password** — `ApiClient` gặp 401 thì làm mới token một lần (một lượt làm mới dùng chung cho các request cùng lỗi) bằng cookie HttpOnly `sc_refresh`, lặp lại request; không làm mới cho đăng nhập sai; `ApiError.errors` giữ lỗi theo trường (RFC 9457); màn `/forgot-password`, `/reset-password`, `/accept-invitation` (ngoài phiên), `/account/password`, `/account/invite` (quyền `users:create`, vai trò được cấp theo SoD, hộp thư đi khi demo); đăng nhập có liên kết "Quên mật khẩu?", báo khoá tài khoản và giới hạn; menu tài khoản thêm hai mục; chữ vi/en (`auth.*`); 14 test mới
 - **ci, docs: guard the base and guide AI-assisted work** — `scripts/check-base-untouched.mjs` (`pnpm check:base`, chạy trong CI) từ chối PR nghiệp vụ sửa phần nền; `.github/CODEOWNERS`; `CLAUDE.md` + `AGENTS.md` (mã cũ ở `../codecash`, vùng được sửa, quy trình chuyển màn); `docs/DOI_CHIEU_CODECASH.md` (màn cũ → màn mới, chủ, service)
 - **docs: let the repository admin merge when CI is green** — bảo vệ nhánh không áp dụng cho admin, để trưởng nhóm merge việc nền khi chưa có người duyệt; thành viên vẫn cần 1 người duyệt và CI xanh
 - **docs: name base task branches core/<task>; allow running CI by hand** — Git không cho có cùng lúc nhánh `base` và `base/<việc>`, nên nhánh việc của phần nền đổi thành `core/<việc>`; CI thêm `workflow_dispatch`

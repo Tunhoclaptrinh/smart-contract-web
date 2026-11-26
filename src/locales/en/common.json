@@ -359,5 +359,76 @@
   "access": {
     "forbiddenTitle": "You may not open this screen",
     "forbiddenBody": "Your role has not been given this permission. Ask an administrator if you need it."
+  },
+  "auth": {
+    "account": "Account",
+    "backToLogin": "Back to sign-in",
+    "newPassword": "New password",
+    "currentPassword": "Current password",
+    "confirmPassword": "Repeat the new password",
+    "passwordHint": "12–128 characters; not a common password and not built on your email.",
+    "mismatch": "The two passwords differ.",
+    "forgot": {
+      "link": "Forgot password?",
+      "title": "Forgotten password",
+      "intro": "Enter your sign-in email. If it has an account, you will receive a reset link valid for 30 minutes.",
+      "submit": "Send the reset link",
+      "sent": "If the email has an account, a reset link is on its way. Check your inbox."
+    },
+    "reset": {
+      "title": "Reset password",
+      "submit": "Set the new password",
+      "done": "Your new password is set. Every earlier session has ended; sign in again.",
+      "again": "Ask for a new link"
+    },
+    "change": {
+      "title": "Change password",
+      "note": "Changing your password signs out every other device; this session goes on.",
+      "submit": "Change password",
+      "done": "Password changed."
+    },
+    "invitation": {
+      "title": "Accept the invitation",
+      "organization": "Organisation",
+      "role": "Role",
+      "submit": "Activate the account and sign in"
+    },
+    "invite": {
+      "title": "Invite a member",
+      "note": "The invited person gets a link (valid 7 days) and chooses their own password; nobody else ever knows it.",
+      "jobTitle": "Job title",
+      "submit": "Send the invitation",
+      "sent": "Invitation sent to {{email}}."
+    },
+    "outbox": {
+      "title": "Outbox (demo, no real email is sent)",
+      "to": "To",
+      "kind": "Kind",
+      "at": "At",
+      "link": "Link",
+      "open": "Open",
+      "kinds": {
+        "PASSWORD_RESET": "Password reset",
+        "INVITATION": "Invitation"
+      }
+    },
+    "errors": {
+      "INVALID_CREDENTIALS": "Wrong email or password.",
+      "ACCOUNT_TEMPORARILY_LOCKED": "The account is locked for 15 minutes after too many wrong passwords.",
+      "TOO_MANY_REQUESTS": "Too many attempts. Wait a minute and try again.",
+      "PASSWORD_MINIMUM_12_CHARACTERS": "The password needs 12–128 characters.",
+      "PASSWORD_TOO_COMMON": "This password is too common; choose another.",
+      "PASSWORD_CONTAINS_EMAIL": "The password must not contain your email.",
+      "CURRENT_PASSWORD_INCORRECT": "The current password is wrong.",
+      "PASSWORD_UNCHANGED": "The new password must differ from the current one.",
+      "INVALID_OR_EXPIRED_TOKEN": "This link is no longer valid (used or expired). Ask for a new one.",
+      "INVITATION_NOT_FOUND": "This invitation is no longer valid. Ask your administrator to send it again.",
+      "EMAIL_TAKEN": "This email already has an account.",
+      "ROLE_NOT_ASSIGNABLE": "You may not assign this role.",
+      "OTHER_ORGANIZATION": "The account belongs to another organisation.",
+      "ORGANIZATION_NOT_FOUND": "Organisation not found.",
+      "PERMISSION_DENIED": "You do not have permission for this.",
+      "UNKNOWN": "That did not work. Try again later."
+    }
   }
 }

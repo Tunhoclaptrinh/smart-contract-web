@@ -29,6 +29,7 @@ import { PreferenceControls } from "../layout/PreferenceControls";
 import { useOnboarding } from "../onboarding/OnboardingContext";
 import { BrandMark } from "../ui/BrandMark";
 import { useSession } from "./session";
+import { authErrorText, errorCode } from "./AuthShell";
 import styles from "./LoginPage.module.css";
 
 const HIGHLIGHTS = [
@@ -44,7 +45,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const [form] = Form.useForm<{ email: string; password: string }>();
   const [demoSearch, setDemoSearch] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const demo = useQuery({
     queryKey: ["demo-accounts"],
@@ -61,12 +62,12 @@ export default function LoginPage() {
   const signInWithDemo = async (account: DemoAccount) => {
     form.setFieldsValue({ email: account.email, password: "" });
     setBusy(true);
-    setError(false);
+    setError(null);
     try {
       const actor = await signInDemo(account.email);
       navigate(homeByRole[actor.role], { replace: true });
-    } catch {
-      setError(true);
+    } catch (failure) {
+      setError(errorCode(failure));
       setBusy(false);
     }
   };
@@ -236,7 +237,12 @@ export default function LoginPage() {
             <Alert
               type="error"
               showIcon
-              title={t("login.errors.INVALID_CREDENTIALS")}
+              title={
+                error === "INVALID_CREDENTIALS" || error === "UNKNOWN"
+                  ? t("login.errors.INVALID_CREDENTIALS")
+                  : authErrorText(t, error)
+              }
+              data-testid="login-error"
               style={{ marginBottom: 16 }}
             />
           ) : null}
@@ -265,12 +271,12 @@ export default function LoginPage() {
             size="large"
             onFinish={async ({ email, password }) => {
               setBusy(true);
-              setError(false);
+              setError(null);
               try {
                 const actor = await signIn(email, password);
                 navigate(homeByRole[actor.role], { replace: true });
-              } catch {
-                setError(true);
+              } catch (failure) {
+                setError(errorCode(failure));
               } finally {
                 setBusy(false);
               }
@@ -318,6 +324,13 @@ export default function LoginPage() {
                 maxLength={1024}
               />
             </Form.Item>
+            <div
+              style={{ textAlign: "right", marginTop: -8, marginBottom: 16 }}
+            >
+              <Link to="/forgot-password" data-testid="forgot-link">
+                {t("auth.forgot.link")}
+              </Link>
+            </div>
             <Button type="primary" htmlType="submit" loading={busy} block>
               {t("login.submit")}
             </Button>

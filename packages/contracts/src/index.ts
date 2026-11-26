@@ -53,7 +53,12 @@ export interface Actor {
   permissions: string[];
 }
 export interface AuthResult {
+  /** Access token (same as accessToken; kept for older callers). */
   token: string;
+  accessToken?: string;
+  /** Also set as the httpOnly cookie sc_refresh; the web never stores it. */
+  refreshToken?: string;
+  refreshExpiresIn?: number;
   user: Actor;
 }
 export interface ResourceField {

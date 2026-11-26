@@ -4,12 +4,20 @@ import type {
   PageResult,
   Entity,
 } from "@codecash/contracts";
+/** One field problem of an RFC 9457 answer (`errors[]`), e.g. `{ field: "admin.email", code: "INVALID_EMAIL" }`. */
+export interface FieldIssue {
+  field: string;
+  code: string;
+  row?: number;
+}
 export class ApiError extends Error {
   constructor(
     public status: number,
     public code: string,
     message: string,
     public requestId?: string,
+    /** Every field problem the API listed, so a form can mark all of them at once. */
+    public errors: FieldIssue[] = [],
   ) {
     super(message);
     this.name = "ApiError";
@@ -18,21 +26,51 @@ export class ApiError extends Error {
 export interface ClientOptions {
   baseUrl: string;
   getToken?: () => string | null;
+  /**
+   * Called once when a request gets 401: gets a new access token (refresh token cookie) and
+   * returns it, or null when the session is over. The request is then sent again once.
+   */
+  refresh?: () => Promise<string | null>;
   onUnauthorized?: () => void;
   fetch?: typeof fetch;
 }
+/** Requests whose 401 means "wrong credentials", not "session expired": never refreshed. */
+const NO_REFRESH =
+  /^\/auth\/(login|register|refresh|demo-login|reset-password|forgot-password|invitations\/accept)\b/;
+
 export class ApiClient {
+  /** One refresh at a time: requests failing together wait for the same new token. */
+  private refreshing: Promise<string | null> | null = null;
   constructor(private readonly options: ClientOptions) {}
+  private refreshOnce() {
+    if (!this.options.refresh) return Promise.resolve(null);
+    this.refreshing ??= this.options.refresh().finally(() => {
+      this.refreshing = null;
+    });
+    return this.refreshing;
+  }
   async request<T>(path: string, init: RequestInit = {}): Promise<T> {
-    const headers = new Headers(init.headers);
-    const token = this.options.getToken?.();
-    if (token) headers.set("Authorization", `Bearer ${token}`);
-    if (init.body && !(init.body instanceof FormData))
-      headers.set("Content-Type", "application/json");
-    const response = await (this.options.fetch ?? fetch)(
-      `${this.options.baseUrl}${path}`,
-      { ...init, headers },
-    );
+    const send = () => {
+      const headers = new Headers(init.headers);
+      const token = this.options.getToken?.();
+      if (token) headers.set("Authorization", `Bearer ${token}`);
+      if (init.body && !(init.body instanceof FormData))
+        headers.set("Content-Type", "application/json");
+      return (this.options.fetch ?? fetch)(`${this.options.baseUrl}${path}`, {
+        credentials: "same-origin",
+        ...init,
+        headers,
+      });
+    };
+    let response = await send();
+    if (
+      response.status === 401 &&
+      !NO_REFRESH.test(path) &&
+      this.options.refresh
+    ) {
+      const token = await this.refreshOnce().catch(() => null);
+      if (token) response = await send();
+    }
     const contentType = response.headers.get("content-type") ?? "";
     const body =
       response.status === 204
@@ -41,14 +79,16 @@ export class ApiClient {
           ? await response.json()
           : await response.text();
     if (!response.ok) {
-      if (response.status === 401) this.options.onUnauthorized?.();
+      if (response.status === 401 && !NO_REFRESH.test(path))
+        this.options.onUnauthorized?.();
       throw new ApiError(
         response.status,
         body?.code ?? "REQUEST_FAILED",
         Array.isArray(body?.message)
           ? body.message.join(", ")
           : (body?.message ?? response.statusText),
-        body?.requestId,
+        body?.requestId ?? body?.traceId,
+        Array.isArray(body?.errors) ? body.errors : [],
       );
     }
     return (
