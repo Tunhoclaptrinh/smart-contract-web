@@ -79,7 +79,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       queryClient.clear();
       dispatch(signedOut());
     };
-    window.addEventListener("codecash:unauthorized", clear);
+    window.addEventListener("scw:unauthorized", clear);
     const refresh = () =>
       void queryClient.invalidateQueries({
         predicate: (query) =>
@@ -92,10 +92,10 @@ export function SessionProvider({ children }: { children: ReactNode }) {
               "milestone-templates",
             ].includes(String(query.queryKey[1]))),
       });
-    window.addEventListener("codecash:workflow-changed", refresh);
+    window.addEventListener("scw:workflow-changed", refresh);
     return () => {
-      window.removeEventListener("codecash:unauthorized", clear);
-      window.removeEventListener("codecash:workflow-changed", refresh);
+      window.removeEventListener("scw:unauthorized", clear);
+      window.removeEventListener("scw:workflow-changed", refresh);
     };
   }, [queryClient, dispatch]);
   const start = useCallback(

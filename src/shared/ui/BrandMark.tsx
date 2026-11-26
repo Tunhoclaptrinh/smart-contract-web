@@ -1,4 +1,4 @@
-/** CodeCash mark: a contract sheet with a check. `inverse` is for placement on the brand colour. */
+/** Product mark: a contract sheet with a check. `inverse` is for placement on the brand colour. */
 export function BrandMark({
   size = 32,
   inverse = false,

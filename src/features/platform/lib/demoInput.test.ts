@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { TFunction } from "i18next";
-import type { Entity } from "@codecash/contracts";
+import type { Entity } from "@scw/contracts";
 import { resourceDemoInput } from "./demoInput";
 
 const t = ((key: string) => key) as unknown as TFunction<"platform">;

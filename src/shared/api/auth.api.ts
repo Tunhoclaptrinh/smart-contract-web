@@ -1,5 +1,5 @@
-import type { AuthResult, Role } from "@codecash/contracts";
-import { ApiError as HttpError } from "@codecash/api-client";
+import type { AuthResult, Role } from "@scw/contracts";
+import { ApiError as HttpError } from "@scw/api-client";
 import { ACCESS_TOKEN_KEY, platform } from "./platform";
 
 const RESTORE_RETRIES = 4;
@@ -30,7 +30,7 @@ export interface DemoDirectory {
   enabled: boolean;
   /** Accounts of the demo buyer and supplier, plus the two controllers. */
   featured: DemoAccount[];
-  /** Every other seeded account, by Data Pack organisation. */
+  /** Every other seeded account, by sample-data organisation. */
   organizations: { id: string; name: string; accounts: DemoAccount[] }[];
 }
 

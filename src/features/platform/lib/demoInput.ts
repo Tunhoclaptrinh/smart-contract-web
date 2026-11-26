@@ -1,4 +1,4 @@
-import type { Entity } from "@codecash/contracts";
+import type { Entity } from "@scw/contracts";
 import type { TFunction } from "i18next";
 
 /** Input proposals only: references come from the allowed directory, never fabricated IDs. */

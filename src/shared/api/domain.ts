@@ -31,8 +31,8 @@ import type {
   Liquidation,
   MilestoneEdit,
   ContractRule,
-} from "@codecash/contracts";
-import { ApiError as HttpError } from "@codecash/api-client";
+} from "@scw/contracts";
+import { ApiError as HttpError } from "@scw/api-client";
 import { ApiError } from "./client";
 import { platform } from "./platform";
 import { workflowCall } from "./workflow";
@@ -132,7 +132,7 @@ export async function uploadEvidenceFile(
       "/evidence-documents",
       { method: "POST", body },
     );
-    window.dispatchEvent(new Event("codecash:workflow-changed"));
+    window.dispatchEvent(new Event("scw:workflow-changed"));
     return result;
   } catch (error) {
     if (error instanceof HttpError) throw new ApiError(error.code);

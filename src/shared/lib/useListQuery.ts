@@ -7,8 +7,8 @@ import {
   type ListPage,
   type ListQuery,
   type ListSpec,
-} from "@codecash/contracts";
-import { exportToCSV, exportToJSON, useListState } from "@codecash/ui";
+} from "@scw/contracts";
+import { exportToCSV, exportToJSON, useListState } from "@scw/ui";
 import { App } from "antd";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
@@ -39,7 +39,7 @@ interface ExportColumn {
 /**
  * State of one workflow list table: the shared list state of the base (`useListState`: paging,
  * search, filters, sort, column filters) plus what only this app adds, the address sync and the
- * audited export. Column keys are the list fields of the spec (apps/api/src/domain/lists.ts).
+ * audited export. Column keys are the list fields of the spec (defined by the service that serves the list).
  */
 export function useListQuery<T, P extends ListPage<T> = ListPage<T>>(options: {
   key: QueryKey;

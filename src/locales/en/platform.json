@@ -44,7 +44,7 @@
     "updatedAt": "Updated",
     "version": "Version",
     "createdAt": "Created",
-    "partyId": "Data Pack party ID",
+    "partyId": "sample data party ID",
     "workflowTemplate": "Workflow",
     "sequence": "Sequence",
     "paymentPercent": "Payment share (%)",
@@ -66,7 +66,7 @@
     "address": "Address"
   },
   "data": {
-    "title": "Data Pack results",
+    "title": "Rule set verification",
     "evaluate": "Evaluate dataset",
     "trace": "Audit trace",
     "columns": {
@@ -116,7 +116,7 @@
     },
     "source": {
       "label": "Data source",
-      "datapack": "Official Data Pack",
+      "datapack": "Sample dataset",
       "upload": "Upload dataset",
       "delete": "Delete dataset",
       "deleteBody": "Delete dataset “{{name}}” with its uploaded files and run results?",
@@ -250,7 +250,7 @@
       "milestones": "Payment milestones",
       "disputes": "Disputes",
       "activity": "Activity",
-      "engine": "Data Pack engine",
+      "engine": "Sample-data engine",
       "documents": "Documents",
       "administration": "Administration",
       "controls": "Exception control",
@@ -293,8 +293,8 @@
       "disputes:read": "View disputes",
       "disputes:resolve": "Close disputes",
       "activity:read": "View activity log",
-      "engine:read": "View Data Pack results",
-      "engine:evaluate": "Run the Data Pack evaluation",
+      "engine:read": "View Rule set verification",
+      "engine:evaluate": "Run the verification on sample data",
       "engine:datasets": "Upload datasets",
       "documents:read": "View documents",
       "documents:upload": "Upload documents",
@@ -360,7 +360,7 @@
   "imported_one": "{{count}} record imported",
   "imported_other": "{{count}} records imported",
   "errors": {
-    "MANAGED_RECORD": "This record belongs to the Data Pack or the workflow, so it cannot be edited or deleted here. Edit contract drafts on the Upload contract screen.",
+    "MANAGED_RECORD": "This record belongs to the sample data or the workflow, so it cannot be edited or deleted here. Edit contract drafts on the Upload contract screen.",
     "CONTRACT_TEMPLATE_INVALID": "Invalid template. Check terms, amount limits and signer roles.",
     "APPEND_ONLY_RESOURCE": "This data is append-only; it cannot be edited or deleted.",
     "CANNOT_DELETE_SELF": "You cannot delete the account you are signed in with.",
@@ -415,7 +415,7 @@
   "fieldOverrides": {
     "users": {
       "title": "Job title",
-      "partyId": "Data Pack party code",
+      "partyId": "sample data party code",
       "active": "Active"
     },
     "organizations": {
@@ -428,7 +428,7 @@
   "fieldHints": {
     "users": {
       "organizationId": "The user sees only this organisation's contracts.",
-      "partyId": "Leave empty when the organisation is not in the Data Pack."
+      "partyId": "Leave empty when the organisation is not in the sample data."
     },
     "milestone-templates": {
       "requiredEvents": "Event codes separated by semicolons, e.g. DELIVERY;INVOICE.",
@@ -440,8 +440,8 @@
   },
   "settingKeys": {
     "DATA_PACK_SNAPSHOT": {
-      "label": "Data Pack snapshot date",
-      "hint": "organiser data in use"
+      "label": "Sample data snapshot date",
+      "hint": "sample data in use"
     },
     "SPEC_VERSION": {
       "label": "Specification version",
@@ -462,7 +462,7 @@
   },
   "auditResources": {
     "users": "Accounts",
-    "datapack": "Data Pack",
+    "datapack": "Sample data",
     "integrity": "Integrity check",
     "app-migrations": "App data update",
     "workflow": "Contract workflow",
@@ -471,7 +471,7 @@
     "rule-versions": "Rule versions",
     "exports": "Data export",
     "documents": "Documents",
-    "engine": "Data Pack engine"
+    "engine": "Sample-data engine"
   },
   "libraryTitle": "Milestone library"
 }

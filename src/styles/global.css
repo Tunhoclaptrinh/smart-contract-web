@@ -1,6 +1,6 @@
 /*
  * Application-wide styles, ported from UniFlow's styles/global.less (base design system).
- * Design tokens come from @codecash/ui/tokens.css, imported first in main.tsx.
+ * Design tokens come from @scw/ui/tokens.css, imported first in main.tsx.
  */
 
 /* Keep helper text readable in both themes using the existing feature palette. */
@@ -119,11 +119,11 @@ p {
   padding-inline: 0;
   width: 32px;
 }
-.codecash-btn-secondary:hover:not(:disabled) {
+.scw-btn-secondary:hover:not(:disabled) {
   border-color: var(--color-primary) !important;
   color: var(--color-primary) !important;
 }
-.codecash-btn-ghost:hover:not(:disabled) {
+.scw-btn-ghost:hover:not(:disabled) {
   background-color: var(--color-primary-subtle) !important;
   border-color: color-mix(
     in srgb,
@@ -234,7 +234,7 @@ p {
 }
 
 /* Row of a rule trace table that decided the milestone. */
-.codecash-row-selected > td {
+.scw-row-selected > td {
   background: var(--color-success-soft, rgba(16, 185, 129, 0.08)) !important;
   font-weight: 600;
 }

@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { useTranslation } from "react-i18next";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { ApiError } from "@codecash/api-client";
+import { ApiError } from "@scw/api-client";
 import type { SignUpInput } from "../api/auth.api";
 import { homeByRole } from "../layout/navConfig";
 import { PreferenceControls } from "../layout/PreferenceControls";

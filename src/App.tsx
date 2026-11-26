@@ -1,4 +1,4 @@
-import { UiProvider, ErrorBoundary } from "@codecash/ui";
+import { UiProvider, ErrorBoundary } from "@scw/ui";
 import { ConfigProvider } from "antd";
 import { useEffect } from "react";
 import dayjs from "dayjs";

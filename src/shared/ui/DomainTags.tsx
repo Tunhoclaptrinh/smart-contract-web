@@ -4,7 +4,7 @@ import type {
   Decision,
   MilestoneStatus,
   Origin,
-} from "@codecash/contracts";
+} from "@scw/contracts";
 import { useTranslation } from "react-i18next";
 import { contractStatusTone, decisionTone, statusTone } from "../lib/domain";
 import { ToneTag } from "./ToneTag";
@@ -16,7 +16,7 @@ const originColor: Record<Origin, string> = {
 };
 
 /**
- * Where a record comes from: the organiser's Data Pack, demo seed data added because the Data Pack
+ * Where a record comes from: the sample dataset, demo seed data added because the sample dataset
  * does not have it, or an action taken in the app. Shown wherever records are listed.
  */
 export function OriginTag({ origin }: { origin: Origin }) {

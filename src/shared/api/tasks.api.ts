@@ -1,4 +1,4 @@
-import type { TaskRow } from "@codecash/contracts";
+import type { TaskRow } from "@scw/contracts";
 import { getPendingTaskCount, getTaskInbox } from "./domain";
 
 export type PendingTask = TaskRow;

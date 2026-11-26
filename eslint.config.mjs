@@ -31,7 +31,7 @@ export default [
     },
   },
   {
-    files: ["apps/web/src/**/*.tsx", "packages/ui/src/**/*.{ts,tsx}"],
+    files: ["src/**/*.tsx", "packages/ui/src/**/*.{ts,tsx}"],
     plugins: { "react-hooks": reactHooks },
     rules: {
       "react-hooks/rules-of-hooks": "error",
@@ -50,14 +50,14 @@ export default [
   },
   {
     // The browser never decides business outcomes: no fixture stores or engine code in the web app.
-    files: ["apps/web/src/**/*.{ts,tsx}"],
+    files: ["src/**/*.{ts,tsx}"],
     rules: {
       "no-restricted-imports": [
         "error",
         {
           patterns: [
             {
-              group: ["**/apps/api/**", "**/workflow/**/mock/**"],
+              group: ["**/workflow/**/mock/**"],
               message:
                 "Call the API through src/shared/api instead of importing server code.",
             },

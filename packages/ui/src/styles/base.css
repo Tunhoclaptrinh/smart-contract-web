@@ -170,7 +170,7 @@
 }
 
 /* IconButton (role="button" span): visible keyboard focus. */
-.codecash-icon-btn:focus-visible {
+.scw-icon-btn:focus-visible {
   outline: 2px solid var(--color-primary, #315bea);
   outline-offset: 1px;
 }

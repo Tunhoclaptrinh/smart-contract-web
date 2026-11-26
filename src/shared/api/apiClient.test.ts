@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { ApiClient, ApiError } from "@codecash/api-client";
+import { ApiClient, ApiError } from "@scw/api-client";
 
 const json = (status: number, body: unknown) =>
   new Response(JSON.stringify(body), {

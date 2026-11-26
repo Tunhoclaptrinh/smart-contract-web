@@ -44,7 +44,7 @@
     "updatedAt": "Cập nhật",
     "version": "Phiên bản",
     "createdAt": "Tạo lúc",
-    "partyId": "Mã bên trong Data Pack",
+    "partyId": "Mã bên trong dữ liệu mẫu",
     "workflowTemplate": "Quy trình",
     "sequence": "Thứ tự",
     "paymentPercent": "Tỷ lệ thanh toán (%)",
@@ -66,7 +66,7 @@
     "address": "Địa chỉ"
   },
   "data": {
-    "title": "Kết quả Data Pack",
+    "title": "Kiểm chứng bộ luật",
     "evaluate": "Đánh giá dữ liệu",
     "trace": "Dấu vết kiểm toán",
     "columns": {
@@ -116,7 +116,7 @@
     },
     "source": {
       "label": "Nguồn dữ liệu",
-      "datapack": "Data Pack chính thức (BTC)",
+      "datapack": "Dữ liệu mẫu",
       "upload": "Tải bộ dữ liệu lên",
       "delete": "Xóa bộ dữ liệu",
       "deleteBody": "Xóa bộ dữ liệu “{{name}}” cùng các tệp đã tải lên và kết quả đã chạy?",
@@ -250,7 +250,7 @@
       "milestones": "Mốc thanh toán",
       "disputes": "Tranh chấp",
       "activity": "Nhật ký",
-      "engine": "Engine Data Pack",
+      "engine": "Engine trên dữ liệu mẫu",
       "documents": "Tài liệu",
       "administration": "Quản trị",
       "controls": "Kiểm soát ngoại lệ",
@@ -293,8 +293,8 @@
       "disputes:read": "Xem tranh chấp",
       "disputes:resolve": "Đóng tranh chấp",
       "activity:read": "Xem nhật ký hoạt động",
-      "engine:read": "Xem kết quả Data Pack",
-      "engine:evaluate": "Chạy đánh giá Data Pack",
+      "engine:read": "Xem kiểm chứng bộ luật",
+      "engine:evaluate": "Chạy kiểm chứng trên dữ liệu mẫu",
       "engine:datasets": "Tải bộ dữ liệu lên",
       "documents:read": "Xem tài liệu",
       "documents:upload": "Tải lên tài liệu",
@@ -360,7 +360,7 @@
   "imported_one": "Đã nhập {{count}} bản ghi",
   "imported_other": "Đã nhập {{count}} bản ghi",
   "errors": {
-    "MANAGED_RECORD": "Bản ghi này thuộc Data Pack hoặc luồng nghiệp vụ nên không sửa, xoá ở đây. Hồ sơ hợp đồng sửa ở màn Tải hợp đồng lên.",
+    "MANAGED_RECORD": "Bản ghi này thuộc dữ liệu mẫu hoặc luồng nghiệp vụ nên không sửa, xoá ở đây. Hồ sơ hợp đồng sửa ở màn Tải hợp đồng lên.",
     "CONTRACT_TEMPLATE_INVALID": "Mẫu hợp đồng không hợp lệ. Kiểm tra điều khoản, giới hạn số tiền và vai trò ký.",
     "APPEND_ONLY_RESOURCE": "Dữ liệu này chỉ được ghi thêm, không sửa hay xoá.",
     "CANNOT_DELETE_SELF": "Không thể xoá chính tài khoản bạn đang dùng.",
@@ -415,7 +415,7 @@
   "fieldOverrides": {
     "users": {
       "title": "Chức danh",
-      "partyId": "Mã bên trong Data Pack",
+      "partyId": "Mã bên trong dữ liệu mẫu",
       "active": "Đang hoạt động"
     },
     "organizations": {
@@ -428,7 +428,7 @@
   "fieldHints": {
     "users": {
       "organizationId": "Người dùng chỉ thấy hợp đồng của tổ chức này.",
-      "partyId": "Để trống nếu tổ chức chưa có trong Data Pack."
+      "partyId": "Để trống nếu tổ chức chưa có trong dữ liệu mẫu."
     },
     "milestone-templates": {
       "requiredEvents": "Mã sự kiện cách nhau bằng dấu chấm phẩy, ví dụ DELIVERY;INVOICE.",
@@ -440,8 +440,8 @@
   },
   "settingKeys": {
     "DATA_PACK_SNAPSHOT": {
-      "label": "Ngày chốt Data Pack",
-      "hint": "bản dữ liệu BTC đang dùng"
+      "label": "Ngày chốt dữ liệu mẫu",
+      "hint": "bản dữ liệu mẫu đang dùng"
     },
     "SPEC_VERSION": {
       "label": "Phiên bản đặc tả",
@@ -462,7 +462,7 @@
   },
   "auditResources": {
     "users": "Tài khoản",
-    "datapack": "Data Pack",
+    "datapack": "Dữ liệu mẫu",
     "integrity": "Kiểm tra toàn vẹn",
     "app-migrations": "Cập nhật dữ liệu ứng dụng",
     "workflow": "Nghiệp vụ hợp đồng",
@@ -471,7 +471,7 @@
     "rule-versions": "Phiên bản quy tắc",
     "exports": "Xuất dữ liệu",
     "documents": "Tài liệu",
-    "engine": "Engine Data Pack"
+    "engine": "Engine trên dữ liệu mẫu"
   },
   "libraryTitle": "Thư viện mốc"
 }

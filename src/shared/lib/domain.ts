@@ -5,7 +5,7 @@ import type {
   EventClass,
   MilestoneStatus,
   NextStep,
-} from "@codecash/contracts";
+} from "@scw/contracts";
 import type { TFunction } from "i18next";
 import type { Tone } from "../ui/ToneTag";
 
@@ -87,7 +87,7 @@ export function describeNext(t: TFunction, step: NextStep): string {
   }
 }
 
-/** Data Pack titles end with their own code ("… - CT0084"); drop it where the code is shown anyway. */
+/** Sample-data titles end with their own code ("… - CT0084"); drop it where the code is shown anyway. */
 export function contractTitle(contract: { id: string; title: string }) {
   const suffix = new RegExp(`\\s*[-–]\\s*${contract.id}$`);
   return contract.title.replace(suffix, "") || contract.title;
@@ -98,7 +98,7 @@ export const contractHeading = (contract: { id: string; title: string }) =>
   `${contract.id} · ${contractTitle(contract)}`;
 
 /**
- * Who recorded an event, in business terms. Data Pack approver parties are named like
+ * Who recorded an event, in business terms. Sample-data approver parties are named like
  * "Contract Owner - Nova An Business JSC"; show the person when known, otherwise the role.
  */
 export function actorName(

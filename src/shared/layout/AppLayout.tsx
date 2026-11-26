@@ -32,7 +32,7 @@ import {
   useNavigate,
   useNavigation,
 } from "react-router-dom";
-import { useAccess, useLocalStorage } from "@codecash/ui";
+import { useAccess, useLocalStorage } from "@scw/ui";
 import { resetDemoData } from "../api/auth.api";
 import { useDemoMode } from "../auth/useDemoMode";
 import { useCurrentUser, useSession } from "../auth/session";
@@ -76,7 +76,7 @@ export function AppLayout() {
   const screens = Grid.useBreakpoint();
   const desktop = screens.lg ?? true;
   const [collapsed, setCollapsed] = useLocalStorage(
-    "codecash.sider.collapsed",
+    "scw.sider.collapsed",
     false,
   );
   const [drawerOpen, setDrawerOpen] = useState(false);

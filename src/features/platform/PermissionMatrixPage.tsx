@@ -16,14 +16,14 @@ import {
   PageContainer,
   type FilterConfig,
   type StatisticsItem,
-} from "@codecash/ui";
+} from "@scw/ui";
 import type {
   Entity,
   ListSpec,
   PermissionMatrix,
   PermissionScope,
   Role,
-} from "@codecash/contracts";
+} from "@scw/contracts";
 import { platform } from "@/shared/api/platform";
 import { useCurrentUser } from "@/shared/auth/session";
 import { AppPage } from "@/shared/layout/AppPage";

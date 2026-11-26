@@ -103,7 +103,7 @@ export interface RuleVersion {
     paymentPercent: string;
     latePenalty: boolean;
     offsetDays: number;
-    /** `APP_` workflows of the version only (docs/NGHIEP_VU.md §6.3). */
+    /** `APP_` workflows of the version only (business specification §6.3). */
     contractType?: string;
     workflowName?: string;
     approval?: string;
@@ -145,7 +145,7 @@ export interface RuleLanguage {
     fields: RuleExpressionField[];
     label: { vi: string; en: string };
     description: { vi: string; en: string };
-    /** Where the engine reads the value: a fact it computes, a policy-derived fact or a Data Pack cell. */
+    /** Where the engine reads the value: a fact it computes, a policy-derived fact or a sample data cell. */
     binding: {
       source:
         "fact" | "config" | "derived" | "amount" | "milestone" | "contract";
@@ -162,7 +162,7 @@ export interface RuleLanguage {
   constants: string[];
   fields: RuleExpressionField[];
 }
-/** Static safety proof of a rule set (apps/engine/codecash_engine/safety.py). */
+/** Static safety proof of a rule set (computed by the decision service). */
 export interface RuleSafety {
   safe: boolean;
   scopes: number;
@@ -204,7 +204,7 @@ export interface RulePreview {
 
 /**
  * The milestone library (idea from Contract Smart): every distinct definition of a milestone type
- * (documents, penalty, approval and the rules of its scope) across the Data Pack and the rule
+ * (documents, penalty, approval and the rules of its scope) across the sample data and the rule
  * versions, numbered in the order it first appeared. A rule version only adds versions; a contract
  * keeps the definition of the version it pinned.
  */
@@ -222,13 +222,13 @@ export interface MilestoneLibraryVersion {
   approval: "CONTRACT" | "NONE";
   /** The rules of the scope in priority order, as written in the rule language. */
   rules: Record<string, string>[];
-  /** Where it first appeared: the Data Pack, or a rule version. */
+  /** Where it first appeared: the sample data, or a rule version. */
   firstSeen: {
     ruleVersionId: string | null;
     ruleVersionName: string | null;
     at: string | null;
   };
-  /** Every workflow stage with this definition, in the Data Pack and every rule version. */
+  /** Every workflow stage with this definition, in the sample data and every rule version. */
   usedBy: Array<{
     ruleVersionId: string | null;
     ruleVersionName: string | null;

@@ -1,12 +1,12 @@
 {
   "origin": {
-    "DATA_PACK": "Dữ liệu BTC",
+    "DATA_PACK": "Dữ liệu mẫu",
     "SEED": "Dữ liệu bổ sung",
     "APP": "Tạo trong app",
     "hint": {
-      "DATA_PACK": "Lấy nguyên từ Data Pack của Ban tổ chức (contracts, parties, milestones, events, payment_rules).",
-      "SEED": "Data Pack không có thông tin này (người dùng, thứ tự ký, hợp đồng demo...). Đội bổ sung để chạy đủ luồng và đánh dấu rõ.",
-      "APP": "Được tạo bởi thao tác của người dùng trong ứng dụng, ghi theo đúng schema của Data Pack."
+      "DATA_PACK": "Lấy nguyên từ bộ dữ liệu mẫu (contracts, parties, milestones, events, payment_rules).",
+      "SEED": "Dữ liệu mẫu không có thông tin này (người dùng, thứ tự ký, hợp đồng demo...). Đội bổ sung để chạy đủ luồng và đánh dấu rõ.",
+      "APP": "Được tạo bởi thao tác của người dùng trong ứng dụng, ghi theo đúng cấu trúc dữ liệu mẫu."
     }
   },
   "contractType": {
@@ -267,7 +267,7 @@
     "STEP_NOT_FOUND": "Không tìm thấy bước ký.",
     "TITLE_REQUIRED": "Cần nhập tên hợp đồng.",
     "UNKNOWN_OUTPUT": "Tệp kết quả không tồn tại.",
-    "UNKNOWN_PARTY": "Bên ghi nhận không có trong Data Pack.",
+    "UNKNOWN_PARTY": "Bên ghi nhận không có trong dữ liệu mẫu.",
     "USER_NOT_FOUND": "Không tìm thấy tài khoản.",
     "INVALID_TITLE": "Tên hợp đồng tối đa 250 ký tự.",
     "AUDIT_CHAIN_BROKEN": "Nhật ký không toàn vẹn; cần xử lý trước khi niêm phong.",
@@ -348,7 +348,7 @@
     "INVALID_WORKFLOW": "Quy trình mốc không thuộc phiên bản luật đã ghim hoặc không dành cho loại hợp đồng này.",
     "APP_WORKFLOW_COUNT": "Một phiên bản có tối đa 8 quy trình riêng.",
     "INVALID_SEEN_AT": "Thời điểm đánh dấu đã đọc không hợp lệ.",
-    "CONFIRM_ON_DEVICE": "Xác nhận ký trên thiết bị ký (ứng dụng hoặc USB token), không xác nhận trong CodeCash.",
+    "CONFIRM_ON_DEVICE": "Xác nhận ký trên thiết bị ký (ứng dụng hoặc USB token), không xác nhận trên ứng dụng web.",
     "SIGNER_UNAVAILABLE": "Không kết nối được dịch vụ ký.",
     "NOT_REMOTE_REQUEST": "Yêu cầu này không ký qua dịch vụ ký.",
     "SIGNER_DISABLED": "Chưa bật ký qua dịch vụ ký.",
@@ -368,7 +368,7 @@
     "INVOICE_DATE_FUTURE": "Ngày lập hoá đơn không được ở tương lai.",
     "INVOICE_DUPLICATE": "Hoá đơn này (cùng người bán, ký hiệu và số) đã được dùng cho một chứng từ khác.",
     "CANNOT_AMEND": "Chỉ cán bộ hợp đồng hoặc chủ hợp đồng của bên mua được lập phụ lục.",
-    "DATA_PACK_LOCKED": "Hợp đồng của dữ liệu ban tổ chức được giữ nguyên, không lập phụ lục.",
+    "DATA_PACK_LOCKED": "Hợp đồng của dữ liệu mẫu được giữ nguyên, không lập phụ lục.",
     "AMENDMENT_PENDING": "Hợp đồng đang có một phụ lục chờ nhà cung cấp trả lời.",
     "AMENDMENT_EMPTY": "Phụ lục chưa thay đổi hạn mốc hay ngày kết thúc nào.",
     "AMENDMENT_NOT_FOUND": "Không tìm thấy phụ lục.",

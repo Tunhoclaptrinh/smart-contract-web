@@ -1,9 +1,4 @@
-import type {
-  AuthResult,
-  PageQuery,
-  PageResult,
-  Entity,
-} from "@codecash/contracts";
+import type { AuthResult, PageQuery, PageResult, Entity } from "@scw/contracts";
 /** One field problem of an RFC 9457 answer (`errors[]`), e.g. `{ field: "admin.email", code: "INVALID_EMAIL" }`. */
 export interface FieldIssue {
   field: string;

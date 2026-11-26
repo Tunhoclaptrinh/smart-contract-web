@@ -3,7 +3,7 @@ import { Collapse, Descriptions, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 
 /**
- * A code the organiser grades or a reviewer traces (contract, milestone, event, rule, reason).
+ * A code a reviewer traces (contract, milestone, event, rule, reason).
  * Kept visible but quiet next to the business wording.
  */
 export function TrackingCode({ code }: { code: string | null | undefined }) {

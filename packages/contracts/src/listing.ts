@@ -1,8 +1,7 @@
 /**
  * One list engine for every table: search, filters, sort and paging, with the same rules on the
- * server (workflow lists) and in the browser (single documents such as the Data Pack results).
- * apps/api/src/domain/listing.ts and packages/contracts/src/listing.ts are identical copies
- * (tests/foundation/domain-types.test.mjs checks it).
+ * server (workflow lists) and in the browser (single documents loaded whole). The backend chassis
+ * keeps an identical copy, so a list behaves the same wherever it is filtered.
  */
 
 export type FilterValue = string | number | boolean;

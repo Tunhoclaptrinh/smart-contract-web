@@ -1,5 +1,5 @@
 import type { ComponentProps } from "react";
-import { BaseCard } from "@codecash/ui";
+import { BaseCard } from "@scw/ui";
 
 type Props = ComponentProps<typeof BaseCard> & {
   /** Keeps a thin frame, for a part that must stand apart from its neighbours. */

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Alert, Modal, Space, Switch, Table, Tag, Typography } from "antd";
 import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import type { ImportValidationReport } from "@codecash/contracts";
+import type { ImportValidationReport } from "@scw/contracts";
 
 type Result = ImportValidationReport["results"][number];
 

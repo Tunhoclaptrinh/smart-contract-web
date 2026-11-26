@@ -37,7 +37,7 @@ export function formatDateTime(value: string | Date): string {
 
 /**
  * Groups a decimal string such as "365785.87" for display without converting it to a float,
- * so Data Pack amounts keep the exact digits the engine produced.
+ * so sample-data amounts keep the exact digits the engine produced.
  */
 export function formatDecimalString(value: string): string {
   const match = /^(-?)(\d+)(?:\.(\d+))?$/.exec(value.trim());

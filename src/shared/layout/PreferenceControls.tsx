@@ -6,7 +6,7 @@ import {
   SunOutlined,
 } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import { useAppConfig } from "@codecash/ui";
+import { useAppConfig } from "@scw/ui";
 import { useOnboarding } from "../onboarding/OnboardingContext";
 import styles from "../onboarding/Onboarding.module.css";
 

@@ -1,6 +1,6 @@
-import { ApiClient } from "@codecash/api-client";
+import { ApiClient } from "@scw/api-client";
 
-export const ACCESS_TOKEN_KEY = "codecash.accessToken";
+export const ACCESS_TOKEN_KEY = "scw.accessToken";
 
 /**
  * Gets a new access token with the refresh token, which only the browser holds (httpOnly cookie
@@ -33,6 +33,6 @@ export const platform = new ApiClient({
   refresh: refreshAccessToken,
   onUnauthorized: () => {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
-    window.dispatchEvent(new Event("codecash:unauthorized"));
+    window.dispatchEvent(new Event("scw:unauthorized"));
   },
 });
